@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LabAgenticFlow pricing dataset changelog — newly added models, removals, and price updates." />
+  <title>Changelog — LabAgenticFlow</title>
+  <link rel="canonical" href="https://labagenticflow.com/changelog.html" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://labagenticflow.com/changelog.html" />
+  <meta property="og:title" content="Changelog — LabAgenticFlow" />
+  <meta property="og:description" content="Model and pricing changes from the latest dataset fetch." />
+  <meta property="og:site_name" content="LabAgenticFlow" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site-base.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <a href="index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="index.html">Calculator</a>
+        <a href="sources.html">Sources</a>
+        <a href="changelog.html" aria-current="page">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </header>
+
+    <section class="doc-hero">
+      <p class="doc-eyebrow">Dataset</p>
+      <h1>Changelog</h1>
+      <p class="doc-lead" id="changelog-lead">Loading latest dataset diff…</p>
+    </section>
+
+    <article class="doc-content" id="changelog-body">
+      <p class="load-state">Fetching <code>data/models.json</code>…</p>
+    </article>
+
+    <footer class="site-footer">
+      <p class="footer-note">Diff reflects the last fetch vs. the previous <code>models.json</code>.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a> · <a href="sources.html">Sources</a> · <a href="privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const DATA_URL = "data/models.json";
+
+    function fmtDate(iso) {
+      if (!iso) return "—";
+      return new Date(iso).toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: "UTC",
+      }) + " UTC";
+    }
+
+    function renderList(items, className, emptyText) {
+      if (!items || !items.length) {
+        return `<p class="load-state">${emptyText}</p>`;
+      }
+      return `<ul class="change-list">${items
+        .map((item) => {
+          const label = item.changes
+            ? `${item.id} — ${item.changes}`
+            : `${item.name} <span style="color:var(--text-dim)">(${item.openrouter_id || item.id})</span>`;
+          return `<li class="${className}">${label}</li>`;
+        })
+        .join("")}</ul>`;
+    }
+
+    async function loadChangelog() {
+      const body = document.getElementById("changelog-body");
+      const lead = document.getElementById("changelog-lead");
+
+      try {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const changes = data.changes || { added: [], removed: [], updated: [] };
+
+        lead.textContent = `Dataset v${data.version} · ${data.model_count} models · last updated ${fmtDate(data.last_updated)}`;
+
+        const total = changes.added.length + changes.removed.length + changes.updated.length;
+        const summary =
+          total === 0
+            ? "<p>No changes since the previous fetch. Run <code>python scripts/fetch_models.py</code> after OpenRouter updates to refresh.</p>"
+            : "";
+
+        body.innerHTML = `
+          ${summary}
+          <h2>Added (${changes.added.length})</h2>
+          ${renderList(changes.added, "change-added", "No new models in the last fetch.")}
+          <h2>Removed (${changes.removed.length})</h2>
+          ${renderList(changes.removed, "change-removed", "No models removed in the last fetch.")}
+          <h2>Updated (${changes.updated.length})</h2>
+          ${renderList(changes.updated, "change-updated", "No price or name changes in the last fetch.")}
+          <h2>Current index</h2>
+          <p>${data.model_count} models from ${data.source || "openrouter"} (selection: ${data.selection || "auto"}).</p>
+          <p><a href="index.html">Open calculator →</a></p>
+        `;
+      } catch (err) {
+        console.error(err);
+        lead.textContent = "Could not load changelog.";
+        body.innerHTML = '<p class="load-state" style="color:#ff6b8a">Failed to load data/models.json.</p>';
+      }
+    }
+
+    loadChangelog();
+  </script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+{
+  "version": "2026.06.15",
+  "last_updated": "2026-06-15T14:55:35.597633Z",
+  "source": "openrouter",
+  "source_url": "https://openrouter.ai/api/v1/models",
+  "selection": "auto",
+  "model_count": 38,
+  "models": [
+    {
+      "id": "amazon-nova-premier-v1",
+      "name": "Nova Premier 1.0",
+      "provider": "AWS",
+      "input": 2.5,
+      "output": 12.5,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "amazon/nova-premier-v1",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "amazon-nova-pro-v1",
+      "name": "Nova Pro 1.0",
+      "provider": "AWS",
+      "input": 0.8,
+      "output": 3.2,
+      "context": 300000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "amazon/nova-pro-v1",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "qwen-qwen3-5-plus-20260420",
+      "name": "Qwen3.5 Plus 2026-04-20",
+      "provider": "Alibaba",
+      "input": 0.3,
+      "output": 1.8,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.5-plus-20260420",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "qwen-qwen3-6-flash",
+      "name": "Qwen3.6 Flash",
+      "provider": "Alibaba",
+      "input": 0.1875,
+      "output": 1.125,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.6-flash",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "qwen-qwen3-6-plus",
+      "name": "Qwen3.6 Plus",
+      "provider": "Alibaba",
+      "input": 0.325,
+      "output": 1.95,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.6-plus",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "qwen-qwen3-7-max",
+      "name": "Qwen3.7 Max",
+      "provider": "Alibaba",
+      "input": 1.25,
+      "output": 3.75,
+      "context": 1000000,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.7-max",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "qwen-qwen3-7-plus",
+      "name": "Qwen3.7 Plus",
+      "provider": "Alibaba",
+      "input": 0.32,
+      "output": 1.28,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.7-plus",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "anthropic-claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "provider": "Anthropic",
+      "input": 1.0,
+      "output": 5.0,
+      "context": 200000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "anthropic/claude-haiku-4.5",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "anthropic-claude-opus-4-8",
+      "name": "Claude Opus 4.8",
+      "provider": "Anthropic",
+      "input": 5.0,
+      "output": 25.0,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "anthropic/claude-opus-4.8",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "anthropic-claude-sonnet-4-6",
+      "name": "Claude Sonnet 4.6",
+      "provider": "Anthropic",
+      "input": 3.0,
+      "output": 15.0,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "anthropic/claude-sonnet-4.6",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "cohere-command-a",
+      "name": "Command A",
+      "provider": "Cohere",
+      "input": 2.5,
+      "output": 10.0,
+      "context": 256000,
+      "tags": [],
+      "openrouter_id": "cohere/command-a",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "cohere-command-r-08-2024",
+      "name": "Command R (08-2024)",
+      "provider": "Cohere",
+      "input": 0.15,
+      "output": 0.6,
+      "context": 128000,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "cohere/command-r-08-2024",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "cohere-command-r-plus-08-2024",
+      "name": "Command R+ (08-2024)",
+      "provider": "Cohere",
+      "input": 2.5,
+      "output": 10.0,
+      "context": 128000,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "cohere/command-r-plus-08-2024",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "deepseek-deepseek-chat-v3-1",
+      "name": "DeepSeek V3.1",
+      "provider": "DeepSeek",
+      "input": 0.21,
+      "output": 0.79,
+      "context": 163840,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "deepseek/deepseek-chat-v3.1",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "deepseek-deepseek-v3-1-terminus",
+      "name": "DeepSeek V3.1 Terminus",
+      "provider": "DeepSeek",
+      "input": 0.27,
+      "output": 0.95,
+      "context": 163840,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "deepseek/deepseek-v3.1-terminus",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "deepseek-deepseek-v3-2-exp",
+      "name": "DeepSeek V3.2 Exp",
+      "provider": "DeepSeek",
+      "input": 0.27,
+      "output": 0.41,
+      "context": 163840,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "deepseek/deepseek-v3.2-exp",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "deepseek-deepseek-v4-flash",
+      "name": "DeepSeek V4 Flash",
+      "provider": "DeepSeek",
+      "input": 0.098,
+      "output": 0.196,
+      "context": 1048576,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "deepseek/deepseek-v4-flash",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "deepseek-deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "input": 0.435,
+      "output": 0.87,
+      "context": 1048576,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "deepseek/deepseek-v4-pro",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "google-gemini-2-5-flash",
+      "name": "Gemini 2.5 Flash",
+      "provider": "Google",
+      "input": 0.3,
+      "output": 2.5,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "google/gemini-2.5-flash",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "google-gemini-2-5-flash-lite",
+      "name": "Gemini 2.5 Flash Lite",
+      "provider": "Google",
+      "input": 0.1,
+      "output": 0.4,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "google/gemini-2.5-flash-lite",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "google-gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
+      "provider": "Google",
+      "input": 0.5,
+      "output": 3.0,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "google/gemini-3-flash-preview",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "google-gemini-3-1-flash-lite",
+      "name": "Gemini 3.1 Flash Lite",
+      "provider": "Google",
+      "input": 0.25,
+      "output": 1.5,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "google/gemini-3.1-flash-lite",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "google-gemini-3-5-flash",
+      "name": "Gemini 3.5 Flash",
+      "provider": "Google",
+      "input": 1.5,
+      "output": 9.0,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "google/gemini-3.5-flash",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "meta-llama-llama-3-3-70b-instruct",
+      "name": "Llama 3.3 70B Instruct",
+      "provider": "Meta (via API)",
+      "input": 0.1,
+      "output": 0.32,
+      "context": 131072,
+      "tags": [
+        "tools"
+      ],
+      "openrouter_id": "meta-llama/llama-3.3-70b-instruct",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "meta-llama-llama-4-maverick",
+      "name": "Llama 4 Maverick",
+      "provider": "Meta (via API)",
+      "input": 0.15,
+      "output": 0.6,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "meta-llama/llama-4-maverick",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "meta-llama-llama-4-scout",
+      "name": "Llama 4 Scout",
+      "provider": "Meta (via API)",
+      "input": 0.1,
+      "output": 0.3,
+      "context": 10000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "meta-llama/llama-4-scout",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "mistralai-mistral-large-2512",
+      "name": "Mistral Large 3 2512",
+      "provider": "Mistral",
+      "input": 0.5,
+      "output": 1.5,
+      "context": 262144,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "mistralai/mistral-large-2512",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "mistralai-mistral-medium-3-1",
+      "name": "Mistral Medium 3.1",
+      "provider": "Mistral",
+      "input": 0.4,
+      "output": 2.0,
+      "context": 131072,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "mistralai/mistral-medium-3.1",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "mistralai-mistral-medium-3-5",
+      "name": "Mistral Medium 3.5",
+      "provider": "Mistral",
+      "input": 1.5,
+      "output": 7.5,
+      "context": 262144,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "mistralai/mistral-medium-3-5",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "mistralai-mistral-small-3-2-24b-instruct",
+      "name": "Mistral Small 3.2 24B",
+      "provider": "Mistral",
+      "input": 0.075,
+      "output": 0.2,
+      "context": 128000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "mistralai/mistral-small-3.2-24b-instruct",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "mistralai-mistral-small-2603",
+      "name": "Mistral Small 4",
+      "provider": "Mistral",
+      "input": 0.15,
+      "output": 0.6,
+      "context": 262144,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "mistralai/mistral-small-2603",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "openai-gpt-5-2-pro",
+      "name": "GPT-5.2 Pro",
+      "provider": "OpenAI",
+      "input": 21.0,
+      "output": 168.0,
+      "context": 400000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.2-pro",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "openai-gpt-5-4-mini",
+      "name": "GPT-5.4 Mini",
+      "provider": "OpenAI",
+      "input": 0.75,
+      "output": 4.5,
+      "context": 400000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.4-mini",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "openai-gpt-5-4-pro",
+      "name": "GPT-5.4 Pro",
+      "provider": "OpenAI",
+      "input": 30.0,
+      "output": 180.0,
+      "context": 1050000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.4-pro",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "openai-gpt-5-5",
+      "name": "GPT-5.5",
+      "provider": "OpenAI",
+      "input": 5.0,
+      "output": 30.0,
+      "context": 1050000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.5",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "openai-gpt-5-5-pro",
+      "name": "GPT-5.5 Pro",
+      "provider": "OpenAI",
+      "input": 30.0,
+      "output": 180.0,
+      "context": 1050000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.5-pro",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "x-ai-grok-4-20",
+      "name": "Grok 4.20",
+      "provider": "xAI",
+      "input": 1.25,
+      "output": 2.5,
+      "context": 2000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "x-ai/grok-4.20",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "x-ai-grok-build-0-1",
+      "name": "Grok Build 0.1",
+      "provider": "xAI",
+      "input": 1.0,
+      "output": 2.0,
+      "context": 256000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "x-ai/grok-build-0.1",
+      "pricing_source": "openrouter"
+    }
+  ],
+  "changes": {
+    "added": [],
+    "removed": [],
+    "updated": [
+      {
+        "id": "deepseek-deepseek-v4-flash",
+        "openrouter_id": "deepseek/deepseek-v4-flash",
+        "changes": "input: 0.09 → 0.098; output: 0.18 → 0.196"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Compare LLM API costs across providers. Calculate monthly spend by input/output tokens — LabAgenticFlow." />
+  <title>LabAgenticFlow — LLM API Cost Lab</title>
+  <link rel="canonical" href="https://labagenticflow.com/" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://labagenticflow.com/" />
+  <meta property="og:title" content="LabAgenticFlow — LLM API Cost Lab" />
+  <meta property="og:description" content="Compare LLM API costs across providers. Calculate monthly spend by input/output tokens." />
+  <meta property="og:site_name" content="LabAgenticFlow" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LabAgenticFlow — LLM API Cost Lab" />
+  <meta name="twitter:description" content="Compare LLM API costs across providers. Calculate monthly spend by input/output tokens." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #06090f;
+      --bg-panel: #0c1219;
+      --bg-elevated: #111a24;
+      --grid-line: rgba(61, 255, 154, 0.06);
+      --text-primary: #e4eaf2;
+      --text-muted: #7a8a9e;
+      --text-dim: #4a5a6e;
+      --phosphor: #3dff9a;
+      --phosphor-dim: rgba(61, 255, 154, 0.15);
+      --phosphor-glow: rgba(61, 255, 154, 0.35);
+      --amber: #f0a030;
+      --amber-dim: rgba(240, 160, 48, 0.12);
+      --violet: #9b7dff;
+      --rose: #ff6b8a;
+      --border: rgba(255, 255, 255, 0.07);
+      --radius: 2px;
+      --font-display: "Instrument Serif", Georgia, serif;
+      --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+      --font-mono: "IBM Plex Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: -20%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(61, 255, 154, 0.04) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .flow-particle { animation: none !important; }
+      .spectra-fill { transition: none !important; }
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    @media (max-width: 640px) {
+      .shell { padding: 0 16px 64px; }
+    }
+
+    /* ── Header ── */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      .site-header { padding: 20px 0; }
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--phosphor);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .logo-mark::before,
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      background: var(--phosphor);
+    }
+
+    .logo-mark::before {
+      width: 60%;
+      height: 1px;
+      top: 50%;
+      left: 20%;
+      transform: translateY(-50%);
+    }
+
+    .logo-mark::after {
+      width: 1px;
+      height: 60%;
+      left: 50%;
+      top: 20%;
+      transform: translateX(-50%);
+    }
+
+    .logo-text {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .logo-text em {
+      font-style: normal;
+      color: var(--phosphor);
+    }
+
+    .header-meta {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    .header-meta span { color: var(--phosphor); }
+
+    @media (max-width: 640px) {
+      .header-meta {
+        width: 100%;
+        text-align: left;
+        font-size: 0.62rem;
+      }
+    }
+
+    /* ── Ad slot ── */
+    .ad-slot {
+      margin: 20px 0;
+      min-height: 90px;
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.01);
+      overflow: hidden;
+    }
+
+    .ad-slot__placeholder {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .ad-slot--live {
+      border-style: solid;
+      border-color: transparent;
+      background: transparent;
+      min-height: 0;
+    }
+
+    .ad-slot--pending .ad-slot__placeholder { color: var(--amber); }
+
+    .ad-slot--native { min-height: 250px; }
+
+    @media (max-width: 640px) {
+      .ad-slot--banner { min-height: 50px; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      padding: 56px 0 48px;
+      align-items: end;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 36px 0 32px; }
+      .flow-viz { padding: 20px 16px; }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--phosphor);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 i {
+      font-style: italic;
+      color: var(--phosphor);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 420px;
+      line-height: 1.7;
+    }
+
+    /* ── Flow viz (signature) ── */
+    .flow-viz {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-viz-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .flow-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      height: 48px;
+    }
+
+    .flow-node {
+      flex-shrink: 0;
+      width: 72px;
+      text-align: center;
+    }
+
+    .flow-node-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .flow-node.active .flow-node-icon {
+      border-color: var(--phosphor);
+      box-shadow: 0 0 20px var(--phosphor-dim);
+      color: var(--phosphor);
+    }
+
+    .flow-node-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .flow-connector {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+      min-width: 24px;
+    }
+
+    .flow-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--phosphor);
+      border-radius: 50%;
+      top: -2.5px;
+      box-shadow: 0 0 8px var(--phosphor-glow);
+      animation: flowMove 2.4s ease-in-out infinite;
+    }
+
+    .flow-particle:nth-child(2) { animation-delay: 0.8s; }
+    .flow-particle:nth-child(3) { animation-delay: 1.6s; }
+
+    @keyframes flowMove {
+      0% { left: 0; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { left: calc(100% - 6px); opacity: 0; }
+    }
+
+    .flow-output {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .flow-output-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .flow-output-value {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--phosphor);
+      letter-spacing: -0.02em;
+    }
+
+    .flow-output-value .unit {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* ── Main grid ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Calculator panel ── */
+    .calc-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      position: sticky;
+      top: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .calc-panel { position: static; top: auto; }
+    }
+
+    .panel-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .panel-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      padding: 3px 8px;
+      background: var(--phosphor-dim);
+      color: var(--phosphor);
+      letter-spacing: 0.06em;
+    }
+
+    .panel-body { padding: 24px; }
+
+    .field { margin-bottom: 28px; }
+
+    .field:last-child { margin-bottom: 0; }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .field-label span:first-child {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .field-value {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--phosphor);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 2px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      background: var(--phosphor);
+      border: 2px solid var(--bg-deep);
+      cursor: pointer;
+      box-shadow: 0 0 12px var(--phosphor-glow);
+    }
+
+    @media (max-width: 640px) {
+      input[type="range"]::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      background: var(--phosphor);
+      border: 2px solid var(--bg-deep);
+      cursor: pointer;
+      border-radius: 0;
+    }
+
+    input[type="range"]:focus-visible::-webkit-slider-thumb {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    .field-hint {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    .period-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin-top: 8px;
+    }
+
+    .period-btn {
+      background: var(--bg-elevated);
+      border: none;
+      padding: 12px 10px;
+      min-height: 44px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .period-btn:hover { color: var(--text-primary); }
+
+    .period-btn.active {
+      background: var(--phosphor-dim);
+      color: var(--phosphor);
+    }
+
+    .period-btn:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: -2px;
+      z-index: 1;
+    }
+
+    .calc-summary {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .summary-row.total {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .summary-row .mono {
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+    }
+
+    .summary-row.total .mono {
+      color: var(--phosphor);
+      font-size: 1rem;
+    }
+
+    /* ── Comparison table ── */
+    .compare-section { min-width: 0; }
+
+    .compare-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .compare-toolbar h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+
+    .sort-group {
+      display: flex;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .sort-btn {
+      background: var(--bg-panel);
+      border: none;
+      padding: 10px 14px;
+      min-height: 44px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    @media (max-width: 640px) {
+      .compare-toolbar h2 { font-size: 1.25rem; }
+      .sort-group { width: 100%; }
+      .sort-btn { flex: 1; text-align: center; }
+    }
+
+    .sort-btn:hover { color: var(--text-primary); }
+
+    .sort-btn.active {
+      background: var(--bg-elevated);
+      color: var(--phosphor);
+    }
+
+    .sort-btn:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: -2px;
+    }
+
+    .model-list { display: flex; flex-direction: column; gap: 2px; }
+
+    .load-state {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      padding: 24px 0;
+    }
+
+    .load-state.error { color: var(--rose); }
+
+    .model-card {
+      display: grid;
+      grid-template-columns: 1fr 140px 100px 80px;
+      gap: 16px;
+      align-items: center;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .model-card:hover { border-color: rgba(61, 255, 154, 0.2); }
+
+    .model-card.cheapest {
+      border-color: rgba(61, 255, 154, 0.4);
+    }
+
+    .model-card.cheapest::before {
+      content: "LOWEST";
+      position: absolute;
+      top: -1px;
+      left: 20px;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      background: var(--phosphor);
+      color: var(--bg-deep);
+      padding: 2px 6px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      .model-card {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .model-info { grid-column: 1 / -1; }
+
+      .spectra { grid-column: 1 / -1; }
+
+      .model-pricing {
+        grid-column: 1 / -1;
+        margin-left: auto;
+        display: grid;
+        grid-template-columns: 5.5rem 5.5rem;
+        gap: 2px 12px;
+        align-items: end;
+        justify-items: end;
+      }
+
+      .col-cost { text-align: right; }
+
+      .col-ctx {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .model-name {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        line-height: 1.35;
+      }
+    }
+
+    .model-pricing { display: contents; }
+
+    .model-info { min-width: 0; }
+
+    .model-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .model-provider {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .model-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      padding: 2px 6px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-dim);
+      letter-spacing: 0.03em;
+    }
+
+    .tag.vision { color: var(--violet); background: rgba(155, 125, 255, 0.1); }
+    .tag.tools { color: var(--amber); background: var(--amber-dim); }
+
+    /* Spectrometer bar — signature readout */
+    .spectra {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .spectra-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .spectra-track {
+      height: 6px;
+      background: var(--bg-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spectra-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--phosphor-dim), var(--phosphor));
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 0 12px var(--phosphor-glow);
+    }
+
+    .model-card:not(.cheapest) .spectra-fill {
+      background: linear-gradient(90deg, rgba(122, 138, 158, 0.2), rgba(122, 138, 158, 0.5));
+      box-shadow: none;
+    }
+
+    .col-cost {
+      text-align: right;
+    }
+
+    .cost-main {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .model-card.cheapest .cost-main { color: var(--phosphor); }
+
+    .cost-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .col-rates {
+      text-align: right;
+    }
+
+    .rate-line {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .col-ctx {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+  .list-header {
+      display: grid;
+      grid-template-columns: 1fr 140px 100px 80px;
+      gap: 16px;
+      padding: 0 20px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 720px) {
+      .list-header { display: none; }
+    }
+
+    /* ── Footer / disclaimer ── */
+    .site-footer {
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .disclaimer {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--phosphor); }
+    .footer-links a:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 640px) {
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <a href="index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <div class="header-meta">
+        Dataset <span id="dataset-version">…</span> · <span id="model-count">…</span> models indexed
+      </div>
+    </header>
+
+    <div class="ad-slot ad-slot--banner" data-ad-slot="banner-top" role="complementary" aria-label="Advertisement">
+      <span class="ad-slot__placeholder">Ad · 728×90 banner</span>
+    </div>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">Cost decision lab</p>
+        <h1>Which LLM API costs <i>less</i> for your workload?</h1>
+        <p class="hero-desc">
+          Set your token mix, compare providers side by side, and see estimated spend — no account, no guesswork. Prices auto-synced from OpenRouter; updated when providers change rates.
+        </p>
+      </div>
+
+      <div class="flow-viz" aria-hidden="true">
+        <div class="flow-viz-label">Agentic flow · cost pipeline</div>
+        <div class="flow-track">
+          <div class="flow-node active">
+            <div class="flow-node-icon">IN</div>
+            <div class="flow-node-label">Input</div>
+          </div>
+          <div class="flow-connector">
+            <div class="flow-particle"></div>
+            <div class="flow-particle"></div>
+            <div class="flow-particle"></div>
+          </div>
+          <div class="flow-node active">
+            <div class="flow-node-icon">Σ</div>
+            <div class="flow-node-label">Model</div>
+          </div>
+          <div class="flow-connector">
+            <div class="flow-particle"></div>
+            <div class="flow-particle"></div>
+            <div class="flow-particle"></div>
+          </div>
+          <div class="flow-node active">
+            <div class="flow-node-icon">OUT</div>
+            <div class="flow-node-label">Output</div>
+          </div>
+        </div>
+        <div class="flow-output">
+          <span class="flow-output-label">Cheapest match</span>
+          <span class="flow-output-value" id="hero-cheapest">—<span class="unit"> /mo</span></span>
+        </div>
+      </div>
+    </section>
+
+    <main class="main-grid">
+      <aside class="calc-panel" aria-label="Cost calculator">
+        <div class="panel-header">
+          <span class="panel-title">Workload</span>
+          <span class="panel-badge">Live</span>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <div class="field-label">
+              <span>Monthly requests</span>
+              <span class="field-value" id="val-requests">10,000</span>
+            </div>
+            <input type="range" id="requests" min="100" max="1000000" step="100" value="10000" aria-label="Monthly requests" />
+            <p class="field-hint">How many API calls per month</p>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              <span>Input tokens / request</span>
+              <span class="field-value" id="val-input">2,000</span>
+            </div>
+            <input type="range" id="input-tokens" min="100" max="128000" step="100" value="2000" aria-label="Input tokens per request" />
+            <p class="field-hint">Prompt + context length</p>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              <span>Output tokens / request</span>
+              <span class="field-value" id="val-output">500</span>
+            </div>
+            <input type="range" id="output-tokens" min="50" max="32000" step="50" value="500" aria-label="Output tokens per request" />
+            <p class="field-hint">Completion length</p>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              <span>Billing period</span>
+            </div>
+            <div class="period-toggle" role="group" aria-label="Billing period">
+              <button type="button" class="period-btn active" data-period="monthly">Monthly</button>
+              <button type="button" class="period-btn" data-period="daily">Daily</button>
+            </div>
+          </div>
+
+          <div class="calc-summary">
+            <div class="summary-row">
+              <span>Total input tokens</span>
+              <span class="mono" id="sum-input">20M</span>
+            </div>
+            <div class="summary-row">
+              <span>Total output tokens</span>
+              <span class="mono" id="sum-output">5M</span>
+            </div>
+            <div class="summary-row total">
+              <span>Token volume</span>
+              <span class="mono" id="sum-total">25M /mo</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="compare-section" aria-label="Model comparison">
+        <div class="compare-toolbar">
+          <h2>Model comparison</h2>
+          <div class="sort-group" role="group" aria-label="Sort models">
+            <button type="button" class="sort-btn active" data-sort="cost">By cost</button>
+            <button type="button" class="sort-btn" data-sort="input">Input $/M</button>
+            <button type="button" class="sort-btn" data-sort="context">Context</button>
+          </div>
+        </div>
+
+        <div class="list-header" aria-hidden="true">
+          <span>Model</span>
+          <span>Cost spectrum</span>
+          <span>Est. cost</span>
+          <span>Context</span>
+        </div>
+
+        <div class="model-list" id="model-list" role="list">
+          <p class="load-state" id="load-state">Loading pricing data…</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="ad-slot ad-slot--native" data-ad-slot="native-bottom" style="margin-top:32px" role="complementary" aria-label="Advertisement">
+      <span class="ad-slot__placeholder">Ad · 300×250 native</span>
+    </div>
+
+    <footer class="site-footer">
+      <p class="disclaimer" id="disclaimer">
+        Estimates only. Rates aggregated from OpenRouter API. Batch, cached-input, and regional pricing not included. Verify before production use.
+      </p>
+      <div class="footer-links">
+        <a href="sources.html">Data sources</a> · <a href="changelog.html">Changelog</a> · <a href="privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const DATA_URL = "data/models.json";
+
+    let MODELS = [];
+    let datasetMeta = null;
+
+    const state = {
+      requests: 10000,
+      inputPerReq: 2000,
+      outputPerReq: 500,
+      period: "monthly",
+      sort: "cost",
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    function fmtNum(n) {
+      if (n >= 1e9) return (n / 1e9).toFixed(1) + "B";
+      if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
+      if (n >= 1e3) return (n / 1e3).toFixed(n >= 1e4 ? 0 : 1) + "K";
+      return String(n);
+    }
+
+    function fmtMoney(n) {
+      if (n < 0.01) return "$" + n.toFixed(4);
+      if (n < 1) return "$" + n.toFixed(3);
+      if (n < 100) return "$" + n.toFixed(2);
+      return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+    }
+
+    function fmtCtx(n) {
+      if (n >= 1e6) return (n / 1e6) + "M";
+      return (n / 1e3) + "K";
+    }
+
+    function fmtDatasetDate(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    }
+
+    function setLoadState(message, isError = false) {
+      const list = $("#model-list");
+      list.innerHTML = `<p class="load-state${isError ? " error" : ""}" id="load-state">${message}</p>`;
+    }
+
+    function updateMeta() {
+      if (!datasetMeta) return;
+      $("#dataset-version").textContent = "v" + datasetMeta.version;
+      $("#model-count").textContent = String(datasetMeta.model_count);
+      const updated = fmtDatasetDate(datasetMeta.last_updated);
+      $("#disclaimer").textContent =
+        `Estimates only. Rates from OpenRouter API (updated ${updated}). Batch, cached-input, and regional pricing not included. Verify before production use.`;
+    }
+
+    function getVolumes() {
+      const mult = state.period === "daily" ? 1 / 30 : 1;
+      const totalInput = state.requests * state.inputPerReq * mult;
+      const totalOutput = state.requests * state.outputPerReq * mult;
+      return { totalInput, totalOutput, mult };
+    }
+
+    function calcCost(model) {
+      const { totalInput, totalOutput } = getVolumes();
+      return (totalInput / 1e6) * model.input + (totalOutput / 1e6) * model.output;
+    }
+
+    function getSortedModels() {
+      const withCost = MODELS.map((m) => ({ ...m, cost: calcCost(m) }));
+      const key = state.sort;
+      return withCost.sort((a, b) => {
+        if (key === "cost") return a.cost - b.cost;
+        if (key === "input") return a.input - b.input;
+        if (key === "context") return b.context - a.context;
+        return 0;
+      });
+    }
+
+    function render() {
+      if (!MODELS.length) return;
+
+      const { totalInput, totalOutput, mult } = getVolumes();
+      const periodLabel = state.period === "daily" ? "/day" : "/mo";
+
+      $("#val-requests").textContent = state.requests.toLocaleString();
+      $("#val-input").textContent = state.inputPerReq.toLocaleString();
+      $("#val-output").textContent = state.outputPerReq.toLocaleString();
+      $("#sum-input").textContent = fmtNum(totalInput);
+      $("#sum-output").textContent = fmtNum(totalOutput);
+      $("#sum-total").textContent = fmtNum(totalInput + totalOutput) + " " + periodLabel;
+
+      const sorted = getSortedModels();
+      const maxCost = sorted[sorted.length - 1].cost;
+      const minCost = sorted[0].cost;
+
+      $("#hero-cheapest").innerHTML =
+        fmtMoney(minCost) + '<span class="unit">' + periodLabel + "</span>";
+
+      const list = $("#model-list");
+      list.innerHTML = sorted
+        .map((m, i) => {
+          const pct = maxCost > 0 ? (m.cost / maxCost) * 100 : 0;
+          const isCheapest = i === 0 && state.sort === "cost";
+          const tags = m.tags
+            .map((t) => `<span class="tag ${t}">${t}</span>`)
+            .join("");
+
+          return `
+            <article class="model-card${isCheapest ? " cheapest" : ""}" role="listitem">
+              <div class="model-info">
+                <div class="model-name">${m.name}</div>
+                <div class="model-provider">${m.provider}</div>
+                <div class="model-tags">${tags}</div>
+              </div>
+              <div class="spectra">
+                <span class="spectra-label">relative</span>
+                <div class="spectra-track">
+                  <div class="spectra-fill" style="width:${pct.toFixed(1)}%"></div>
+                </div>
+              </div>
+              <div class="model-pricing">
+                <div class="col-cost">
+                  <div class="cost-main">${fmtMoney(m.cost)}</div>
+                  <div class="cost-sub">${periodLabel}</div>
+                </div>
+                <div class="col-ctx">${fmtCtx(m.context)}</div>
+              </div>
+              <div class="col-rates" style="display:none" aria-hidden="true">
+                <div class="rate-line">$${m.input}/M in</div>
+                <div class="rate-line">$${m.output}/M out</div>
+              </div>
+            </article>`;
+        })
+        .join("");
+    }
+
+    async function loadModels() {
+      try {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        MODELS = data.models || [];
+        datasetMeta = {
+          version: data.version,
+          last_updated: data.last_updated,
+          model_count: data.model_count ?? MODELS.length,
+        };
+        updateMeta();
+        render();
+      } catch (err) {
+        console.error(err);
+        setLoadState("Failed to load pricing data. Check data/models.json.", true);
+      }
+    }
+
+    $("#requests").addEventListener("input", (e) => {
+      state.requests = +e.target.value;
+      render();
+    });
+
+    $("#input-tokens").addEventListener("input", (e) => {
+      state.inputPerReq = +e.target.value;
+      render();
+    });
+
+    $("#output-tokens").addEventListener("input", (e) => {
+      state.outputPerReq = +e.target.value;
+      render();
+    });
+
+    $$(".period-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        $$(".period-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.period = btn.dataset.period;
+        render();
+      });
+    });
+
+    $$(".sort-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        $$(".sort-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.sort = btn.dataset.sort;
+        render();
+      });
+    });
+
+    loadModels();
+  </script>
+  <script src="assets/ad-config.js"></script>
+  <script src="assets/ads.js"></script>
+</body>
+</html>

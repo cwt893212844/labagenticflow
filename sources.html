@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How LabAgenticFlow sources LLM API pricing, selects models, and calculates cost estimates." />
+  <title>Data Sources &amp; Methodology — LabAgenticFlow</title>
+  <link rel="canonical" href="https://labagenticflow.com/sources.html" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://labagenticflow.com/sources.html" />
+  <meta property="og:title" content="Data Sources — LabAgenticFlow" />
+  <meta property="og:description" content="Pricing sources, model selection rules, and cost calculation methodology." />
+  <meta property="og:site_name" content="LabAgenticFlow" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site-base.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <a href="index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="index.html">Calculator</a>
+        <a href="sources.html" aria-current="page">Sources</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </header>
+
+    <section class="doc-hero">
+      <p class="doc-eyebrow">Transparency</p>
+      <h1>Data sources &amp; methodology</h1>
+      <p class="doc-lead">How we get prices, which models appear, and how the calculator works.</p>
+    </section>
+
+    <article class="doc-content">
+      <h2>Primary data source</h2>
+      <p>
+        Model names, per-token prices, and context windows are pulled from the
+        <a href="https://openrouter.ai/api/v1/models" rel="noopener noreferrer">OpenRouter Models API</a>
+        — a public aggregator that tracks pricing across major LLM providers.
+        We run an automated fetch script; we do not manually edit individual model prices.
+      </p>
+      <p>
+        Dataset version and last fetch time are shown in the site header on the
+        <a href="index.html">calculator page</a>.
+      </p>
+
+      <h2>Model selection (automatic)</h2>
+      <p>Not every OpenRouter model is listed. An auto-selection pipeline applies:</p>
+      <ul>
+        <li><strong>Provider allowlist</strong> — OpenAI, Anthropic, Google, DeepSeek, Mistral, Meta, xAI, Cohere, AWS, Qwen.</li>
+        <li><strong>Exclusions</strong> — Free tiers, distill models, image-only endpoints, legacy generations (e.g. GPT-3, Claude 3).</li>
+        <li><strong>Family dedup</strong> — One representative per model family (latest version; prefers standard over “fast” variants).</li>
+        <li><strong>Scoring cap</strong> — Top models per provider, global maximum ~50.</li>
+      </ul>
+      <p>
+        Rules live in <code>data/selection_rules.json</code> in our repository.
+        New flagship models on OpenRouter are picked up on the next fetch without manual catalog edits.
+      </p>
+
+      <h2>Cost formula</h2>
+      <p>For each model, estimated cost is:</p>
+      <p><code>cost = (input_tokens / 1M × input_price) + (output_tokens / 1M × output_price)</code></p>
+      <p>Where:</p>
+      <ul>
+        <li><code>input_tokens</code> = requests × input tokens per request (monthly or daily ÷ 30)</li>
+        <li><code>output_tokens</code> = requests × output tokens per request</li>
+        <li>Prices are USD per million tokens from the API</li>
+      </ul>
+
+      <h2>What we do not include</h2>
+      <ul>
+        <li>Batch API discounts</li>
+        <li>Cached / prompt-caching input rates</li>
+        <li>Regional or enterprise pricing</li>
+        <li>Tool-call overhead, vision token surcharges, or reasoning-token billing quirks</li>
+        <li>Taxes, platform fees, or minimum spend commitments</li>
+      </ul>
+      <p>Always verify on the provider's official pricing page before production commitments.</p>
+
+      <h2>Official provider pricing pages</h2>
+      <ul>
+        <li><a href="https://openai.com/api/pricing/" rel="noopener noreferrer">OpenAI</a></li>
+        <li><a href="https://www.anthropic.com/pricing" rel="noopener noreferrer">Anthropic</a></li>
+        <li><a href="https://ai.google.dev/pricing" rel="noopener noreferrer">Google AI</a></li>
+        <li><a href="https://api-docs.deepseek.com/quick_start/pricing" rel="noopener noreferrer">DeepSeek</a></li>
+        <li><a href="https://mistral.ai/technology/#pricing" rel="noopener noreferrer">Mistral</a></li>
+        <li><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener noreferrer">AWS Bedrock (Nova)</a></li>
+      </ul>
+
+      <h2>Update frequency</h2>
+      <p>
+        We refresh when providers change rates or new models ship — not on a meaningless hourly ticker.
+        After deployment, fetches can run on a daily cron (e.g. GitHub Actions).
+      </p>
+    </article>
+
+    <footer class="site-footer">
+      <p class="footer-note">Questions? <a href="mailto:hello@labagenticflow.com">hello@labagenticflow.com</a></p>
+      <div class="footer-links">
+        <a href="index.html">Home</a> · <a href="changelog.html">Changelog</a> · <a href="privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
