@@ -15,7 +15,7 @@
           key: m.key,
           width: m.width,
           height: m.height,
-          invokeHost: m.invokeHost || host,
+          invokeHost: m.invokeHost || slotCfg.invokeHost || host,
         };
       }
     }
@@ -27,19 +27,47 @@
     };
   }
 
-  /** Sequential mount — global atOptions must not be overwritten by a second slot. */
-  function mountSlot(el, slotCfg, host) {
-    const resolved = resolveSlot(el.dataset.adSlot, slotCfg, host);
-    if (!resolved.key) return Promise.resolve(false);
-
+  function buildIframeSrcdoc(opts) {
     const atOptions = {
-      key: resolved.key,
+      key: opts.key,
       format: "iframe",
-      height: resolved.height,
-      width: resolved.width,
+      height: opts.height,
+      width: opts.width,
       params: {},
     };
-    const invokeHost = resolved.invokeHost.replace(/^\/\//, "");
+    const invokeHost = opts.invokeHost.replace(/^\/\//, "");
+    return (
+      "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
+      "<style>html,body{margin:0;padding:0;overflow:hidden;background:transparent}body{display:flex;justify-content:center;align-items:center;min-height:" +
+      opts.height +
+      "px}</style></head><body>" +
+      "<script>atOptions=" +
+      JSON.stringify(atOptions) +
+      ";<\/script>" +
+      "<script src=\"//" +
+      invokeHost +
+      "/" +
+      opts.key +
+      "/invoke.js\"><\/script></body></html>"
+    );
+  }
+
+  /** Isolated iframe per slot — no sandbox (Adsterra fill breaks inside sandbox). */
+  function mountSlot(el, slotCfg, host) {
+    const resolved = resolveSlot(el.dataset.adSlot, slotCfg, host);
+    if (!resolved.key) return false;
+
+    const iframe = document.createElement("iframe");
+    iframe.title = "Advertisement";
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+    iframe.width = String(resolved.width);
+    iframe.height = String(resolved.height);
+    iframe.style.border = "0";
+    iframe.style.display = "block";
+    iframe.style.margin = "0 auto";
+    iframe.style.maxWidth = "100%";
+    iframe.srcdoc = buildIframeSrcdoc(resolved);
 
     el.innerHTML = "";
     el.classList.add("ad-slot--live");
@@ -47,22 +75,8 @@
     el.style.maxWidth = resolved.width + "px";
     el.style.marginLeft = "auto";
     el.style.marginRight = "auto";
-
-    return new Promise((resolve) => {
-      const optsScript = document.createElement("script");
-      optsScript.text = "atOptions = " + JSON.stringify(atOptions) + ";";
-
-      const invokeScript = document.createElement("script");
-      invokeScript.src = "//" + invokeHost + "/" + resolved.key + "/invoke.js";
-      invokeScript.onload = () => resolve(true);
-      invokeScript.onerror = () => {
-        el.classList.add("ad-slot--pending");
-        resolve(false);
-      };
-
-      el.appendChild(optsScript);
-      el.appendChild(invokeScript);
-    });
+    el.appendChild(iframe);
+    return true;
   }
 
   function placeholderLabel(slotId) {
@@ -79,10 +93,14 @@
       '<span class="ad-slot__placeholder">' + placeholderLabel(el.dataset.adSlot) + "</span>";
   }
 
-  async function mountAll(slots, cfg) {
-    for (const el of slots) {
-      const slotCfg = cfg.slots[el.dataset.adSlot];
-      if (slotCfg) await mountSlot(el, slotCfg, cfg.invokeHost);
+  function initSlot(el, cfg) {
+    const slotId = el.dataset.adSlot;
+    const slotCfg = cfg.slots[slotId];
+    if (!slotCfg) return;
+
+    const mounted = mountSlot(el, slotCfg, cfg.invokeHost);
+    if (!mounted && cfg.enabled) {
+      el.classList.add("ad-slot--pending");
     }
   }
 
@@ -91,14 +109,16 @@
     const slots = document.querySelectorAll("[data-ad-slot]");
     if (!cfg.enabled) return;
 
-    mountAll(slots, cfg);
+    slots.forEach((el) => initSlot(el, cfg));
 
     MOBILE_MQ.addEventListener("change", () => {
       slots.forEach((el) => {
         const slotCfg = cfg.slots[el.dataset.adSlot];
-        if (slotCfg?.mobile) resetSlot(el);
+        if (slotCfg?.mobile) {
+          resetSlot(el);
+          initSlot(el, cfg);
+        }
       });
-      mountAll(slots, cfg);
     });
   }
 
