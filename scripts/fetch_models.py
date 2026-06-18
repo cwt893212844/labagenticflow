@@ -12,6 +12,7 @@ import httpx
 import typer
 
 from model_selector import DEFAULT_RULES, diff_models, load_rules, select_models
+from price_history import DEFAULT_HISTORY_PATH, append_snapshot
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 
@@ -58,6 +59,7 @@ def load_previous_models(output_path: Path) -> list[dict[str, Any]] | None:
 async def run_fetch(rules_path: Path, output_path: Path) -> dict[str, Any]:
     rules = load_rules(rules_path)
     previous = load_previous_models(output_path)
+    history_path = DEFAULT_HISTORY_PATH
 
     async with httpx.AsyncClient(
         headers={"User-Agent": "LabAgenticFlow/1.0 (+https://labagenticflow.com)"},
@@ -92,6 +94,8 @@ async def run_fetch(rules_path: Path, output_path: Path) -> dict[str, Any]:
         encoding="utf-8",
     )
 
+    history = append_snapshot(models, now, history_path)
+
     return {
         "ok": True,
         "output": str(output_path),
@@ -102,6 +106,7 @@ async def run_fetch(rules_path: Path, output_path: Path) -> dict[str, Any]:
         "updated": len(changes["updated"]),
         "warnings": warnings,
         "changes": changes,
+        "history": history,
     }
 
 
@@ -128,6 +133,14 @@ def main(
         typer.echo(
             f"Changes: +{result['added']} added, -{result['removed']} removed, ~{result['updated']} updated"
         )
+        hist = result.get("history") or {}
+        if hist.get("written"):
+            typer.echo(
+                f"History: {hist.get('action')} snapshot for {hist.get('date')} "
+                f"({hist.get('snapshot_count')} days on record)"
+            )
+        else:
+            typer.echo(f"History: unchanged for {hist.get('date', 'today')}")
         if result["warnings"]:
             typer.echo(f"Warnings ({len(result['warnings'])}):", err=True)
             for warning in result["warnings"]:

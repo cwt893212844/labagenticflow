@@ -64,15 +64,28 @@
       }) + " UTC";
     }
 
-    function renderList(items, className, emptyText) {
+    function modelLabel(data, item) {
+      const m = (data.models || []).find((x) => x.id === item.id);
+      const name = m ? m.name : item.name || item.id;
+      const href = `index.html?model=${encodeURIComponent(item.id)}`;
+      return `<a href="${href}">${name}</a>`;
+    }
+
+    function renderList(items, className, emptyText, data, { link = false } = {}) {
       if (!items || !items.length) {
         return `<p class="load-state">${emptyText}</p>`;
       }
       return `<ul class="change-list">${items
         .map((item) => {
-          const label = item.changes
-            ? `${item.id} — ${item.changes}`
-            : `${item.name} <span style="color:var(--text-dim)">(${item.openrouter_id || item.id})</span>`;
+          let label;
+          if (item.changes) {
+            const who = link ? modelLabel(data, item) : (data.models?.find((x) => x.id === item.id)?.name || item.id);
+            label = `${who} — ${item.changes}`;
+          } else if (link) {
+            label = `${modelLabel(data, item)} <span class="change-meta">(${item.openrouter_id || item.id})</span>`;
+          } else {
+            label = `${item.name} <span class="change-meta">(${item.openrouter_id || item.id})</span>`;
+          }
           return `<li class="${className}">${label}</li>`;
         })
         .join("")}</ul>`;
@@ -99,11 +112,11 @@
         body.innerHTML = `
           ${summary}
           <h2>Added (${changes.added.length})</h2>
-          ${renderList(changes.added, "change-added", "No new models in the last fetch.")}
+          ${renderList(changes.added, "change-added", "No new models in the last fetch.", data, { link: true })}
           <h2>Removed (${changes.removed.length})</h2>
-          ${renderList(changes.removed, "change-removed", "No models removed in the last fetch.")}
+          ${renderList(changes.removed, "change-removed", "No models removed in the last fetch.", data)}
           <h2>Updated (${changes.updated.length})</h2>
-          ${renderList(changes.updated, "change-updated", "No price or name changes in the last fetch.")}
+          ${renderList(changes.updated, "change-updated", "No price or name changes in the last fetch.", data, { link: true })}
           <h2>Current index</h2>
           <p>${data.model_count} models from ${data.source || "openrouter"} (selection: ${data.selection || "auto"}).</p>
           <p><a href="index.html">Open calculator →</a></p>

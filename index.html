@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="google-site-verification" content="TshxOLUGYkVXZNacOFrPs37BS29e1SOBzbMMW9DjTzw" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Compare LLM API costs across providers. Calculate monthly spend by input/output tokens — LabAgenticFlow." />
@@ -32,8 +33,8 @@
       --bg-elevated: #111a24;
       --grid-line: rgba(61, 255, 154, 0.06);
       --text-primary: #e4eaf2;
-      --text-muted: #7a8a9e;
-      --text-dim: #4a5a6e;
+      --text-muted: #96a5b8;
+      --text-dim: #7a8a9e;
       --phosphor: #3dff9a;
       --phosphor-dim: rgba(61, 255, 154, 0.15);
       --phosphor-glow: rgba(61, 255, 154, 0.35);
@@ -604,6 +605,77 @@
       font-size: 1rem;
     }
 
+    .preset-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      margin-top: 8px;
+    }
+
+    .preset-btn {
+      background: var(--bg-elevated);
+      border: none;
+      padding: 10px 12px;
+      min-height: 40px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .preset-btn:hover { color: var(--text-primary); }
+
+    .preset-btn.active {
+      background: var(--phosphor-dim);
+      color: var(--phosphor);
+    }
+
+    .preset-btn:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: -2px;
+      z-index: 1;
+    }
+
+    .share-row {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .share-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      min-height: 44px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .share-btn:hover {
+      border-color: rgba(61, 255, 154, 0.3);
+      color: var(--phosphor);
+    }
+
+    .share-btn:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    .share-btn.copied {
+      border-color: var(--phosphor);
+      color: var(--phosphor);
+    }
+
     /* ── Comparison table ── */
     .compare-section { min-width: 0; }
 
@@ -660,6 +732,114 @@
       outline-offset: -2px;
     }
 
+    .compare-meta {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+
+    .compare-meta span { color: var(--phosphor); }
+
+    .filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      min-width: 72px;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .filter-chip {
+      background: var(--bg-elevated);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 6px 10px;
+      min-height: 32px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.03em;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .filter-chip:hover {
+      border-color: rgba(61, 255, 154, 0.25);
+      color: var(--text-primary);
+    }
+
+    .filter-chip.active {
+      border-color: var(--phosphor);
+      background: var(--phosphor-dim);
+      color: var(--phosphor);
+    }
+
+    .filter-chip.tag-vision.active { border-color: var(--violet); background: rgba(155, 125, 255, 0.12); color: var(--violet); }
+    .filter-chip.tag-tools.active { border-color: var(--amber); background: var(--amber-dim); color: var(--amber); }
+
+    .filter-chip:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    .filter-clear {
+      align-self: flex-start;
+      background: none;
+      border: none;
+      padding: 4px 0;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+
+    .filter-clear:hover { color: var(--rose); }
+
+    .filter-clear:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    .empty-state {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      padding: 32px 20px;
+      text-align: center;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      line-height: 1.6;
+    }
+
+    .empty-state strong { color: var(--text-muted); font-weight: 500; }
+
     .model-list { display: flex; flex-direction: column; gap: 2px; }
 
     .load-state {
@@ -703,6 +883,38 @@
       color: var(--bg-deep);
       padding: 2px 6px;
       font-weight: 600;
+    }
+
+    .model-card.focused {
+      border-color: rgba(155, 125, 255, 0.55);
+      box-shadow: 0 0 0 1px rgba(155, 125, 255, 0.2);
+    }
+
+    .model-card.focused .col-rates {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      grid-column: 1 / -1;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .model-card.focused .col-rates .rate-line {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    @media (min-width: 721px) {
+      .model-card.focused {
+        grid-template-columns: 1fr 140px 100px 80px;
+      }
+
+      .model-card.focused .col-rates {
+        grid-column: 1 / 2;
+        border-top: none;
+        padding-top: 6px;
+      }
     }
 
     @media (max-width: 720px) {
@@ -757,7 +969,7 @@
     .model-provider {
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
       letter-spacing: 0.04em;
     }
 
@@ -790,7 +1002,7 @@
     .spectra-label {
       font-family: var(--font-mono);
       font-size: 0.58rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
@@ -862,7 +1074,7 @@
       font-size: 0.58rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-dim);
+      color: var(--text-muted);
     }
 
     @media (max-width: 720px) {
@@ -1000,12 +1212,24 @@
           <span class="panel-badge">Live</span>
         </div>
         <div class="panel-body">
+          <div class="field preset-field">
+            <div class="field-label">
+              <span>Agent scenarios</span>
+            </div>
+            <div class="preset-group" role="group" aria-label="Agent scenario presets" id="preset-group">
+              <button type="button" class="preset-btn" data-preset="tool-call">Single tool call</button>
+              <button type="button" class="preset-btn" data-preset="rag">RAG query</button>
+              <button type="button" class="preset-btn" data-preset="agent">High-volume agent</button>
+            </div>
+            <p class="field-hint">One-click workload templates for common agent patterns</p>
+          </div>
+
           <div class="field">
             <div class="field-label">
               <span>Monthly requests</span>
               <span class="field-value" id="val-requests">10,000</span>
             </div>
-            <input type="range" id="requests" min="100" max="1000000" step="100" value="10000" aria-label="Monthly requests" />
+            <input type="range" id="requests" min="1" max="1000000" step="1" value="10000" aria-label="Monthly requests" />
             <p class="field-hint">How many API calls per month</p>
           </div>
 
@@ -1051,6 +1275,10 @@
               <span class="mono" id="sum-total">25M /mo</span>
             </div>
           </div>
+
+          <div class="share-row">
+            <button type="button" class="share-btn" id="share-link">Copy share link</button>
+          </div>
         </div>
       </aside>
 
@@ -1062,6 +1290,20 @@
             <button type="button" class="sort-btn" data-sort="input">Input $/M</button>
             <button type="button" class="sort-btn" data-sort="context">Context</button>
           </div>
+        </div>
+
+        <p class="compare-meta" id="compare-meta" hidden>Showing <span id="visible-count">0</span> of <span id="total-count">0</span> models</p>
+
+        <div class="filter-bar" id="filter-bar" hidden>
+          <div class="filter-group">
+            <span class="filter-label">Provider</span>
+            <div class="chip-group" id="provider-chips" role="group" aria-label="Filter by provider"></div>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Capability</span>
+            <div class="chip-group" id="tag-chips" role="group" aria-label="Filter by capability"></div>
+          </div>
+          <button type="button" class="filter-clear" id="filter-clear" hidden>Clear filters</button>
         </div>
 
         <div class="list-header" aria-hidden="true">
@@ -1107,8 +1349,16 @@
   <script>
     const DATA_URL = "data/models.json";
 
+    const PRESETS = {
+      "tool-call": { requests: 1, input: 8000, output: 400 },
+      rag: { requests: 10000, input: 4000, output: 800 },
+      agent: { requests: 100000, input: 2000, output: 500 },
+    };
+
     let MODELS = [];
     let datasetMeta = null;
+    let providers = [];
+    let allTags = [];
 
     const state = {
       requests: 10000,
@@ -1116,6 +1366,10 @@
       outputPerReq: 500,
       period: "monthly",
       sort: "cost",
+      providers: new Set(),
+      tags: new Set(),
+      preset: null,
+      focusModel: null,
     };
 
     const $ = (sel) => document.querySelector(sel);
@@ -1146,6 +1400,10 @@
       return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
     }
 
+    function clamp(n, min, max) {
+      return Math.min(max, Math.max(min, n));
+    }
+
     function setLoadState(message, isError = false) {
       const list = $("#model-list");
       list.innerHTML = `<p class="load-state${isError ? " error" : ""}" id="load-state">${message}</p>`;
@@ -1172,14 +1430,184 @@
       return (totalInput / 1e6) * model.input + (totalOutput / 1e6) * model.output;
     }
 
+    function getFilteredModels() {
+      return MODELS.filter((m) => {
+        if (state.providers.size > 0 && !state.providers.has(m.provider)) return false;
+        if (state.tags.size > 0 && !m.tags.some((t) => state.tags.has(t))) return false;
+        return true;
+      });
+    }
+
     function getSortedModels() {
-      const withCost = MODELS.map((m) => ({ ...m, cost: calcCost(m) }));
+      const withCost = getFilteredModels().map((m) => ({ ...m, cost: calcCost(m) }));
       const key = state.sort;
       return withCost.sort((a, b) => {
         if (key === "cost") return a.cost - b.cost;
         if (key === "input") return a.input - b.input;
         if (key === "context") return b.context - a.context;
         return 0;
+      });
+    }
+
+    function hasActiveFilters() {
+      return state.providers.size > 0 || state.tags.size > 0;
+    }
+
+    function detectPreset() {
+      for (const [id, p] of Object.entries(PRESETS)) {
+        if (
+          state.requests === p.requests &&
+          state.inputPerReq === p.input &&
+          state.outputPerReq === p.output
+        ) {
+          state.preset = id;
+          return;
+        }
+      }
+      state.preset = null;
+    }
+
+    function syncSliders() {
+      $("#requests").value = state.requests;
+      $("#input-tokens").value = state.inputPerReq;
+      $("#output-tokens").value = state.outputPerReq;
+    }
+
+    function syncPresetButtons() {
+      $$(".preset-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.preset === state.preset);
+      });
+    }
+
+    function syncFilterChips() {
+      $$("#provider-chips .filter-chip").forEach((chip) => {
+        const on = state.providers.has(chip.dataset.provider);
+        chip.classList.toggle("active", on);
+        chip.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      $$("#tag-chips .filter-chip").forEach((chip) => {
+        const on = state.tags.has(chip.dataset.tag);
+        chip.classList.toggle("active", on);
+        chip.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      $("#filter-clear").hidden = !hasActiveFilters();
+    }
+
+    function buildWorkloadUrl(full = false) {
+      const params = new URLSearchParams();
+      const set = (key, val, defaultVal) => {
+        if (full || val !== defaultVal) params.set(key, val);
+      };
+      set("r", state.requests, 10000);
+      set("in", state.inputPerReq, 2000);
+      set("out", state.outputPerReq, 500);
+      if (state.period !== "monthly") params.set("period", state.period);
+      if (state.providers.size) params.set("providers", [...state.providers].sort().join(","));
+      if (state.tags.size) params.set("tags", [...state.tags].sort().join(","));
+      if (state.focusModel) params.set("model", state.focusModel);
+      const qs = params.toString();
+      return qs ? `${location.origin}${location.pathname}?${qs}` : `${location.origin}${location.pathname}`;
+    }
+
+    function syncUrl() {
+      const url = buildWorkloadUrl(false);
+      const path = url.replace(location.origin, "");
+      history.replaceState(null, "", path);
+    }
+
+    function parseUrl() {
+      const params = new URLSearchParams(location.search);
+      const r = params.get("r");
+      const inp = params.get("in");
+      const out = params.get("out");
+      const period = params.get("period");
+      const prov = params.get("providers");
+      const tags = params.get("tags");
+
+      if (r) state.requests = clamp(+r, 1, 1000000);
+      if (inp) state.inputPerReq = clamp(+inp, 100, 128000);
+      if (out) state.outputPerReq = clamp(+out, 50, 32000);
+      if (period === "daily" || period === "monthly") state.period = period;
+
+      state.providers.clear();
+      if (prov) prov.split(",").filter(Boolean).forEach((p) => state.providers.add(p));
+
+      state.tags.clear();
+      if (tags) tags.split(",").filter(Boolean).forEach((t) => state.tags.add(t));
+
+      const hashModel = location.hash.startsWith("#model-")
+        ? decodeURIComponent(location.hash.slice(7))
+        : null;
+      const modelParam = params.get("model") || hashModel;
+      if (modelParam) state.focusModel = modelParam;
+
+      detectPreset();
+      syncSliders();
+
+      $$(".period-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.period === state.period);
+      });
+    }
+
+    function ensureFocusModelVisible() {
+      if (!state.focusModel || !MODELS.length) return;
+      const model = MODELS.find((m) => m.id === state.focusModel);
+      if (!model) {
+        state.focusModel = null;
+        return;
+      }
+      state.providers.clear();
+      state.tags.clear();
+    }
+
+    function scrollToFocusModel() {
+      if (!state.focusModel) return;
+      const el = document.getElementById(`model-${state.focusModel}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function buildFilterBar() {
+      providers = [...new Set(MODELS.map((m) => m.provider))].sort();
+      allTags = [...new Set(MODELS.flatMap((m) => m.tags))].sort();
+
+      const provEl = $("#provider-chips");
+      provEl.innerHTML = providers
+        .map(
+          (p) =>
+            `<button type="button" class="filter-chip" data-provider="${p}" aria-pressed="false">${p}</button>`
+        )
+        .join("");
+
+      const tagEl = $("#tag-chips");
+      tagEl.innerHTML = allTags
+        .map(
+          (t) =>
+            `<button type="button" class="filter-chip tag-${t}" data-tag="${t}" aria-pressed="false">${t}</button>`
+        )
+        .join("");
+
+      $("#filter-bar").hidden = false;
+      $("#compare-meta").hidden = false;
+      $("#total-count").textContent = String(MODELS.length);
+
+      provEl.addEventListener("click", (e) => {
+        const chip = e.target.closest(".filter-chip");
+        if (!chip) return;
+        const p = chip.dataset.provider;
+        if (state.providers.has(p)) state.providers.delete(p);
+        else state.providers.add(p);
+        syncFilterChips();
+        render();
+      });
+
+      tagEl.addEventListener("click", (e) => {
+        const chip = e.target.closest(".filter-chip");
+        if (!chip) return;
+        const t = chip.dataset.tag;
+        if (state.tags.has(t)) state.tags.delete(t);
+        else state.tags.add(t);
+        syncFilterChips();
+        render();
       });
     }
 
@@ -1196,24 +1624,45 @@
       $("#sum-output").textContent = fmtNum(totalOutput);
       $("#sum-total").textContent = fmtNum(totalInput + totalOutput) + " " + periodLabel;
 
+      syncPresetButtons();
+      syncFilterChips();
+      syncUrl();
+
       const sorted = getSortedModels();
+      $("#visible-count").textContent = String(sorted.length);
+
+      const list = $("#model-list");
+
+      if (!sorted.length) {
+        const parts = [];
+        if (state.providers.size) parts.push([...state.providers].join(", "));
+        if (state.tags.size) parts.push([...state.tags].join(" + "));
+        list.innerHTML = `
+          <div class="empty-state" role="status">
+            <strong>No models match your filters</strong><br>
+            ${parts.length ? `Active: ${parts.join(" · ")}. ` : ""}Try clearing filters or broadening your selection.
+          </div>`;
+        $("#hero-cheapest").innerHTML = "—<span class=\"unit\">" + periodLabel + "</span>";
+        return;
+      }
+
       const maxCost = sorted[sorted.length - 1].cost;
       const minCost = sorted[0].cost;
 
       $("#hero-cheapest").innerHTML =
         fmtMoney(minCost) + '<span class="unit">' + periodLabel + "</span>";
 
-      const list = $("#model-list");
       list.innerHTML = sorted
         .map((m, i) => {
           const pct = maxCost > 0 ? (m.cost / maxCost) * 100 : 0;
           const isCheapest = i === 0 && state.sort === "cost";
+          const isFocused = state.focusModel === m.id;
           const tags = m.tags
             .map((t) => `<span class="tag ${t}">${t}</span>`)
             .join("");
 
           return `
-            <article class="model-card${isCheapest ? " cheapest" : ""}" role="listitem">
+            <article class="model-card${isCheapest ? " cheapest" : ""}${isFocused ? " focused" : ""}" id="model-${m.id}" role="listitem">
               <div class="model-info">
                 <div class="model-name">${m.name}</div>
                 <div class="model-provider">${m.provider}</div>
@@ -1232,13 +1681,15 @@
                 </div>
                 <div class="col-ctx">${fmtCtx(m.context)}</div>
               </div>
-              <div class="col-rates" style="display:none" aria-hidden="true">
+              <div class="col-rates"${isFocused ? "" : ' style="display:none" aria-hidden="true"'}>
                 <div class="rate-line">$${m.input}/M in</div>
                 <div class="rate-line">$${m.output}/M out</div>
               </div>
             </article>`;
         })
         .join("");
+
+      requestAnimationFrame(scrollToFocusModel);
     }
 
     async function loadModels() {
@@ -1253,6 +1704,8 @@
           model_count: data.model_count ?? MODELS.length,
         };
         updateMeta();
+        ensureFocusModelVisible();
+        buildFilterBar();
         render();
       } catch (err) {
         console.error(err);
@@ -1260,19 +1713,24 @@
       }
     }
 
+    function applyWorkloadChange() {
+      detectPreset();
+      render();
+    }
+
     $("#requests").addEventListener("input", (e) => {
       state.requests = +e.target.value;
-      render();
+      applyWorkloadChange();
     });
 
     $("#input-tokens").addEventListener("input", (e) => {
       state.inputPerReq = +e.target.value;
-      render();
+      applyWorkloadChange();
     });
 
     $("#output-tokens").addEventListener("input", (e) => {
       state.outputPerReq = +e.target.value;
-      render();
+      applyWorkloadChange();
     });
 
     $$(".period-btn").forEach((btn) => {
@@ -1293,7 +1751,65 @@
       });
     });
 
+    $$(".preset-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.preset;
+        const p = PRESETS[id];
+        if (!p) return;
+
+        if (state.preset === id) {
+          state.preset = null;
+          state.requests = 10000;
+          state.inputPerReq = 2000;
+          state.outputPerReq = 500;
+        } else {
+          state.preset = id;
+          state.requests = p.requests;
+          state.inputPerReq = p.input;
+          state.outputPerReq = p.output;
+        }
+
+        syncSliders();
+        render();
+      });
+    });
+
+    $("#filter-clear").addEventListener("click", () => {
+      state.providers.clear();
+      state.tags.clear();
+      render();
+    });
+
+    $("#share-link").addEventListener("click", async () => {
+      const url = buildWorkloadUrl(true);
+      const btn = $("#share-link");
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = "Link copied";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = "Copy share link";
+          btn.classList.remove("copied");
+        }, 2000);
+      } catch {
+        prompt("Copy this link:", url);
+      }
+    });
+
+    parseUrl();
     loadModels();
+
+    window.addEventListener("hashchange", () => {
+      const hashModel = location.hash.startsWith("#model-")
+        ? decodeURIComponent(location.hash.slice(7))
+        : null;
+      if (hashModel && hashModel !== state.focusModel) {
+        state.focusModel = hashModel;
+        ensureFocusModelVisible();
+        syncFilterChips();
+        render();
+      }
+    });
   </script>
 </body>
 </html>

@@ -4,8 +4,8 @@
   --bg-elevated: #111a24;
   --grid-line: rgba(61, 255, 154, 0.06);
   --text-primary: #e4eaf2;
-  --text-muted: #7a8a9e;
-  --text-dim: #4a5a6e;
+  --text-muted: #96a5b8;
+  --text-dim: #7a8a9e;
   --phosphor: #3dff9a;
   --phosphor-dim: rgba(61, 255, 154, 0.15);
   --violet: #9b7dff;
@@ -254,6 +254,16 @@ body::before {
 .change-added { color: var(--phosphor); }
 .change-removed { color: #ff6b8a; }
 .change-updated { color: var(--violet); }
+
+.change-meta { color: var(--text-dim); }
+
+.change-list a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.change-list a:hover { opacity: 0.85; }
 
 .load-state {
   font-family: var(--font-mono);
