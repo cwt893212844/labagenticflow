@@ -6,8 +6,8 @@ window.LAF_AD_CONFIG = {
   /** Live — keys from Adsterra Websites → GET CODE (2026-06-17) */
   enabled: true,
 
-  /** Must match GET CODE snippet host exactly (not always highperformanceformat.com) */
-  invokeHost: "www.profitablecpmrate.com",
+  /** Banner CDN per GET CODE — banners use highperformanceformat.com; native uses effectivecpmnetwork.com */
+  invokeHost: "www.highperformanceformat.com",
 
   slots: {
     /** Top leaderboard — desktop 728×90, mobile 320×50 */
