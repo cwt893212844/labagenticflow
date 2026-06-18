@@ -27,43 +27,50 @@
     };
   }
 
-  function buildIframeSrcdoc(opts) {
-    const atOptions = {
-      key: opts.key,
-      format: "iframe",
-      height: opts.height,
-      width: opts.width,
-      params: opts.params || {},
-    };
-    const host = opts.invokeHost.replace(/^\/\//, "");
-    return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent}body{display:flex;justify-content:center;align-items:center;min-height:${opts.height}px}</style></head><body><script>atOptions=${JSON.stringify(atOptions)};<\/script><script src="https://${host}/${opts.key}/invoke.js"><\/script></body></html>`;
-  }
-
-  function mountBannerSlot(el, slotCfg, host) {
+  /** Adsterra standard snippet — direct script per slot (srcdoc sandbox blocks fill). */
+  function mountSlot(el, slotCfg, host) {
     const resolved = resolveSlot(el.dataset.adSlot, slotCfg, host);
     if (!resolved.key) return false;
 
-    const iframe = document.createElement("iframe");
-    iframe.title = "Advertisement";
-    iframe.setAttribute("loading", "lazy");
-    iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
-    iframe.setAttribute(
-      "sandbox",
-      "allow-scripts allow-popups allow-popups-to-escape-sandbox allow-same-origin"
-    );
-    iframe.width = String(resolved.width);
-    iframe.height = String(resolved.height);
-    iframe.style.border = "0";
-    iframe.style.display = "block";
-    iframe.style.margin = "0 auto";
-    iframe.style.maxWidth = "100%";
-    iframe.srcdoc = buildIframeSrcdoc(resolved);
+    const atOptions = {
+      key: resolved.key,
+      format: "iframe",
+      height: resolved.height,
+      width: resolved.width,
+      params: {},
+    };
+    const invokeHost = resolved.invokeHost.replace(/^\/\//, "");
 
     el.innerHTML = "";
     el.classList.add("ad-slot--live");
     el.style.minHeight = resolved.height + "px";
-    el.appendChild(iframe);
+    el.style.maxWidth = resolved.width + "px";
+    el.style.marginLeft = "auto";
+    el.style.marginRight = "auto";
+
+    const optsScript = document.createElement("script");
+    optsScript.text = "atOptions = " + JSON.stringify(atOptions) + ";";
+
+    const invokeScript = document.createElement("script");
+    invokeScript.src = "https://" + invokeHost + "/" + resolved.key + "/invoke.js";
+
+    el.appendChild(optsScript);
+    el.appendChild(invokeScript);
     return true;
+  }
+
+  function placeholderLabel(slotId) {
+    return slotId === "banner-top" ? "Ad · banner" : "Ad · native";
+  }
+
+  function resetSlot(el) {
+    el.classList.remove("ad-slot--live", "ad-slot--pending");
+    el.style.minHeight = "";
+    el.style.maxWidth = "";
+    el.style.marginLeft = "";
+    el.style.marginRight = "";
+    el.innerHTML =
+      '<span class="ad-slot__placeholder">' + placeholderLabel(el.dataset.adSlot) + "</span>";
   }
 
   function initSlot(el, cfg) {
@@ -71,7 +78,7 @@
     const slotCfg = cfg.slots[slotId];
     if (!slotCfg) return;
 
-    const mounted = mountBannerSlot(el, slotCfg, cfg.invokeHost);
+    const mounted = mountSlot(el, slotCfg, cfg.invokeHost);
     if (!mounted && cfg.enabled) {
       el.classList.add("ad-slot--pending");
     }
@@ -88,11 +95,7 @@
       slots.forEach((el) => {
         const slotCfg = cfg.slots[el.dataset.adSlot];
         if (slotCfg?.mobile) {
-          el.classList.remove("ad-slot--live", "ad-slot--pending");
-          el.innerHTML =
-            '<span class="ad-slot__placeholder">' +
-            (el.dataset.adSlot === "banner-top" ? "Ad · banner" : "Ad · native") +
-            "</span>";
+          resetSlot(el);
           initSlot(el, cfg);
         }
       });
