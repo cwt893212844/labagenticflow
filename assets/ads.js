@@ -27,10 +27,10 @@
     };
   }
 
-  /** Adsterra standard snippet — direct script per slot (srcdoc sandbox blocks fill). */
+  /** Sequential mount — global atOptions must not be overwritten by a second slot. */
   function mountSlot(el, slotCfg, host) {
     const resolved = resolveSlot(el.dataset.adSlot, slotCfg, host);
-    if (!resolved.key) return false;
+    if (!resolved.key) return Promise.resolve(false);
 
     const atOptions = {
       key: resolved.key,
@@ -48,15 +48,21 @@
     el.style.marginLeft = "auto";
     el.style.marginRight = "auto";
 
-    const optsScript = document.createElement("script");
-    optsScript.text = "atOptions = " + JSON.stringify(atOptions) + ";";
+    return new Promise((resolve) => {
+      const optsScript = document.createElement("script");
+      optsScript.text = "atOptions = " + JSON.stringify(atOptions) + ";";
 
-    const invokeScript = document.createElement("script");
-    invokeScript.src = "https://" + invokeHost + "/" + resolved.key + "/invoke.js";
+      const invokeScript = document.createElement("script");
+      invokeScript.src = "//" + invokeHost + "/" + resolved.key + "/invoke.js";
+      invokeScript.onload = () => resolve(true);
+      invokeScript.onerror = () => {
+        el.classList.add("ad-slot--pending");
+        resolve(false);
+      };
 
-    el.appendChild(optsScript);
-    el.appendChild(invokeScript);
-    return true;
+      el.appendChild(optsScript);
+      el.appendChild(invokeScript);
+    });
   }
 
   function placeholderLabel(slotId) {
@@ -73,14 +79,10 @@
       '<span class="ad-slot__placeholder">' + placeholderLabel(el.dataset.adSlot) + "</span>";
   }
 
-  function initSlot(el, cfg) {
-    const slotId = el.dataset.adSlot;
-    const slotCfg = cfg.slots[slotId];
-    if (!slotCfg) return;
-
-    const mounted = mountSlot(el, slotCfg, cfg.invokeHost);
-    if (!mounted && cfg.enabled) {
-      el.classList.add("ad-slot--pending");
+  async function mountAll(slots, cfg) {
+    for (const el of slots) {
+      const slotCfg = cfg.slots[el.dataset.adSlot];
+      if (slotCfg) await mountSlot(el, slotCfg, cfg.invokeHost);
     }
   }
 
@@ -89,16 +91,14 @@
     const slots = document.querySelectorAll("[data-ad-slot]");
     if (!cfg.enabled) return;
 
-    slots.forEach((el) => initSlot(el, cfg));
+    mountAll(slots, cfg);
 
     MOBILE_MQ.addEventListener("change", () => {
       slots.forEach((el) => {
         const slotCfg = cfg.slots[el.dataset.adSlot];
-        if (slotCfg?.mobile) {
-          resetSlot(el);
-          initSlot(el, cfg);
-        }
+        if (slotCfg?.mobile) resetSlot(el);
       });
+      mountAll(slots, cfg);
     });
   }
 
