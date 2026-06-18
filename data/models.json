@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.17",
-  "last_updated": "2026-06-17T11:06:37.352349Z",
+  "version": "2026.06.18",
+  "last_updated": "2026-06-18T10:38:18.188346Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -530,12 +530,6 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": [
-      {
-        "id": "deepseek-deepseek-v4-flash",
-        "openrouter_id": "deepseek/deepseek-v4-flash",
-        "changes": "input: 0.098 → 0.09; output: 0.196 → 0.18"
-      }
-    ]
+    "updated": []
   }
 }
