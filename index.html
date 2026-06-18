@@ -19,6 +19,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="assets/ad-config.js?v=6"></script>
+  <script>
+    if (!(window.LAF_AD_CONFIG && window.LAF_AD_CONFIG.enabled)) {
+      document.documentElement.classList.add("ads-disabled");
+    }
+  </script>
   <style>
     :root {
       --bg-deep: #06090f;
@@ -209,7 +215,14 @@
       border-style: solid;
       border-color: transparent;
       background: transparent;
+      display: block;
+      text-align: center;
     }
+
+    .ad-slot--banner-desktop { display: block; }
+    .ad-slot--banner-mobile { display: none; min-height: 50px; }
+
+    .ads-disabled .ad-placement { display: none !important; }
 
     .ad-slot--pending .ad-slot__placeholder { color: var(--amber); }
 
@@ -217,6 +230,8 @@
 
     @media (max-width: 640px) {
       .ad-slot--banner { min-height: 50px; }
+      .ad-slot--banner-desktop { display: none; }
+      .ad-slot--banner-mobile { display: block; }
     }
 
     /* ── Hero ── */
@@ -911,8 +926,29 @@
       </div>
     </header>
 
-    <div class="ad-slot ad-slot--banner" data-ad-slot="banner-top" role="complementary" aria-label="Advertisement">
-      <span class="ad-slot__placeholder">Ad · 728×90 banner</span>
+    <div class="ad-slot ad-slot--banner ad-slot--banner-desktop ad-placement ad-slot--live" role="complementary" aria-label="Advertisement">
+      <script type="text/javascript">
+        atOptions = {
+          key: "b8d212a174ec325734e583a2bdd92347",
+          format: "iframe",
+          height: 90,
+          width: 728,
+          params: {},
+        };
+      </script>
+      <script type="text/javascript" src="https://www.profitablecpmrate.com/b8d212a174ec325734e583a2bdd92347/invoke.js"></script>
+    </div>
+    <div class="ad-slot ad-slot--banner ad-slot--banner-mobile ad-placement ad-slot--live" role="complementary" aria-label="Advertisement">
+      <script type="text/javascript">
+        atOptions = {
+          key: "c4f7002bad9af6ab27fa3476178f04ef",
+          format: "iframe",
+          height: 50,
+          width: 320,
+          params: {},
+        };
+      </script>
+      <script type="text/javascript" src="https://www.profitablecpmrate.com/c4f7002bad9af6ab27fa3476178f04ef/invoke.js"></script>
     </div>
 
     <section class="hero">
@@ -1041,8 +1077,17 @@
       </section>
     </main>
 
-    <div class="ad-slot ad-slot--native" data-ad-slot="native-bottom" style="margin-top:32px" role="complementary" aria-label="Advertisement">
-      <span class="ad-slot__placeholder">Ad · 300×250 native</span>
+    <div class="ad-slot ad-slot--native ad-placement ad-slot--live" style="margin-top:32px" role="complementary" aria-label="Advertisement">
+      <script type="text/javascript">
+        atOptions = {
+          key: "2b760e4dda54dbe4750df8f4e430f74f",
+          format: "iframe",
+          height: 250,
+          width: 300,
+          params: {},
+        };
+      </script>
+      <script type="text/javascript" src="https://www.profitablecpmrate.com/2b760e4dda54dbe4750df8f4e430f74f/invoke.js"></script>
     </div>
 
     <footer class="site-footer">
@@ -1246,7 +1291,5 @@
 
     loadModels();
   </script>
-  <script src="assets/ad-config.js?v=5"></script>
-  <script src="assets/ads.js?v=5"></script>
 </body>
 </html>

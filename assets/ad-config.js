@@ -1,7 +1,6 @@
 /**
- * Adsterra placement config — fill keys after publisher approval.
- * Dashboard: Websites → Get code → copy key + invoke host per placement.
- * Keep Pop/Push disabled; only Banner + Native on this site.
+ * Adsterra placement config — toggles ads-disabled on <html> when enabled: false.
+ * Live snippets are static in index.html (parser-loaded; avoids Chrome ORB on dynamic scripts).
  */
 window.LAF_AD_CONFIG = {
   /** Live — keys from Adsterra Websites → GET CODE (2026-06-17) */
