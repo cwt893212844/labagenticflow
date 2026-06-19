@@ -1,0 +1,387 @@
+{
+  "version": "2026.06.18",
+  "last_updated": "2026-06-18T00:00:00Z",
+  "source": "curated",
+  "source_note": "Hand-picked from the official Model Context Protocol servers monorepo and widely used community servers. Not a full registry mirror.",
+  "server_count": 32,
+  "scenarios": [
+    {
+      "id": "rag",
+      "title": "RAG agent",
+      "description": "Retrieve context, read files, and answer from your data store.",
+      "calculator_query": "r=10000&in=4000&out=800",
+      "workload_label": "10k queries/mo · 4k in · 800 out",
+      "mcp_ids": ["mcp-fetch", "mcp-filesystem", "mcp-postgres", "mcp-memory"]
+    },
+    {
+      "id": "coding",
+      "title": "Coding agent",
+      "description": "Edit repos, run git operations, and open PRs via GitHub.",
+      "calculator_query": "r=1&in=8000&out=400",
+      "workload_label": "1 tool call · 8k in · 400 out",
+      "mcp_ids": ["mcp-filesystem", "mcp-git", "mcp-github"]
+    },
+    {
+      "id": "browser",
+      "title": "Browser agent",
+      "description": "Automate pages, scrape content, and pass results to the model.",
+      "calculator_query": "r=10000&in=4000&out=800",
+      "workload_label": "10k sessions/mo · 4k in · 800 out",
+      "mcp_ids": ["mcp-puppeteer", "mcp-fetch", "mcp-brave-search"]
+    },
+    {
+      "id": "data",
+      "title": "Data agent",
+      "description": "Query SQL stores and pull files from cloud drives.",
+      "calculator_query": "r=10000&in=2000&out=500",
+      "workload_label": "10k queries/mo · 2k in · 500 out",
+      "mcp_ids": ["mcp-postgres", "mcp-sqlite", "mcp-google-drive"]
+    },
+    {
+      "id": "ops",
+      "title": "Ops & comms",
+      "description": "Ship changes, notify channels, and coordinate team workflows.",
+      "calculator_query": "r=100000&in=2000&out=500",
+      "workload_label": "100k calls/mo · 2k in · 500 out",
+      "mcp_ids": ["mcp-github", "mcp-slack", "mcp-git"]
+    },
+    {
+      "id": "research",
+      "title": "Research agent",
+      "description": "Search the web, pull sources, and retain findings across multi-step runs.",
+      "calculator_query": "r=5000&in=6000&out=1200",
+      "workload_label": "5k runs/mo · 6k in · 1.2k out",
+      "mcp_ids": ["mcp-brave-search", "mcp-tavily", "mcp-fetch", "mcp-memory"]
+    }
+  ],
+  "servers": [
+    {
+      "id": "mcp-filesystem",
+      "name": "Filesystem",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Read and write files under directories you allow at startup.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+      "featured": true
+    },
+    {
+      "id": "mcp-git",
+      "name": "Git",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Read, search, and manipulate Git repositories on disk.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+      "featured": true
+    },
+    {
+      "id": "mcp-github",
+      "name": "GitHub",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Manage issues, PRs, and repository content through the GitHub API.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+      "featured": true
+    },
+    {
+      "id": "mcp-gitlab",
+      "name": "GitLab",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Interact with GitLab projects, issues, and merge requests.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab"
+    },
+    {
+      "id": "mcp-fetch",
+      "name": "Fetch",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "search",
+      "transport": ["stdio"],
+      "description": "Fetch and convert web pages to markdown for model consumption.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+      "featured": true
+    },
+    {
+      "id": "mcp-brave-search",
+      "name": "Brave Search",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "search",
+      "transport": ["stdio"],
+      "description": "Web search via the Brave Search API.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search"
+    },
+    {
+      "id": "mcp-puppeteer",
+      "name": "Puppeteer",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "browser",
+      "transport": ["stdio"],
+      "description": "Control a headless browser for navigation, screenshots, and scraping.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+      "featured": true
+    },
+    {
+      "id": "mcp-postgres",
+      "name": "PostgreSQL",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "data",
+      "transport": ["stdio"],
+      "description": "Run read-only SQL queries against a PostgreSQL database.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+      "featured": true
+    },
+    {
+      "id": "mcp-sqlite",
+      "name": "SQLite",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "data",
+      "transport": ["stdio"],
+      "description": "Query and analyze local SQLite database files.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite"
+    },
+    {
+      "id": "mcp-redis",
+      "name": "Redis",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "data",
+      "transport": ["stdio"],
+      "description": "Interact with Redis key-value stores.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+    },
+    {
+      "id": "mcp-google-drive",
+      "name": "Google Drive",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Search and read files from Google Drive.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive"
+    },
+    {
+      "id": "mcp-google-maps",
+      "name": "Google Maps",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Geocoding, directions, and place search via Google Maps.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/google-maps"
+    },
+    {
+      "id": "mcp-slack",
+      "name": "Slack",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "communication",
+      "transport": ["stdio"],
+      "description": "Post messages and read channel history in Slack workspaces.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+      "featured": true
+    },
+    {
+      "id": "mcp-memory",
+      "name": "Memory",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "data",
+      "transport": ["stdio"],
+      "description": "Persistent memory graph for facts the agent should recall across sessions.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory"
+    },
+    {
+      "id": "mcp-sequential-thinking",
+      "name": "Sequential Thinking",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Structured step-by-step reasoning blocks for complex tool chains.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking"
+    },
+    {
+      "id": "mcp-aws-kb",
+      "name": "AWS Knowledge Base",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Retrieve documents from Amazon Bedrock Knowledge Bases.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/aws-kb-retrieval"
+    },
+    {
+      "id": "mcp-everything",
+      "name": "Everything",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Reference server exposing every MCP capability — useful for client testing.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/everything"
+    },
+    {
+      "id": "mcp-time",
+      "name": "Time",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Current time and timezone conversion utilities.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/time"
+    },
+    {
+      "id": "mcp-sentry",
+      "name": "Sentry",
+      "publisher": "Model Context Protocol",
+      "origin": "community",
+      "category": "devtools",
+      "transport": ["stdio"],
+      "description": "Inspect Sentry issues and events for debugging production agents.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+    },
+    {
+      "id": "mcp-everart",
+      "name": "EverArt",
+      "publisher": "Model Context Protocol",
+      "origin": "official",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Generate images through the EverArt API.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/everart"
+    },
+    {
+      "id": "playwright-mcp",
+      "name": "Playwright",
+      "publisher": "Microsoft",
+      "origin": "community",
+      "category": "browser",
+      "transport": ["stdio"],
+      "description": "Browser automation via Playwright — alternative to Puppeteer for web agents.",
+      "repo_url": "https://github.com/microsoft/playwright-mcp",
+      "featured": true
+    },
+    {
+      "id": "mcp-docker",
+      "name": "Docker",
+      "publisher": "Docker",
+      "origin": "community",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Manage containers and images from an agent workflow.",
+      "repo_url": "https://github.com/docker/mcp-servers"
+    },
+    {
+      "id": "mcp-notion",
+      "name": "Notion",
+      "publisher": "Notion",
+      "origin": "community",
+      "category": "productivity",
+      "transport": ["stdio"],
+      "description": "Read and search Notion pages and databases.",
+      "repo_url": "https://github.com/makenotion/notion-mcp-server"
+    },
+    {
+      "id": "mcp-linear",
+      "name": "Linear",
+      "publisher": "Linear",
+      "origin": "community",
+      "category": "productivity",
+      "transport": ["stdio"],
+      "description": "Create and track issues in Linear from agent tool calls.",
+      "repo_url": "https://github.com/jerhadf/linear-mcp-server"
+    },
+    {
+      "id": "mcp-supabase",
+      "name": "Supabase",
+      "publisher": "Supabase",
+      "origin": "community",
+      "category": "data",
+      "transport": ["stdio"],
+      "description": "Query Supabase tables and manage project resources.",
+      "repo_url": "https://github.com/supabase-community/supabase-mcp"
+    },
+    {
+      "id": "mcp-stripe",
+      "name": "Stripe",
+      "publisher": "Stripe",
+      "origin": "community",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Access Stripe customers, payments, and billing objects.",
+      "repo_url": "https://github.com/stripe/agent-toolkit"
+    },
+    {
+      "id": "mcp-cloudflare",
+      "name": "Cloudflare",
+      "publisher": "Cloudflare",
+      "origin": "community",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Manage Workers, KV, and DNS from an MCP-enabled client.",
+      "repo_url": "https://github.com/cloudflare/mcp-server-cloudflare"
+    },
+    {
+      "id": "mcp-kubernetes",
+      "name": "Kubernetes",
+      "publisher": "Community",
+      "origin": "community",
+      "category": "cloud",
+      "transport": ["stdio"],
+      "description": "Inspect pods, logs, and resources in Kubernetes clusters.",
+      "repo_url": "https://github.com/Flux159/mcp-server-kubernetes"
+    },
+    {
+      "id": "mcp-elasticsearch",
+      "name": "Elasticsearch",
+      "publisher": "Elastic",
+      "origin": "community",
+      "category": "search",
+      "transport": ["stdio"],
+      "description": "Search and aggregate documents in Elasticsearch indices.",
+      "repo_url": "https://github.com/elastic/mcp-server-elasticsearch"
+    },
+    {
+      "id": "mcp-context7",
+      "name": "Context7",
+      "publisher": "Upstash",
+      "origin": "community",
+      "category": "search",
+      "transport": ["stdio", "http"],
+      "description": "Up-to-date library documentation injected into prompts.",
+      "repo_url": "https://github.com/upstash/context7"
+    },
+    {
+      "id": "mcp-firecrawl",
+      "name": "Firecrawl",
+      "publisher": "Firecrawl",
+      "origin": "community",
+      "category": "browser",
+      "transport": ["stdio"],
+      "description": "Crawl and scrape websites into clean markdown for RAG pipelines.",
+      "repo_url": "https://github.com/mendableai/firecrawl-mcp-server"
+    },
+    {
+      "id": "mcp-tavily",
+      "name": "Tavily",
+      "publisher": "Tavily",
+      "origin": "community",
+      "category": "search",
+      "transport": ["stdio"],
+      "description": "Search engine API tuned for AI agents and research workflows.",
+      "repo_url": "https://github.com/tavily-ai/tavily-mcp"
+    }
+  ]
+}

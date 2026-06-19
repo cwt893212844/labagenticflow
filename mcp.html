@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Curated MCP server picks for agent builders — common stacks wired to LLM API cost estimates. Not a full registry." />
+  <title>Agent Stack Picks — MCP Directory — LabAgenticFlow</title>
+  <link rel="canonical" href="https://labagenticflow.com/mcp.html" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://labagenticflow.com/mcp.html" />
+  <meta property="og:title" content="Agent Stack Picks — LabAgenticFlow" />
+  <meta property="og:description" content="MCP server picks for common agent patterns, linked to live LLM API cost estimates." />
+  <meta property="og:site_name" content="LabAgenticFlow" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site-base.css" />
+  <style>
+    :root {
+      --violet: #9b7dff;
+      --violet-dim: rgba(155, 125, 255, 0.12);
+      --amber: #f0a030;
+      --amber-dim: rgba(240, 160, 48, 0.12);
+    }
+
+    .shell--mcp {
+      max-width: 1080px;
+    }
+
+    .mcp-hero {
+      padding: 40px 0 36px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: end;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .mcp-hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .mcp-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.12;
+      margin-bottom: 14px;
+    }
+
+    .mcp-hero h1 em {
+      font-style: italic;
+      color: var(--violet);
+    }
+
+    .mcp-hero-lead {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 52ch;
+      line-height: 1.65;
+    }
+
+    .mcp-hero-aside {
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .mcp-hero-aside { text-align: left; }
+    }
+
+    .mcp-hero-stat {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .mcp-hero-stat span {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--phosphor);
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+    }
+
+    .mcp-not-registry {
+      margin-top: 20px;
+      padding: 12px 14px;
+      border-left: 2px solid var(--violet);
+      background: var(--violet-dim);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      max-width: 52ch;
+      line-height: 1.55;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      margin: 48px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .scenario-card {
+      background: var(--bg-panel);
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 100%;
+    }
+
+    .scenario-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .scenario-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .scenario-card p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .scenario-workload {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    /* Signature: stack conduit — tools → LLM → cost */
+    .stack-conduit {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 10px 0 4px;
+      overflow-x: auto;
+    }
+
+    .stack-node {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.02em;
+      padding: 5px 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      max-width: 88px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stack-node--llm {
+      border-color: rgba(155, 125, 255, 0.45);
+      color: var(--violet);
+      background: var(--violet-dim);
+    }
+
+    .stack-wire {
+      flex-shrink: 0;
+      width: 14px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), var(--phosphor-dim));
+      position: relative;
+    }
+
+    .stack-wire::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: -2px;
+      border: 3px solid transparent;
+      border-left-color: var(--phosphor-dim);
+    }
+
+    .scenario-cost {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cost-readout {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .cost-readout strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--phosphor);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .cost-readout.loading strong {
+      color: var(--text-dim);
+    }
+
+    .scenario-cta {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      text-decoration: none;
+      padding: 8px 12px;
+      border: 1px solid rgba(61, 255, 154, 0.35);
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .scenario-cta:hover {
+      background: var(--phosphor-dim);
+      border-color: var(--phosphor);
+    }
+
+    .scenario-cta:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    .directory-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .directory-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+    }
+
+    .search-input::placeholder { color: var(--text-dim); }
+
+    .search-input:focus {
+      outline: none;
+      border-color: rgba(61, 255, 154, 0.4);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .filter-chip {
+      background: var(--bg-elevated);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .filter-chip:hover { color: var(--text-primary); }
+
+    .filter-chip.active {
+      border-color: var(--phosphor);
+      background: var(--phosphor-dim);
+      color: var(--phosphor);
+    }
+
+    .filter-chip.cat-browser.active { border-color: var(--violet); background: var(--violet-dim); color: var(--violet); }
+    .filter-chip.cat-data.active { border-color: var(--amber); background: var(--amber-dim); color: var(--amber); }
+
+    .filter-chip:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+
+    .directory-meta {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .directory-meta span { color: var(--phosphor); }
+
+    .server-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .server-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px 20px;
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .server-card:hover {
+      border-color: rgba(61, 255, 154, 0.15);
+    }
+
+    @media (max-width: 640px) {
+      .server-card { grid-template-columns: 1fr; }
+    }
+
+    .server-name-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .server-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .server-badge {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+    }
+
+    .server-badge.official {
+      color: var(--phosphor);
+      background: var(--phosphor-dim);
+    }
+
+    .server-badge.community {
+      color: var(--violet);
+      background: var(--violet-dim);
+    }
+
+    .server-meta {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.03em;
+    }
+
+    .server-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      grid-column: 1;
+    }
+
+    .server-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      grid-row: 1 / 3;
+      grid-column: 2;
+    }
+
+    @media (max-width: 640px) {
+      .server-desc { grid-column: 1; }
+      .server-links {
+        grid-row: auto;
+        grid-column: 1;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .server-link {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--phosphor);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .server-link:hover { text-decoration: underline; }
+
+    .server-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .server-tag {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      padding: 2px 6px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-dim);
+    }
+
+    .empty-directory {
+      padding: 32px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .methodology {
+      margin-top: 40px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .methodology a { color: var(--phosphor); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scenario-cta, .server-card, .filter-chip { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell shell--mcp">
+    <header class="site-header">
+      <a href="index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="index.html">Calculator</a>
+        <a href="mcp.html" aria-current="page">MCP</a>
+        <a href="sources.html">Sources</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </header>
+
+    <section class="mcp-hero">
+      <div>
+        <p class="doc-eyebrow">Agent stacks</p>
+        <h1>Wire your tools.<br>Then <em>price</em> the model.</h1>
+        <p class="mcp-hero-lead">
+          Curated MCP server picks for common agent patterns — each stack links to a live LLM API cost estimate.
+          This is not a full registry; we optimize for decisions, not volume.
+        </p>
+        <p class="mcp-not-registry">
+          Large directories list hundreds of servers. We list the ones that show up in production agent stacks — and show what the LLM layer costs for that workload.
+        </p>
+      </div>
+      <div class="mcp-hero-aside">
+        <p class="mcp-hero-stat">Curated servers<span id="hero-count">…</span></p>
+        <p class="mcp-hero-stat">Agent patterns<span id="hero-patterns">6</span></p>
+      </div>
+    </section>
+
+    <h2 class="section-label">Stack picks</h2>
+    <div class="scenario-grid" id="scenario-grid" aria-live="polite">
+      <p class="load-state">Loading stacks…</p>
+    </div>
+
+    <h2 class="section-label">Curated index</h2>
+    <div class="directory-panel">
+      <div class="directory-toolbar">
+        <input type="search" class="search-input" id="search" placeholder="Search servers…" aria-label="Search MCP servers" autocomplete="off" />
+        <div class="filter-row" id="category-filters" role="group" aria-label="Filter by category"></div>
+        <div class="filter-row" id="origin-filters" role="group" aria-label="Filter by origin"></div>
+      </div>
+      <p class="directory-meta">Showing <span id="visible-count">0</span> of <span id="total-count">0</span> servers</p>
+      <div class="server-list" id="server-list" role="list"></div>
+    </div>
+
+    <div class="methodology">
+      <strong style="color:var(--text-primary);font-weight:600;">How this list is built</strong><br>
+      Servers are hand-picked from the
+      <a href="https://github.com/modelcontextprotocol/servers" rel="noopener noreferrer">official MCP servers repository</a>
+      and established community maintainers. We do not host or audit server code — verify each repo before production use.
+      Cost estimates use the same <a href="sources.html">OpenRouter pricing pipeline</a> as the calculator.
+      <br><br>
+      <a href="index.html">Open cost calculator →</a>
+    </div>
+
+    <footer class="site-footer">
+      <p class="footer-note">Stack picks v<span id="footer-version">…</span> · curated for agent builders</p>
+      <div class="footer-links">
+        <a href="index.html">Calculator</a> · <a href="sources.html">Sources</a> · <a href="privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const MCP_URL = "data/mcp.json";
+    const MODELS_URL = "data/models.json";
+
+    let mcpData = null;
+    let models = [];
+    const state = { search: "", category: "", origin: "" };
+
+    const CATEGORIES = [
+      { id: "", label: "All" },
+      { id: "devtools", label: "Devtools" },
+      { id: "browser", label: "Browser" },
+      { id: "data", label: "Data" },
+      { id: "search", label: "Search" },
+      { id: "cloud", label: "Cloud" },
+      { id: "communication", label: "Comms" },
+      { id: "productivity", label: "Productivity" },
+    ];
+
+    const ORIGINS = [
+      { id: "", label: "All" },
+      { id: "official", label: "Official" },
+      { id: "community", label: "Community" },
+    ];
+
+    function serverById(id) {
+      return mcpData.servers.find((s) => s.id === id);
+    }
+
+    function fmtMoney(n) {
+      if (n < 0.01) return "$" + n.toFixed(4);
+      if (n < 1) return "$" + n.toFixed(3);
+      if (n < 100) return "$" + n.toFixed(2);
+      return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+    }
+
+    function minCostForQuery(query) {
+      if (!models.length) return null;
+      const params = new URLSearchParams(query);
+      const r = +(params.get("r") || 10000);
+      const inp = +(params.get("in") || 2000);
+      const out = +(params.get("out") || 500);
+      const totalIn = r * inp;
+      const totalOut = r * out;
+      let min = Infinity;
+      for (const m of models) {
+        const cost = (totalIn / 1e6) * m.input + (totalOut / 1e6) * m.output;
+        if (cost < min) min = cost;
+      }
+      return min === Infinity ? null : min;
+    }
+
+    function renderConduit(mcpIds) {
+      const nodes = mcpIds
+        .map((id) => serverById(id))
+        .filter(Boolean)
+        .slice(0, 3);
+
+      const parts = [];
+      nodes.forEach((s, i) => {
+        if (i) parts.push('<span class="stack-wire" aria-hidden="true"></span>');
+        parts.push(`<span class="stack-node" title="${s.name}">${s.name}</span>`);
+      });
+      if (nodes.length) parts.push('<span class="stack-wire" aria-hidden="true"></span>');
+      parts.push('<span class="stack-node stack-node--llm">LLM</span>');
+      return `<div class="stack-conduit" aria-hidden="true">${parts.join("")}</div>`;
+    }
+
+    function renderScenarios() {
+      const grid = document.getElementById("scenario-grid");
+      grid.innerHTML = mcpData.scenarios
+        .map((sc) => {
+          const cost = minCostForQuery(sc.calculator_query);
+          const costLabel = cost != null
+            ? `<strong>${fmtMoney(cost)}</strong> /mo at lowest`
+            : `<strong>—</strong>`;
+          const href = `index.html?${sc.calculator_query}`;
+
+          return `
+            <article class="scenario-card">
+              <div class="scenario-card-header">
+                <h3>${sc.title}</h3>
+                <span class="scenario-workload">${sc.workload_label}</span>
+              </div>
+              <p>${sc.description}</p>
+              ${renderConduit(sc.mcp_ids)}
+              <div class="scenario-cost">
+                <div class="cost-readout${cost == null ? " loading" : ""}">
+                  LLM layer from
+                  ${costLabel}
+                </div>
+                <a class="scenario-cta" href="${href}">Estimate cost</a>
+              </div>
+            </article>`;
+        })
+        .join("");
+    }
+
+    function matchesFilters(s) {
+      if (state.category && s.category !== state.category) return false;
+      if (state.origin && s.origin !== state.origin) return false;
+      if (state.search) {
+        const q = state.search.toLowerCase();
+        const hay = `${s.name} ${s.publisher} ${s.description} ${s.category}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    }
+
+    function renderDirectory() {
+      const filtered = mcpData.servers.filter(matchesFilters);
+      document.getElementById("visible-count").textContent = String(filtered.length);
+      document.getElementById("total-count").textContent = String(mcpData.servers.length);
+
+      const list = document.getElementById("server-list");
+      if (!filtered.length) {
+        list.innerHTML = '<p class="empty-directory">No servers match. Clear filters or try another search.</p>';
+        return;
+      }
+
+      list.innerHTML = filtered
+        .map(
+          (s) => `
+          <article class="server-card" role="listitem">
+            <div>
+              <div class="server-name-row">
+                <span class="server-name">${s.name}</span>
+                <span class="server-badge ${s.origin}">${s.origin}</span>
+              </div>
+              <p class="server-meta">${s.publisher} · ${s.category} · ${(s.transport || []).join(", ")}</p>
+              <p class="server-desc">${s.description}</p>
+              <div class="server-tags">
+                ${(s.transport || []).map((t) => `<span class="server-tag">${t}</span>`).join("")}
+                ${s.featured ? '<span class="server-tag" style="color:var(--phosphor)">featured</span>' : ""}
+              </div>
+            </div>
+            <div class="server-links">
+              ${s.repo_url ? `<a class="server-link" href="${s.repo_url}" rel="noopener noreferrer" target="_blank">Repository</a>` : ""}
+            </div>
+          </article>`
+        )
+        .join("");
+    }
+
+    function buildFilters() {
+      const catEl = document.getElementById("category-filters");
+      catEl.innerHTML = CATEGORIES.map(
+        (c) =>
+          `<button type="button" class="filter-chip cat-${c.id}" data-cat="${c.id}">${c.label}</button>`
+      ).join("");
+      catEl.querySelector('[data-cat=""]').classList.add("active");
+
+      const origEl = document.getElementById("origin-filters");
+      origEl.innerHTML = ORIGINS.map(
+        (o) => `<button type="button" class="filter-chip" data-origin="${o.id}">${o.label}</button>`
+      ).join("");
+      origEl.querySelector('[data-origin=""]').classList.add("active");
+
+      catEl.addEventListener("click", (e) => {
+        const btn = e.target.closest(".filter-chip");
+        if (!btn) return;
+        catEl.querySelectorAll(".filter-chip").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.category = btn.dataset.cat;
+        renderDirectory();
+      });
+
+      origEl.addEventListener("click", (e) => {
+        const btn = e.target.closest(".filter-chip");
+        if (!btn) return;
+        origEl.querySelectorAll(".filter-chip").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.origin = btn.dataset.origin;
+        renderDirectory();
+      });
+    }
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      state.search = e.target.value.trim();
+      renderDirectory();
+    });
+
+    async function init() {
+      try {
+        const [mcpRes, modelsRes] = await Promise.all([fetch(MCP_URL), fetch(MODELS_URL)]);
+        if (!mcpRes.ok) throw new Error("mcp.json");
+        mcpData = await mcpRes.json();
+        if (modelsRes.ok) {
+          const md = await modelsRes.json();
+          models = md.models || [];
+        }
+
+        document.getElementById("hero-count").textContent = String(mcpData.server_count || mcpData.servers.length);
+        document.getElementById("hero-patterns").textContent = String(mcpData.scenarios.length);
+        document.getElementById("footer-version").textContent = mcpData.version || "—";
+
+        buildFilters();
+        renderScenarios();
+        renderDirectory();
+      } catch (err) {
+        console.error(err);
+        document.getElementById("scenario-grid").innerHTML =
+          '<p class="load-state" style="color:#ff6b8a">Failed to load MCP data.</p>';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
