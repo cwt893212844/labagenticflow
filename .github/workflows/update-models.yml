@@ -26,14 +26,17 @@ jobs:
       - name: Fetch OpenRouter pricing
         run: python scripts/fetch_models.py --json
 
+      - name: Fetch MCP registry picks
+        run: python scripts/fetch_mcp.py --json
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/models.json data/price_history.json
+          git add data/models.json data/price_history.json data/mcp.json
           if git diff --staged --quiet; then
             echo "No data changes."
             exit 0
           fi
-          git commit -m "chore(data): refresh pricing and daily history snapshot"
+          git commit -m "chore(data): refresh pricing, MCP catalog, and daily history snapshot"
           git push
