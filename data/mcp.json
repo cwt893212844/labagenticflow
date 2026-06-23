@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.22",
-  "last_updated": "2026-06-22T12:14:11.130932Z",
+  "version": "2026.06.23",
+  "last_updated": "2026-06-23T09:52:01.918760Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -486,7 +486,7 @@
       "description": "MCP server for Firecrawl — search, scrape, and interact with the web.",
       "repo_url": "https://github.com/firecrawl/firecrawl-mcp-server",
       "registry_name": "io.github.firecrawl/firecrawl-mcp-server",
-      "registry_version": "3.7.5",
+      "registry_version": "3.21.3",
       "registry_synced": true
     },
     {
@@ -508,6 +508,12 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "mcp-firecrawl",
+        "name": "Firecrawl",
+        "changes": "registry_version: '3.7.5' → '3.21.3'"
+      }
+    ]
   }
 }
