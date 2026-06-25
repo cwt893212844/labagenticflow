@@ -387,9 +387,20 @@
       padding-top: 20px;
       border-top: 1px solid var(--border);
       display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .flow-output-row {
+      display: flex;
       justify-content: space-between;
       align-items: baseline;
+      gap: 16px;
     }
+
+    .flow-output-row[hidden] { display: none; }
+
+    .flow-output-row--value .flow-output-value { color: var(--violet); }
 
     .flow-output-label {
       font-family: var(--font-mono);
@@ -885,6 +896,40 @@
       font-weight: 600;
     }
 
+    .model-card.best-value {
+      border-color: rgba(155, 125, 255, 0.45);
+    }
+
+    .model-card.best-value:not(.cheapest)::before {
+      content: "BEST VALUE";
+      position: absolute;
+      top: -1px;
+      left: 20px;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      background: var(--violet);
+      color: var(--bg-deep);
+      padding: 2px 6px;
+      font-weight: 600;
+    }
+
+    .model-card.cheapest.best-value::after {
+      content: "BEST VALUE";
+      position: absolute;
+      top: -1px;
+      left: 88px;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      background: var(--violet);
+      color: var(--bg-deep);
+      padding: 2px 6px;
+      font-weight: 600;
+    }
+
     .model-card.focused {
       border-color: rgba(155, 125, 255, 0.55);
       box-shadow: 0 0 0 1px rgba(155, 125, 255, 0.2);
@@ -1199,8 +1244,14 @@
           </div>
         </div>
         <div class="flow-output">
-          <span class="flow-output-label">Cheapest match</span>
-          <span class="flow-output-value" id="hero-cheapest">—<span class="unit"> /mo</span></span>
+          <div class="flow-output-row">
+            <span class="flow-output-label">Cheapest match</span>
+            <span class="flow-output-value" id="hero-cheapest">—<span class="unit"> /mo</span></span>
+          </div>
+          <div class="flow-output-row flow-output-row--value" id="hero-best-value" hidden>
+            <span class="flow-output-label" id="hero-best-value-label">Best value</span>
+            <span class="flow-output-value" id="hero-best-value-cost">—<span class="unit"> /mo</span></span>
+          </div>
         </div>
       </div>
     </section>
@@ -1221,7 +1272,7 @@
               <button type="button" class="preset-btn" data-preset="rag">RAG query</button>
               <button type="button" class="preset-btn" data-preset="agent">High-volume agent</button>
             </div>
-            <p class="field-hint">One-click workload templates for common agent patterns</p>
+            <p class="field-hint">One-click workload templates — active preset shows <strong>Best value</strong> for that scenario</p>
           </div>
 
           <div class="field">
@@ -1355,6 +1406,13 @@
       agent: { requests: 100000, input: 2000, output: 500 },
     };
 
+    /** Scenario gates for Best value — aligned with MCP workload patterns */
+    const PRESET_VALUE = {
+      "tool-call": { label: "Coding", requiredTags: ["tools"] },
+      rag: { label: "RAG", minContext: 500000 },
+      agent: { label: "High-volume agent", requiredTags: ["tools"] },
+    };
+
     let MODELS = [];
     let datasetMeta = null;
     let providers = [];
@@ -1447,6 +1505,36 @@
         if (key === "context") return b.context - a.context;
         return 0;
       });
+    }
+
+    function modelMeetsValueGate(model, gate) {
+      if (gate.requiredTags && !gate.requiredTags.every((t) => model.tags.includes(t))) return false;
+      if (gate.minContext && model.context < gate.minContext) return false;
+      return true;
+    }
+
+    function getBestValueModel() {
+      if (!state.preset) return null;
+      const gate = PRESET_VALUE[state.preset];
+      if (!gate) return null;
+      const candidates = getFilteredModels()
+        .filter((m) => modelMeetsValueGate(m, gate))
+        .map((m) => ({ ...m, cost: calcCost(m) }))
+        .sort((a, b) => a.cost - b.cost);
+      return candidates[0] || null;
+    }
+
+    function updateHeroBestValue(periodLabel, bestValue) {
+      const row = $("#hero-best-value");
+      if (!bestValue || !state.preset) {
+        row.hidden = true;
+        return;
+      }
+      const gate = PRESET_VALUE[state.preset];
+      row.hidden = false;
+      $("#hero-best-value-label").textContent = "Best for " + gate.label;
+      $("#hero-best-value-cost").innerHTML =
+        fmtMoney(bestValue.cost) + '<span class="unit">' + periodLabel + "</span>";
     }
 
     function hasActiveFilters() {
@@ -1643,26 +1731,38 @@
             ${parts.length ? `Active: ${parts.join(" · ")}. ` : ""}Try clearing filters or broadening your selection.
           </div>`;
         $("#hero-cheapest").innerHTML = "—<span class=\"unit\">" + periodLabel + "</span>";
+        updateHeroBestValue(periodLabel, null);
         return;
       }
 
       const maxCost = sorted[sorted.length - 1].cost;
       const minCost = sorted[0].cost;
+      const bestValue = getBestValueModel();
 
       $("#hero-cheapest").innerHTML =
         fmtMoney(minCost) + '<span class="unit">' + periodLabel + "</span>";
+      updateHeroBestValue(periodLabel, bestValue);
 
       list.innerHTML = sorted
         .map((m, i) => {
           const pct = maxCost > 0 ? (m.cost / maxCost) * 100 : 0;
           const isCheapest = i === 0 && state.sort === "cost";
+          const isBestValue = bestValue && m.id === bestValue.id && state.preset;
           const isFocused = state.focusModel === m.id;
           const tags = m.tags
             .map((t) => `<span class="tag ${t}">${t}</span>`)
             .join("");
+          const cardClasses = [
+            "model-card",
+            isCheapest ? "cheapest" : "",
+            isBestValue ? "best-value" : "",
+            isFocused ? "focused" : "",
+          ]
+            .filter(Boolean)
+            .join(" ");
 
           return `
-            <article class="model-card${isCheapest ? " cheapest" : ""}${isFocused ? " focused" : ""}" id="model-${m.id}" role="listitem">
+            <article class="${cardClasses}" id="model-${m.id}" role="listitem">
               <div class="model-info">
                 <div class="model-name">${m.name}</div>
                 <div class="model-provider">${m.provider}</div>
