@@ -1,12 +1,12 @@
 {
   "version": "2026.06.25",
-  "last_updated": "2026-06-25T09:32:04.056154Z",
+  "last_updated": "2026-06-25T13:50:32.306224Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
   "source_note": "Curated pins from mcp_selection_rules.json, enriched from the official MCP Registry where available. Not a full registry mirror.",
   "server_count": 32,
-  "registry_hits": 8,
+  "registry_hits": 14,
   "scenarios": [
     {
       "id": "rag",
@@ -130,10 +130,14 @@
       "origin": "official",
       "category": "devtools",
       "transport": [
+        "http",
         "stdio"
       ],
       "description": "Interact with GitLab projects, issues, and merge requests.",
-      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab"
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab",
+      "registry_name": "com.gitlab/mcp",
+      "registry_version": "0.0.1",
+      "registry_synced": true
     },
     {
       "id": "mcp-fetch",
@@ -157,8 +161,8 @@
       "transport": [
         "stdio"
       ],
-      "description": "Brave Search MCP Server: web results, images, videos, rich results, AI summaries, and more.",
-      "repo_url": "https://github.com/brave/brave-search-mcp-server",
+      "description": "Web search via the Brave Search API.",
+      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
       "registry_name": "io.github.brave/brave-search-mcp-server",
       "registry_version": "2.0.85",
       "registry_synced": true
@@ -204,14 +208,17 @@
     {
       "id": "mcp-redis",
       "name": "Redis",
-      "publisher": "Model Context Protocol",
+      "publisher": "Redis",
       "origin": "official",
       "category": "data",
       "transport": [
         "stdio"
       ],
       "description": "Interact with Redis key-value stores.",
-      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+      "repo_url": "https://github.com/redis/mcp-redis",
+      "registry_name": "io.github.redis/mcp-redis",
+      "registry_version": "0.5.0",
+      "registry_synced": true
     },
     {
       "id": "mcp-google-drive",
@@ -313,14 +320,17 @@
     {
       "id": "mcp-sentry",
       "name": "Sentry",
-      "publisher": "Model Context Protocol",
+      "publisher": "Sentry",
       "origin": "community",
       "category": "devtools",
       "transport": [
         "stdio"
       ],
-      "description": "Inspect Sentry issues and events for debugging production agents.",
-      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+      "description": "MCP server for Sentry - error monitoring, issue tracking, and debugging for AI assistants",
+      "repo_url": "https://github.com/getsentry/sentry-mcp",
+      "registry_name": "io.github.getsentry/sentry-mcp",
+      "registry_version": "0.25.0",
+      "registry_synced": true
     },
     {
       "id": "mcp-everart",
@@ -372,7 +382,7 @@
         "http",
         "stdio"
       ],
-      "description": "Official Notion MCP server",
+      "description": "Read and search Notion pages and databases.",
       "repo_url": "https://github.com/makenotion/notion-mcp-server",
       "registry_name": "com.notion/mcp",
       "registry_version": "1.0.1",
@@ -385,10 +395,14 @@
       "origin": "community",
       "category": "productivity",
       "transport": [
+        "http",
         "stdio"
       ],
       "description": "Create and track issues in Linear from agent tool calls.",
-      "repo_url": "https://github.com/jerhadf/linear-mcp-server"
+      "repo_url": "https://github.com/jerhadf/linear-mcp-server",
+      "registry_name": "app.linear/linear",
+      "registry_version": "1.0.0",
+      "registry_synced": true
     },
     {
       "id": "mcp-supabase",
@@ -400,8 +414,8 @@
         "http",
         "stdio"
       ],
-      "description": "MCP server for interacting with the Supabase platform",
-      "repo_url": "https://github.com/supabase/mcp",
+      "description": "Query Supabase tables and manage project resources.",
+      "repo_url": "https://github.com/supabase-community/supabase-mcp",
       "registry_name": "com.supabase/mcp",
       "registry_version": "0.8.2",
       "registry_synced": true
@@ -429,22 +443,30 @@
       "origin": "community",
       "category": "cloud",
       "transport": [
+        "http",
         "stdio"
       ],
-      "description": "Manage Workers, KV, and DNS from an MCP-enabled client.",
-      "repo_url": "https://github.com/cloudflare/mcp-server-cloudflare"
+      "description": "Cloudflare MCP servers",
+      "repo_url": "https://github.com/cloudflare/mcp-server-cloudflare",
+      "registry_name": "com.cloudflare.mcp/mcp",
+      "registry_version": "1.0.0",
+      "registry_synced": true
     },
     {
       "id": "mcp-kubernetes",
       "name": "Kubernetes",
-      "publisher": "Community",
+      "publisher": "Red Hat",
       "origin": "community",
       "category": "cloud",
       "transport": [
+        "http",
         "stdio"
       ],
-      "description": "Inspect pods, logs, and resources in Kubernetes clusters.",
-      "repo_url": "https://github.com/Flux159/mcp-server-kubernetes"
+      "description": "A Model Context Protocol (MCP) server for Kubernetes and OpenShift",
+      "repo_url": "https://github.com/containers/kubernetes-mcp-server",
+      "registry_name": "io.github.containers/kubernetes-mcp-server",
+      "registry_version": "0.0.63",
+      "registry_synced": true
     },
     {
       "id": "mcp-elasticsearch",
@@ -483,8 +505,8 @@
       "transport": [
         "stdio"
       ],
-      "description": "MCP server for Firecrawl — search, scrape, and interact with the web.",
-      "repo_url": "https://github.com/firecrawl/firecrawl-mcp-server",
+      "description": "Crawl and scrape websites into clean markdown for RAG pipelines.",
+      "repo_url": "https://github.com/mendableai/firecrawl-mcp-server",
       "registry_name": "io.github.firecrawl/firecrawl-mcp-server",
       "registry_version": "3.22.0",
       "registry_synced": true
@@ -508,12 +530,6 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": [
-      {
-        "id": "mcp-firecrawl",
-        "name": "Firecrawl",
-        "changes": "registry_version: '3.21.4' → '3.22.0'"
-      }
-    ]
+    "updated": []
   }
 }

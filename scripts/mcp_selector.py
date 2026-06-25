@@ -46,11 +46,63 @@ def registry_repo_url(server: dict[str, Any]) -> str | None:
     return normalize_repo_url(repo.get("url"))
 
 
+def normalize_repo_url(url: str | None) -> str | None:
+    if not url:
+        return None
+    return url.rstrip("/").removesuffix(".git").lower()
+
+
+def github_owner_repo(url: str | None) -> str | None:
+    if not url or "github.com/" not in url:
+        return None
+    tail = url.split("github.com/", 1)[1].split("/tree", 1)[0].strip("/")
+    parts = tail.split("/")
+    if len(parts) >= 2:
+        return f"{parts[0]}/{parts[1]}".lower()
+    return None
+
+
+def monorepo_slug(url: str | None) -> str | None:
+    if not url or "/src/" not in url:
+        return None
+    return url.split("/src/", 1)[1].split("/", 1)[0].lower()
+
+
+def repo_match_score(repo_hint: str | None, candidate_repo: str | None) -> int:
+    if not repo_hint or not candidate_repo:
+        return 0
+
+    hint = normalize_repo_url(repo_hint) or ""
+    cand = normalize_repo_url(candidate_repo) or ""
+    if not hint or not cand:
+        return 0
+    if hint == cand:
+        return 100
+
+    hint_owner_repo = github_owner_repo(repo_hint)
+    cand_owner_repo = github_owner_repo(candidate_repo)
+    if hint_owner_repo and hint_owner_repo == cand_owner_repo:
+        return 90
+
+    if hint_owner_repo and hint_owner_repo in cand:
+        return 70
+
+    hint_slug = monorepo_slug(repo_hint)
+    if hint_slug and hint_slug in cand:
+        return 40
+
+    if hint in cand or cand in hint:
+        return 30
+
+    return 0
+
+
 def pick_search_match(
     candidates: list[dict[str, Any]],
     *,
     prefer_name: str | None = None,
     repo_hint: str | None = None,
+    min_score: int = 30,
 ) -> dict[str, Any] | None:
     if not candidates:
         return None
@@ -61,13 +113,39 @@ def pick_search_match(
                 return item
 
     if repo_hint:
-        hint = repo_hint.lower()
-        for item in candidates:
-            repo = registry_repo_url(item["server"])
-            if repo and hint in repo.lower():
-                return item
+        scored = [
+            (repo_match_score(repo_hint, registry_repo_url(item["server"])), item)
+            for item in candidates
+        ]
+        scored.sort(key=lambda pair: pair[0], reverse=True)
+        if scored[0][0] >= min_score:
+            return scored[0][1]
+        return None
 
     return candidates[0]
+
+
+def derive_registry_queries(pin: dict[str, Any]) -> list[str]:
+    if pin.get("registry_resolve") != "repo":
+        return []
+
+    queries: list[str] = []
+    if pin.get("registry_search"):
+        queries.append(str(pin["registry_search"]))
+
+    repo = pin.get("repo_url") or ""
+    owner_repo = github_owner_repo(repo)
+    if owner_repo:
+        queries.append(owner_repo)
+
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for query in queries:
+        key = query.lower().strip()
+        if key and key not in seen:
+            seen.add(key)
+            ordered.append(query)
+    return ordered
 
 
 def merge_server(
@@ -106,11 +184,13 @@ def merge_server(
     if reg_server.get("version"):
         server["registry_version"] = reg_server["version"]
 
-    if reg_server.get("description"):
+    reg_repo = registry_repo_url(reg_server)
+    repo_score = repo_match_score(pin.get("repo_url"), reg_repo)
+
+    if reg_server.get("description") and repo_score >= 90:
         server["description"] = reg_server["description"].strip()
 
-    reg_repo = registry_repo_url(reg_server)
-    if reg_repo:
+    if reg_repo and repo_score >= 90:
         server["repo_url"] = reg_repo
 
     reg_transport = infer_transport(reg_server)

@@ -86,6 +86,7 @@
     },
     {
       "id": "mcp-gitlab",
+      "registry_name": "com.gitlab/mcp",
       "name": "GitLab",
       "publisher": "Model Context Protocol",
       "origin": "official",
@@ -150,13 +151,14 @@
     },
     {
       "id": "mcp-redis",
+      "registry_name": "io.github.redis/mcp-redis",
       "name": "Redis",
-      "publisher": "Model Context Protocol",
+      "publisher": "Redis",
       "origin": "official",
       "category": "data",
       "transport": ["stdio"],
       "description": "Interact with Redis key-value stores.",
-      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis"
+      "repo_url": "https://github.com/redis/mcp-redis"
     },
     {
       "id": "mcp-google-drive",
@@ -241,13 +243,14 @@
     },
     {
       "id": "mcp-sentry",
+      "registry_name": "io.github.getsentry/sentry-mcp",
       "name": "Sentry",
-      "publisher": "Model Context Protocol",
+      "publisher": "Sentry",
       "origin": "community",
       "category": "devtools",
       "transport": ["stdio"],
       "description": "Inspect Sentry issues and events for debugging production agents.",
-      "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sentry"
+      "repo_url": "https://github.com/getsentry/sentry-mcp"
     },
     {
       "id": "mcp-everart",
@@ -294,6 +297,7 @@
     },
     {
       "id": "mcp-linear",
+      "registry_name": "app.linear/linear",
       "name": "Linear",
       "publisher": "Linear",
       "origin": "community",
@@ -326,6 +330,7 @@
     },
     {
       "id": "mcp-cloudflare",
+      "registry_name": "com.cloudflare.mcp/mcp",
       "name": "Cloudflare",
       "publisher": "Cloudflare",
       "origin": "community",
@@ -336,13 +341,14 @@
     },
     {
       "id": "mcp-kubernetes",
+      "registry_name": "io.github.containers/kubernetes-mcp-server",
       "name": "Kubernetes",
-      "publisher": "Community",
+      "publisher": "Red Hat",
       "origin": "community",
       "category": "cloud",
       "transport": ["stdio"],
       "description": "Inspect pods, logs, and resources in Kubernetes clusters.",
-      "repo_url": "https://github.com/Flux159/mcp-server-kubernetes"
+      "repo_url": "https://github.com/containers/kubernetes-mcp-server"
     },
     {
       "id": "mcp-elasticsearch",

@@ -14,6 +14,7 @@ import typer
 
 from mcp_selector import (
     DEFAULT_RULES,
+    derive_registry_queries,
     diff_servers,
     load_rules,
     merge_server,
@@ -81,7 +82,7 @@ async def search_registry(
         payload = await fetch_json(
             client,
             url,
-            params={"search": query, "limit": 10, "version": "latest"},
+            params={"search": query, "limit": 20, "version": "latest"},
             max_retries=3,
         )
     except RuntimeError:
@@ -101,17 +102,20 @@ async def resolve_pin(
             return entry, None
         return None, f"{pin['id']}: registry name not found ({registry_name})"
 
-    registry_search = pin.get("registry_search")
-    if registry_search:
-        candidates = await search_registry(client, registry_url, registry_search)
+    repo_hint = pin.get("repo_url")
+    queries = derive_registry_queries(pin)
+    for query in queries:
+        candidates = await search_registry(client, registry_url, query)
         entry = pick_search_match(
             candidates,
             prefer_name=pin.get("registry_name"),
-            repo_hint=pin.get("repo_url"),
+            repo_hint=repo_hint,
         )
         if entry:
             return entry, None
-        return None, f"{pin['id']}: registry search returned no match ({registry_search})"
+
+    if queries:
+        return None, f"{pin['id']}: registry search returned no repo match"
 
     return None, None
 

@@ -396,6 +396,11 @@
       background: var(--violet-dim);
     }
 
+    .server-badge.registry {
+      color: #7ec8e3;
+      background: rgba(126, 200, 227, 0.12);
+    }
+
     .server-meta {
       font-family: var(--font-mono);
       font-size: 0.62rem;
@@ -508,6 +513,7 @@
       </div>
       <div class="mcp-hero-aside">
         <p class="mcp-hero-stat">Curated servers<span id="hero-count">…</span></p>
+        <p class="mcp-hero-stat">Registry synced<span id="hero-registry">…</span></p>
         <p class="mcp-hero-stat">Agent patterns<span id="hero-patterns">6</span></p>
       </div>
     </section>
@@ -532,7 +538,9 @@
       <strong style="color:var(--text-primary);font-weight:600;">How this list is built</strong><br>
       Servers are curated via <code>mcp_selection_rules.json</code> and enriched from the
       <a href="https://registry.modelcontextprotocol.io" rel="noopener noreferrer">official MCP Registry</a>
-      where published. Monorepo and community picks are not a full registry mirror — verify each repo before production use.
+      when a pin has a published registry entry (<span id="footer-registry">…</span> synced).
+      Official monorepo servers not yet published to the registry keep static metadata from our pins.
+      Verify each repo before production use.
       Cost estimates use the same <a href="sources.html">OpenRouter pricing pipeline</a> as the calculator.
       <br><br>
       <a href="index.html">Open cost calculator →</a>
@@ -674,6 +682,7 @@
               <div class="server-name-row">
                 <span class="server-name">${s.name}</span>
                 <span class="server-badge ${s.origin}">${s.origin}</span>
+                ${s.registry_synced ? '<span class="server-badge registry">registry</span>' : ""}
               </div>
               <p class="server-meta">${s.publisher} · ${s.category} · ${(s.transport || []).join(", ")}</p>
               <p class="server-desc">${s.description}</p>
@@ -739,6 +748,10 @@
         }
 
         document.getElementById("hero-count").textContent = String(mcpData.server_count || mcpData.servers.length);
+        const hits = mcpData.registry_hits ?? mcpData.servers.filter((s) => s.registry_synced).length;
+        const total = mcpData.server_count || mcpData.servers.length;
+        document.getElementById("hero-registry").textContent = `${hits}/${total}`;
+        document.getElementById("footer-registry").textContent = `${hits}/${total}`;
         document.getElementById("hero-patterns").textContent = String(mcpData.scenarios.length);
         document.getElementById("footer-version").textContent = mcpData.version || "—";
 
