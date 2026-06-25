@@ -123,10 +123,24 @@ def pick_family_representative(group: list[dict[str, Any]]) -> dict[str, Any]:
     return max(group, key=sort_key)
 
 
+def resolve_benchmark_link(openrouter_id: str, rules: dict[str, Any]) -> dict[str, str] | None:
+    flagship = _compile(rules["flagship_id_patterns"])
+    model_slug = openrouter_id.split("/", 1)[1]
+    if not flagship.search(model_slug):
+        return None
+    for entry in rules.get("benchmark_links", []):
+        if re.search(entry["pattern"], openrouter_id, re.I):
+            return {
+                "benchmark_url": entry["url"],
+                "benchmark_source": entry.get("source", "benchmarks"),
+            }
+    return None
+
+
 def to_output_model(remote: dict[str, Any], rules: dict[str, Any]) -> dict[str, Any]:
     provider_key = remote["id"].split("/")[0]
     pricing = remote["pricing"]
-    return {
+    model: dict[str, Any] = {
         "id": slug_id(remote["id"]),
         "name": display_name(remote),
         "provider": rules["provider_display"].get(provider_key, provider_key),
@@ -138,6 +152,10 @@ def to_output_model(remote: dict[str, Any], rules: dict[str, Any]) -> dict[str, 
         "pricing_source": "openrouter",
         "score": round(score_model(remote, rules), 2),
     }
+    bench = resolve_benchmark_link(remote["id"], rules)
+    if bench:
+        model.update(bench)
+    return model
 
 
 def select_models(

@@ -117,5 +117,57 @@
   "min_context_length": 32000,
   "per_provider_max": 5,
   "global_max": 50,
-  "min_score": 5.0
+  "min_score": 5.0,
+  "benchmark_links": [
+    {
+      "pattern": "^openai/",
+      "url": "https://artificialanalysis.ai/providers/openai",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^anthropic/",
+      "url": "https://artificialanalysis.ai/providers/anthropic",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^google/",
+      "url": "https://artificialanalysis.ai/providers/google",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^meta-llama/",
+      "url": "https://artificialanalysis.ai/providers/meta",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^mistralai/",
+      "url": "https://artificialanalysis.ai/providers/mistral",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^deepseek/",
+      "url": "https://artificialanalysis.ai/providers/deepseek",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^x-ai/",
+      "url": "https://artificialanalysis.ai/providers/xai",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^qwen/",
+      "url": "https://artificialanalysis.ai/leaderboards/models",
+      "source": "Artificial Analysis"
+    },
+    {
+      "pattern": "^amazon/",
+      "url": "https://aws.amazon.com/bedrock/pricing/",
+      "source": "AWS Bedrock"
+    },
+    {
+      "pattern": "^cohere/",
+      "url": "https://docs.cohere.com/docs/models",
+      "source": "Cohere"
+    }
+  ]
 }

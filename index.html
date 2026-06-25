@@ -812,6 +812,7 @@
 
     .filter-chip.tag-vision.active { border-color: var(--violet); background: rgba(155, 125, 255, 0.12); color: var(--violet); }
     .filter-chip.tag-tools.active { border-color: var(--amber); background: var(--amber-dim); color: var(--amber); }
+    .filter-chip.tag-1m-ctx.active { border-color: var(--phosphor); background: rgba(61, 255, 154, 0.1); color: var(--phosphor); }
 
     .filter-chip:focus-visible {
       outline: 2px solid var(--violet);
@@ -1021,8 +1022,58 @@
     .model-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .cap-chip {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 3px 7px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      line-height: 1.2;
+    }
+
+    .cap-chip--tools {
+      color: var(--amber);
+      background: var(--amber-dim);
+      border-color: rgba(255, 184, 77, 0.25);
+    }
+
+    .cap-chip--vision {
+      color: var(--violet);
+      background: rgba(155, 125, 255, 0.12);
+      border-color: rgba(155, 125, 255, 0.28);
+    }
+
+    .cap-chip--ctx-1m {
+      color: var(--phosphor);
+      background: rgba(61, 255, 154, 0.1);
+      border-color: rgba(61, 255, 154, 0.22);
+    }
+
+    .cap-chip--ctx-500k {
+      color: #7ec8e3;
+      background: rgba(126, 200, 227, 0.1);
+      border-color: rgba(126, 200, 227, 0.22);
+    }
+
+    .model-bench-link {
+      display: inline-block;
       margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .model-bench-link:hover {
+      color: var(--phosphor);
+      text-decoration: underline;
     }
 
     .tag {
@@ -1406,7 +1457,12 @@
       agent: { requests: 100000, input: 2000, output: 500 },
     };
 
-    /** Scenario gates for Best value — aligned with MCP workload patterns */
+    /** Virtual capability filters (not in model.tags) */
+    const VIRTUAL_TAG_FILTERS = {
+      "1m-ctx": (m) => m.context >= 1_000_000,
+    };
+
+    const CAP_FILTER_CHIPS = [{ tag: "1m-ctx", label: "1M ctx", className: "tag-1m-ctx" }];
     const PRESET_VALUE = {
       "tool-call": { label: "Coding", requiredTags: ["tools"] },
       rag: { label: "RAG", minContext: 500000 },
@@ -1452,6 +1508,25 @@
       return (n / 1e3) + "K";
     }
 
+    function modelMatchesTagFilter(model, tag) {
+      if (VIRTUAL_TAG_FILTERS[tag]) return VIRTUAL_TAG_FILTERS[tag](model);
+      return model.tags.includes(tag);
+    }
+
+    function buildCapChips(model) {
+      const chips = [];
+      if (model.tags.includes("tools")) chips.push({ key: "tools", label: "Tools" });
+      if (model.tags.includes("vision")) chips.push({ key: "vision", label: "Vision" });
+      if (model.context >= 1_000_000) chips.push({ key: "ctx-1m", label: "1M ctx" });
+      else if (model.context >= 500_000) chips.push({ key: "ctx-500k", label: "500K+" });
+      return chips
+        .map(
+          (c) =>
+            `<span class="cap-chip cap-chip--${c.key}" title="${c.label}">${c.label}</span>`
+        )
+        .join("");
+    }
+
     function fmtDatasetDate(iso) {
       if (!iso) return "—";
       const d = new Date(iso);
@@ -1491,7 +1566,7 @@
     function getFilteredModels() {
       return MODELS.filter((m) => {
         if (state.providers.size > 0 && !state.providers.has(m.provider)) return false;
-        if (state.tags.size > 0 && !m.tags.some((t) => state.tags.has(t))) return false;
+        if (state.tags.size > 0 && ![...state.tags].some((t) => modelMatchesTagFilter(m, t))) return false;
         return true;
       });
     }
@@ -1667,12 +1742,16 @@
         .join("");
 
       const tagEl = $("#tag-chips");
-      tagEl.innerHTML = allTags
-        .map(
+      tagEl.innerHTML = [
+        ...allTags.map(
           (t) =>
             `<button type="button" class="filter-chip tag-${t}" data-tag="${t}" aria-pressed="false">${t}</button>`
-        )
-        .join("");
+        ),
+        ...CAP_FILTER_CHIPS.map(
+          (c) =>
+            `<button type="button" class="filter-chip ${c.className}" data-tag="${c.tag}" aria-pressed="false">${c.label}</button>`
+        ),
+      ].join("");
 
       $("#filter-bar").hidden = false;
       $("#compare-meta").hidden = false;
@@ -1749,9 +1828,10 @@
           const isCheapest = i === 0 && state.sort === "cost";
           const isBestValue = bestValue && m.id === bestValue.id && state.preset;
           const isFocused = state.focusModel === m.id;
-          const tags = m.tags
-            .map((t) => `<span class="tag ${t}">${t}</span>`)
-            .join("");
+          const capChips = buildCapChips(m);
+          const benchLink = m.benchmark_url
+            ? `<a class="model-bench-link" href="${m.benchmark_url}" target="_blank" rel="noopener noreferrer" title="${m.benchmark_source || "Benchmarks"}">See provider benchmarks →</a>`
+            : "";
           const cardClasses = [
             "model-card",
             isCheapest ? "cheapest" : "",
@@ -1766,7 +1846,8 @@
               <div class="model-info">
                 <div class="model-name">${m.name}</div>
                 <div class="model-provider">${m.provider}</div>
-                <div class="model-tags">${tags}</div>
+                <div class="model-tags">${capChips}</div>
+                ${benchLink}
               </div>
               <div class="spectra">
                 <span class="spectra-label">relative</span>
