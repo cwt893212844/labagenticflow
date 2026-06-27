@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Decode JWT header and payload in the browser. Local only — no verification, nothing uploaded." />
+  <title>JWT Decoder — LabAgenticFlow Tools</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site-base.css" />
+  <link rel="stylesheet" href="../assets/tools.css" />
+</head>
+<body>
+  <div class="shell shell--tool">
+    <header class="site-header">
+      <a href="../index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="../index.html">Calculator</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="json-formatter.html">JSON</a>
+        <a href="yaml-convert.html">YAML</a>
+      </nav>
+    </header>
+
+    <section class="tool-hero">
+      <p class="doc-eyebrow"><a href="index.html" style="color:inherit;text-decoration:none">Tools</a> / JWT</p>
+      <h1>JWT Decoder</h1>
+      <p class="tool-hero-lead">Paste a JSON Web Token to inspect its header and payload. Decoding only — signatures are not verified.</p>
+      <p class="local-badge">Runs locally · do not paste production secrets on shared machines</p>
+    </section>
+
+    <div class="tool-workspace">
+      <div class="tool-panel" style="border:1px solid var(--border)">
+        <div class="tool-panel-head"><span>Token</span><button type="button" class="tool-btn" id="btn-sample" style="padding:4px 8px;min-height:auto">Sample</button></div>
+        <textarea class="tool-textarea" id="token" style="min-height:100px" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…" spellcheck="false"></textarea>
+        <div class="tool-status" id="status">Paste a JWT with three dot-separated parts</div>
+      </div>
+
+      <div class="jwt-grid">
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span>Header</span></div>
+          <pre class="tool-output" id="header-out"></pre>
+        </div>
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span>Payload</span></div>
+          <pre class="tool-output" id="payload-out"></pre>
+        </div>
+      </div>
+
+      <div class="tool-panel" style="border:1px solid var(--border)">
+        <div class="tool-panel-head"><span>Claims note</span></div>
+        <pre class="tool-output" id="claims-out" style="min-height:60px;color:var(--text-dim)"></pre>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="index.html">All tools</a> · <a href="json-formatter.html">JSON</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const SAMPLE =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+    function b64urlDecode(seg) {
+      const pad = seg.length % 4 === 0 ? "" : "=".repeat(4 - (seg.length % 4));
+      const b64 = seg.replace(/-/g, "+").replace(/_/g, "/") + pad;
+      return decodeURIComponent(
+        atob(b64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+    }
+
+    function fmtClaims(payload) {
+      const notes = [];
+      if (payload.exp) notes.push(`exp: ${new Date(payload.exp * 1000).toISOString()}`);
+      if (payload.iat) notes.push(`iat: ${new Date(payload.iat * 1000).toISOString()}`);
+      if (payload.nbf) notes.push(`nbf: ${new Date(payload.nbf * 1000).toISOString()}`);
+      return notes.length ? notes.join("\n") : "No standard time claims detected";
+    }
+
+    function decode() {
+      const raw = $("token").value.trim();
+      const parts = raw.split(".");
+      if (parts.length < 2) {
+        $("header-out").textContent = "";
+        $("payload-out").textContent = "";
+        $("claims-out").textContent = "";
+        $("status").textContent = "Expected header.payload.signature";
+        $("status").className = "tool-status err";
+        return;
+      }
+      try {
+        const header = JSON.parse(b64urlDecode(parts[0]));
+        const payload = JSON.parse(b64urlDecode(parts[1]));
+        $("header-out").textContent = JSON.stringify(header, null, 2);
+        $("payload-out").textContent = JSON.stringify(payload, null, 2);
+        $("claims-out").textContent = fmtClaims(payload);
+        $("status").textContent = parts.length === 3 ? "Decoded (signature not verified)" : "Decoded — missing signature segment";
+        $("status").className = "tool-status ok";
+      } catch (e) {
+        $("status").textContent = e.message;
+        $("status").className = "tool-status err";
+      }
+    }
+
+    $("token").addEventListener("input", decode);
+    $("btn-sample").addEventListener("click", () => {
+      $("token").value = SAMPLE;
+      decode();
+    });
+  </script>
+</body>
+</html>

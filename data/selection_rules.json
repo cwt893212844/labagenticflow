@@ -1,15 +1,10 @@
 {
-  "allowed_providers": [
-    "openai",
-    "anthropic",
-    "google",
-    "deepseek",
-    "mistralai",
-    "meta-llama",
-    "x-ai",
-    "cohere",
-    "amazon",
-    "qwen"
+  "provider_mode": "auto",
+  "blocked_providers": [
+    "~anthropic",
+    "~google",
+    "~moonshotai",
+    "~openai"
   ],
   "provider_display": {
     "openai": "OpenAI",
@@ -21,7 +16,10 @@
     "x-ai": "xAI",
     "cohere": "Cohere",
     "amazon": "AWS",
-    "qwen": "Alibaba"
+    "qwen": "Alibaba",
+    "z-ai": "Z.ai",
+    "moonshotai": "Moonshot",
+    "minimax": "MiniMax"
   },
   "exclude_id_patterns": [
     ":free",
@@ -95,7 +93,7 @@
   "flagship_id_patterns": [
     "gpt-4o",
     "gpt-5",
-    "o[134]",
+    "o[134](?:-|/|$)",
     "claude-sonnet",
     "claude-opus",
     "claude-haiku",
@@ -112,7 +110,10 @@
     "command-[ar]",
     "nova-pro",
     "nova-premier",
-    "qwen3"
+    "qwen3",
+    "glm",
+    "kimi",
+    "moonshot"
   ],
   "min_context_length": 32000,
   "per_provider_max": 5,
@@ -168,6 +169,11 @@
       "pattern": "^cohere/",
       "url": "https://docs.cohere.com/docs/models",
       "source": "Cohere"
+    },
+    {
+      "pattern": "^z-ai/",
+      "url": "https://open.bigmodel.cn/dev/api",
+      "source": "Z.ai"
     }
   ]
 }

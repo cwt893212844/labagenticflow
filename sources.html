@@ -18,6 +18,47 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/site-base.css" />
+  <style>
+    .catalog-panel {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated, #111a24);
+    }
+
+    .catalog-stat {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .catalog-stat span { color: var(--phosphor); }
+
+    .catalog-providers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .catalog-chip {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .catalog-links {
+      margin-top: 12px;
+      font-size: 0.82rem;
+    }
+
+    .catalog-links a { color: var(--phosphor); text-decoration: none; }
+    .catalog-links a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
   <div class="shell">
@@ -57,15 +98,28 @@
       <h2>Model selection (automatic)</h2>
       <p>Not every OpenRouter model is listed. An auto-selection pipeline applies:</p>
       <ul>
-        <li><strong>Provider allowlist</strong> — OpenAI, Anthropic, Google, DeepSeek, Mistral, Meta, xAI, Cohere, AWS, Qwen.</li>
+        <li><strong>Auto providers</strong> — Any OpenRouter vendor with qualifying text models (e.g. Z.ai, Moonshot) is discovered on each fetch; synthetic <code>~vendor</code> namespaces are blocked.</li>
+        <li><strong>Minimum context</strong> — Models below <strong>32K</strong> context are excluded (agent workloads need usable context).</li>
         <li><strong>Exclusions</strong> — Free tiers, distill models, image-only endpoints, legacy generations (e.g. GPT-3, Claude 3).</li>
         <li><strong>Family dedup</strong> — One representative per model family (latest version; prefers standard over “fast” variants).</li>
-        <li><strong>Scoring cap</strong> — Top models per provider, global maximum ~50.</li>
+        <li><strong>Scoring cap</strong> — Up to <strong>5</strong> models per provider, <strong>50</strong> globally; flagship names score higher, niche variants lower.</li>
+        <li><strong>Daily refresh</strong> — GitHub Actions re-fetches OpenRouter and re-runs selection; new vendors and flagships appear without manual catalog edits.</li>
       </ul>
       <p>
-        Rules live in <code>data/selection_rules.json</code> in our repository.
-        New flagship models on OpenRouter are picked up on the next fetch without manual catalog edits.
+        Full rule patterns live in
+        <a href="https://github.com/cwt893212844/labagenticflow/blob/main/data/selection_rules.json" rel="noopener noreferrer"><code>selection_rules.json</code></a>
+        in our repository — we keep the site summary short so it stays in sync with the pipeline.
       </p>
+
+      <div class="catalog-panel" id="catalog-panel" aria-live="polite">
+        <p class="catalog-stat" id="catalog-stat">Loading current catalog…</p>
+        <div class="catalog-providers" id="catalog-providers" hidden></div>
+        <p class="catalog-links">
+          <a href="model.html">Browse all model pages →</a>
+          ·
+          <a href="index.html">Open calculator →</a>
+        </p>
+      </div>
 
       <h2>Cost formula</h2>
       <p>For each model, estimated cost is:</p>
@@ -121,8 +175,9 @@
 
       <h2>Update frequency</h2>
       <p>
-        We refresh when providers change rates or new models ship — not on a meaningless hourly ticker.
-        After deployment, fetches can run on a daily cron (e.g. GitHub Actions).
+        Pricing and catalog membership refresh on a <strong>daily cron</strong> (06:00 UTC via GitHub Actions).
+        We update when providers change rates or ship new models — not on a meaningless hourly ticker.
+        The live counts in the box above reflect the latest committed <code>data/models.json</code>.
       </p>
     </article>
 
@@ -133,5 +188,43 @@
       </div>
     </footer>
   </div>
+
+  <script>
+    const DATA_URL = "data/models.json";
+
+    function fmtDate(iso) {
+      if (!iso) return "—";
+      return new Date(iso).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+
+    async function loadCatalog() {
+      const stat = document.getElementById("catalog-stat");
+      const chips = document.getElementById("catalog-providers");
+      try {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error("fetch");
+        const data = await res.json();
+        const providers = [...new Set((data.models || []).map((m) => m.provider))].sort();
+        const updated = fmtDate(data.last_updated);
+        stat.innerHTML =
+          `Current catalog: <span>${data.model_count ?? "—"} models</span> from ` +
+          `<span>${data.provider_count ?? providers.length} providers</span> ` +
+          `(dataset v${data.version ?? "—"}, updated ${updated}).`;
+        chips.innerHTML = providers
+          .map((p) => `<span class="catalog-chip">${p}</span>`)
+          .join("");
+        chips.hidden = !providers.length;
+      } catch {
+        stat.textContent = "Could not load catalog stats. See the calculator header for dataset version.";
+        chips.hidden = true;
+      }
+    }
+
+    loadCatalog();
+  </script>
 </body>
 </html>

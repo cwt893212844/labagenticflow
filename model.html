@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LLM API pricing, context window, and workload cost estimates — LabAgenticFlow model pages." />
+  <title>Model pricing — LabAgenticFlow</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site-base.css" />
+  <style>
+    :root {
+      --amber: #f0a030;
+      --amber-dim: rgba(240, 160, 48, 0.12);
+      --violet: #9b7dff;
+      --bg-elevated: #111a24;
+    }
+
+    .shell--wide { max-width: 1080px; }
+
+    .model-hero {
+      padding: 40px 0 28px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    @media (max-width: 768px) {
+      .model-hero { grid-template-columns: 1fr; }
+    }
+
+    .model-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .model-provider {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+
+    .model-id {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .model-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+    .cap-chip {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+
+    .cap-chip--tools { border-color: rgba(61, 255, 154, 0.3); color: var(--phosphor); }
+    .cap-chip--vision { border-color: rgba(155, 125, 255, 0.35); color: var(--violet); }
+    .cap-chip--ctx-1m, .cap-chip--ctx-500k { border-color: rgba(240, 160, 48, 0.35); color: var(--amber); }
+
+    .hero-cost {
+      text-align: right;
+      min-width: 180px;
+    }
+
+    @media (max-width: 768px) { .hero-cost { text-align: left; } }
+
+    .hero-cost-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .hero-cost-value {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--phosphor);
+      margin-top: 4px;
+    }
+
+    .hero-cost-sub {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+      margin-top: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat-cell {
+      background: var(--bg-panel);
+      padding: 18px 16px;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      margin: 40px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .workload-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .preset-btn, .action-link {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+    }
+
+    .preset-btn:hover, .action-link:hover { border-color: rgba(61, 255, 154, 0.35); color: var(--phosphor); }
+    .preset-btn.active { border-color: var(--phosphor); color: var(--phosphor); background: rgba(61, 255, 154, 0.08); }
+
+    .slider-field { margin-bottom: 16px; }
+
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      margin-bottom: 8px;
+    }
+
+    .slider-head span:last-child { color: var(--phosphor); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--phosphor);
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sparkline-wrap {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 18px 18px 14px;
+    }
+
+    .sparkline-meta {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .sparkline-chart {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .sparkline-grid {
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 1;
+    }
+
+    .sparkline-axis {
+      stroke: rgba(255, 255, 255, 0.18);
+      stroke-width: 1;
+    }
+
+    .sparkline-line { fill: none; stroke: var(--phosphor); stroke-width: 1.5; }
+    .sparkline-fill { fill: rgba(61, 255, 154, 0.08); }
+
+    .sparkline-tick {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      fill: var(--text-dim);
+    }
+
+    .sparkline-y-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px;
+      fill: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .model-index {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .model-index-card {
+      background: var(--bg-panel);
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .model-index-card:hover { border-color: rgba(61, 255, 154, 0.3); }
+
+    .model-index-card h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .model-index-card p {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+    }
+
+    .bench-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--phosphor);
+      text-decoration: none;
+    }
+
+    .bench-link:hover { text-decoration: underline; }
+
+    .not-found {
+      padding: 48px 0;
+      color: var(--text-muted);
+    }
+
+    .not-found a { color: var(--phosphor); }
+  </style>
+</head>
+<body>
+  <div class="shell shell--wide">
+    <header class="site-header">
+      <a href="index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="index.html">Calculator</a>
+        <a href="compare.html">Compare</a>
+        <a href="model.html" aria-current="page">Models</a>
+        <a href="mcp.html">MCP</a>
+        <a href="tools/index.html">Tools</a>
+        <a href="sources.html">Sources</a>
+      </nav>
+    </header>
+
+    <div id="page-root">
+      <p class="load-state">Loading model data…</p>
+    </div>
+
+    <footer class="site-footer">
+      <p class="footer-note" id="footer-note">Estimates only. Verify before production use.</p>
+      <div class="footer-links">
+        <a href="index.html">Calculator</a> · <a href="compare.html">Compare</a> · <a href="tools/index.html">Dev tools</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/laf-calc.js"></script>
+  <script>
+    const MODELS_URL = "data/models.json";
+    const HISTORY_URL = "data/price_history.json";
+
+    let MODELS = [];
+    let history = null;
+    let workload = LAF.parseWorkloadFromUrl();
+
+    const $ = (sel, root = document) => root.querySelector(sel);
+
+    function getModelId() {
+      return new URLSearchParams(location.search).get("m");
+    }
+
+    function fmtPriceTick(v) {
+      if (v >= 10) return "$" + v.toFixed(1);
+      if (v >= 1) return "$" + v.toFixed(2);
+      return "$" + v.toFixed(3);
+    }
+
+    function fmtDateTick(iso) {
+      const d = new Date(iso + "T12:00:00");
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    }
+
+    function pickTickIndices(count, maxTicks) {
+      if (count <= 1) return [0];
+      const n = Math.min(maxTicks, count);
+      const out = [];
+      for (let i = 0; i < n; i++) {
+        out.push(Math.round((i / (n - 1)) * (count - 1)));
+      }
+      return [...new Set(out)];
+    }
+
+    function renderSparkline(series) {
+      if (series.length < 2) {
+        return `<div class="sparkline-wrap"><p class="load-state">Price history needs more daily snapshots (building…).</p></div>`;
+      }
+
+      const values = series.map((p) => p.input);
+      const dates = series.map((p) => p.date);
+      const rawMin = Math.min(...values);
+      const rawMax = Math.max(...values);
+
+      let min = rawMin;
+      let max = rawMax;
+      if (rawMin === rawMax) {
+        const pad = Math.max(rawMin * 0.12, 0.05);
+        min = rawMin - pad;
+        max = rawMax + pad;
+      } else {
+        const pad = (rawMax - rawMin) * 0.1;
+        min = rawMin - pad;
+        max = rawMax + pad;
+      }
+      const range = max - min || 1;
+
+      const W = 520;
+      const H = 168;
+      const margin = { top: 22, right: 16, bottom: 30, left: 52 };
+      const plotW = W - margin.left - margin.right;
+      const plotH = H - margin.top - margin.bottom;
+
+      const xAt = (i) => margin.left + (i / (values.length - 1)) * plotW;
+      const yAt = (v) => margin.top + plotH - ((v - min) / range) * plotH;
+
+      const yTickCount = 4;
+      const yTicks = Array.from({ length: yTickCount + 1 }, (_, i) => {
+        const v = min + (range * i) / yTickCount;
+        return { v, y: yAt(v) };
+      });
+
+      const xIndices = pickTickIndices(dates.length, 5);
+
+      const gridLines = yTicks
+        .map((t) => `<line class="sparkline-grid" x1="${margin.left}" y1="${t.y}" x2="${margin.left + plotW}" y2="${t.y}" />`)
+        .join("");
+
+      const yLabels = yTicks
+        .map(
+          (t) =>
+            `<text class="sparkline-tick" x="${margin.left - 10}" y="${t.y + 3}" text-anchor="end">${fmtPriceTick(t.v)}</text>`
+        )
+        .join("");
+
+      const xLabels = xIndices
+        .map((i) => {
+          const x = xAt(i);
+          return `
+            <line class="sparkline-grid" x1="${x}" y1="${margin.top}" x2="${x}" y2="${margin.top + plotH}" />
+            <text class="sparkline-tick" x="${x}" y="${H - 8}" text-anchor="middle">${fmtDateTick(dates[i])}</text>`;
+        })
+        .join("");
+
+      const pts = values.map((v, i) => `${xAt(i)},${yAt(v)}`);
+      const baseline = margin.top + plotH;
+      const area = `${xAt(0)},${baseline} ${pts.join(" ")} ${xAt(values.length - 1)},${baseline}`;
+
+      const first = series[0].date;
+      const last = series[series.length - 1].date;
+      const delta = values[values.length - 1] - values[0];
+      const deltaLabel =
+        delta === 0 ? "flat" : delta > 0 ? `+${delta.toFixed(3)} $/M in` : `${delta.toFixed(3)} $/M in`;
+
+      const ariaLabel = `Input price from ${first} to ${last}, ${deltaLabel}`;
+
+      return `
+        <div class="sparkline-wrap">
+          <div class="sparkline-meta">
+            <span>Input price · ${series.length} days</span>
+            <span>${first} → ${last} · ${deltaLabel}</span>
+          </div>
+          <svg class="sparkline-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ariaLabel}">
+            ${gridLines}
+            ${xLabels}
+            <line class="sparkline-axis" x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${baseline}" />
+            <line class="sparkline-axis" x1="${margin.left}" y1="${baseline}" x2="${margin.left + plotW}" y2="${baseline}" />
+            <text class="sparkline-y-label" x="${margin.left}" y="${margin.top - 6}" text-anchor="start">$/M in</text>
+            ${yLabels}
+            <polygon class="sparkline-fill" points="${area}" />
+            <polyline class="sparkline-line" points="${pts.join(" ")}" />
+            ${values.map((v, i) => `<circle cx="${xAt(i)}" cy="${yAt(v)}" r="2.5" fill="var(--phosphor)" />`).join("")}
+          </svg>
+        </div>`;
+    }
+
+    function renderWorkloadPanel(model) {
+      const preset = LAF.detectPreset(workload);
+      const cost = LAF.calcCost(model, workload);
+      const periodLabel = workload.period === "daily" ? "/day" : "/mo";
+
+      const presetBtns = Object.entries(LAF.PRESETS)
+        .map(([id, p]) => `<button type="button" class="preset-btn${preset === id ? " active" : ""}" data-preset="${id}">${p.label}</button>`)
+        .join("");
+
+      return `
+        <h2 class="section-label">Workload estimate</h2>
+        <div class="workload-panel" id="workload-panel">
+          <div class="preset-row" role="group" aria-label="Scenario presets">${presetBtns}</div>
+          <div class="slider-field">
+            <div class="slider-head"><span>Monthly requests</span><span id="val-r">${workload.requests.toLocaleString()}</span></div>
+            <input type="range" id="sl-r" min="1" max="1000000" step="1" value="${workload.requests}" />
+          </div>
+          <div class="slider-field">
+            <div class="slider-head"><span>Input tokens / request</span><span id="val-in">${workload.inputPerReq.toLocaleString()}</span></div>
+            <input type="range" id="sl-in" min="100" max="128000" step="100" value="${workload.inputPerReq}" />
+          </div>
+          <div class="slider-field">
+            <div class="slider-head"><span>Output tokens / request</span><span id="val-out">${workload.outputPerReq.toLocaleString()}</span></div>
+            <input type="range" id="sl-out" min="50" max="32000" step="50" value="${workload.outputPerReq}" />
+          </div>
+          <div class="action-row">
+            <a class="action-link" href="index.html?${LAF.buildWorkloadQuery(workload, { model: model.id })}">Open in full calculator</a>
+            <a class="action-link" href="compare.html?${LAF.buildWorkloadQuery(workload, { models: model.id })}">Add to compare</a>
+          </div>
+        </div>
+        <p class="hero-cost-sub" style="margin-top:12px" id="live-cost-hint">Estimated <strong style="color:var(--phosphor)">${LAF.fmtMoney(cost)}</strong>${periodLabel} at current workload</p>`;
+    }
+
+    function bindWorkload(model) {
+      const update = () => {
+        const qs = LAF.buildWorkloadQuery(workload, { m: model.id });
+        history.replaceState(null, "", `model.html?${qs}`);
+        const cost = LAF.calcCost(model, workload);
+        const periodLabel = workload.period === "daily" ? "/day" : "/mo";
+        $("#hero-cost-value").textContent = LAF.fmtMoney(cost);
+        $("#hero-cost-sub").textContent = periodLabel + " est.";
+        $("#live-cost-hint").innerHTML = `Estimated <strong style="color:var(--phosphor)">${LAF.fmtMoney(cost)}</strong>${periodLabel} at current workload`;
+        $("#val-r").textContent = workload.requests.toLocaleString();
+        $("#val-in").textContent = workload.inputPerReq.toLocaleString();
+        $("#val-out").textContent = workload.outputPerReq.toLocaleString();
+        document.querySelectorAll(".preset-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.preset === LAF.detectPreset(workload));
+        });
+      };
+
+      $("#sl-r")?.addEventListener("input", (e) => { workload.requests = +e.target.value; update(); });
+      $("#sl-in")?.addEventListener("input", (e) => { workload.inputPerReq = +e.target.value; update(); });
+      $("#sl-out")?.addEventListener("input", (e) => { workload.outputPerReq = +e.target.value; update(); });
+
+      document.querySelectorAll(".preset-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const p = LAF.PRESETS[btn.dataset.preset];
+          if (!p) return;
+          workload.requests = p.requests;
+          workload.inputPerReq = p.input;
+          workload.outputPerReq = p.output;
+          $("#sl-r").value = workload.requests;
+          $("#sl-in").value = workload.inputPerReq;
+          $("#sl-out").value = workload.outputPerReq;
+          update();
+        });
+      });
+    }
+
+    function renderModel(model) {
+      const cost = LAF.calcCost(model, workload);
+      const periodLabel = workload.period === "daily" ? "/day" : "/mo";
+      const series = LAF.getPriceSeries(model.id, history);
+      const bench = model.benchmark_url
+        ? `<a class="bench-link" href="${model.benchmark_url}" target="_blank" rel="noopener noreferrer">See ${model.benchmark_source || "provider"} benchmarks →</a>`
+        : "";
+
+      document.title = `${model.name} API pricing — LabAgenticFlow`;
+
+      $("#page-root").innerHTML = `
+        <section class="model-hero">
+          <div>
+            <p class="doc-eyebrow">Model pricing</p>
+            <h1>${model.name}</h1>
+            <p class="model-provider">${model.provider}</p>
+            <p class="model-id">${model.openrouter_id}</p>
+            <div class="model-tags">${LAF.buildCapChips(model)}</div>
+            ${bench}
+          </div>
+          <div class="hero-cost">
+            <p class="hero-cost-label">Estimated cost</p>
+            <p class="hero-cost-value" id="hero-cost-value">${LAF.fmtMoney(cost)}</p>
+            <p class="hero-cost-sub" id="hero-cost-sub">${periodLabel} est.</p>
+          </div>
+        </section>
+
+        <div class="stat-grid">
+          <div class="stat-cell"><p class="stat-label">Input</p><p class="stat-value">$${model.input}/M</p></div>
+          <div class="stat-cell"><p class="stat-label">Output</p><p class="stat-value">$${model.output}/M</p></div>
+          <div class="stat-cell"><p class="stat-label">Context</p><p class="stat-value">${LAF.fmtCtx(model.context)}</p></div>
+          <div class="stat-cell"><p class="stat-label">Source</p><p class="stat-value">OpenRouter</p></div>
+        </div>
+
+        ${renderWorkloadPanel(model)}
+
+        <h2 class="section-label">Price trend</h2>
+        ${renderSparkline(series)}
+      `;
+
+      bindWorkload(model);
+    }
+
+    function renderIndex() {
+      document.title = "All models — LabAgenticFlow";
+      const cards = MODELS.map((m) => `
+        <a class="model-index-card" href="model.html?m=${encodeURIComponent(m.id)}">
+          <h2>${m.name}</h2>
+          <p>${m.provider} · $${m.input}/M in · ${LAF.fmtCtx(m.context)} ctx</p>
+        </a>`).join("");
+
+      $("#page-root").innerHTML = `
+        <section class="doc-hero">
+          <p class="doc-eyebrow">Model index</p>
+          <h1>LLM pricing pages</h1>
+          <p class="doc-lead">Per-model API rates, context limits, and workload estimates. Pick a model or pass <code>?m=model-id</code> in the URL.</p>
+        </section>
+        <div class="model-index">${cards}</div>
+      `;
+    }
+
+    function renderNotFound(id) {
+      $("#page-root").innerHTML = `
+        <div class="not-found">
+          <p class="doc-eyebrow">Not found</p>
+          <h1>Unknown model</h1>
+          <p>No model with id <code>${id}</code>. <a href="model.html">Browse all models</a>.</p>
+        </div>`;
+    }
+
+    async function init() {
+      try {
+        const [modelsRes, histRes] = await Promise.all([
+          fetch(MODELS_URL),
+          fetch(HISTORY_URL).catch(() => null),
+        ]);
+        if (!modelsRes.ok) throw new Error("models");
+        const data = await modelsRes.json();
+        MODELS = data.models || [];
+        if (histRes?.ok) history = await histRes.json();
+
+        $("#footer-note").textContent =
+          `Rates from OpenRouter (updated ${LAF.fmtDatasetDate(data.last_updated)}). Estimates only.`;
+
+        const id = getModelId();
+        if (!id) {
+          renderIndex();
+          return;
+        }
+        const model = MODELS.find((m) => m.id === id);
+        if (!model) {
+          renderNotFound(id);
+          return;
+        }
+        renderModel(model);
+      } catch {
+        $("#page-root").innerHTML = `<p class="load-state">Failed to load data/models.json</p>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

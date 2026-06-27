@@ -60,10 +60,54 @@ def infer_tags(remote: dict[str, Any]) -> list[str]:
     return tags
 
 
+def format_provider_name(provider_key: str, rules: dict[str, Any]) -> str:
+    overrides = rules.get("provider_display") or {}
+    if provider_key in overrides:
+        return overrides[provider_key]
+
+    known = {
+        "openai": "OpenAI",
+        "anthropic": "Anthropic",
+        "google": "Google",
+        "deepseek": "DeepSeek",
+        "mistralai": "Mistral",
+        "meta-llama": "Meta (via API)",
+        "x-ai": "xAI",
+        "cohere": "Cohere",
+        "amazon": "AWS",
+        "qwen": "Alibaba",
+        "z-ai": "Z.ai",
+        "moonshotai": "Moonshot",
+        "minimax": "MiniMax",
+        "baidu": "Baidu",
+        "bytedance": "ByteDance",
+        "tencent": "Tencent",
+        "perplexity": "Perplexity",
+        "microsoft": "Microsoft",
+    }
+    if provider_key in known:
+        return known[provider_key]
+
+    return provider_key.replace("-", " ").title()
+
+
+def provider_allowed(provider_key: str, rules: dict[str, Any]) -> bool:
+    blocked = set(rules.get("blocked_providers") or [])
+    if provider_key in blocked or provider_key.startswith("~"):
+        return False
+
+    mode = rules.get("provider_mode", "allowlist")
+    if mode == "auto":
+        return True
+
+    allowed = set(rules.get("allowed_providers") or [])
+    return provider_key in allowed
+
+
 def is_candidate(remote: dict[str, Any], rules: dict[str, Any]) -> bool:
     mid = remote["id"]
-    allowed = set(rules["allowed_providers"])
-    if not any(mid.startswith(f"{p}/") for p in allowed):
+    provider_key = mid.split("/", 1)[0]
+    if not provider_allowed(provider_key, rules):
         return False
 
     exclude_id = _compile(rules["exclude_id_patterns"])
@@ -98,16 +142,17 @@ def is_candidate(remote: dict[str, Any], rules: dict[str, Any]) -> bool:
 
 
 def score_model(remote: dict[str, Any], rules: dict[str, Any]) -> float:
-    mid = remote["id"].lower()
+    oid = remote["id"].lower()
+    slug = oid.split("/", 1)[1]
     flagship = _compile(rules["flagship_id_patterns"])
     niche = _compile(rules["niche_id_patterns"])
 
     s = 0.0
-    if flagship.search(mid):
+    if flagship.search(slug):
         s += 20.0
-    if niche.search(mid):
+    if niche.search(slug):
         s -= 8.0
-    if re.search(r"-fast$|-high$", mid):
+    if re.search(r"-fast$|-high$", oid):
         s -= 4.0
     s += min((remote.get("context_length") or 0) / 200_000, 3.0)
     s += (remote.get("created") or 0) / 1e9
@@ -143,7 +188,7 @@ def to_output_model(remote: dict[str, Any], rules: dict[str, Any]) -> dict[str, 
     model: dict[str, Any] = {
         "id": slug_id(remote["id"]),
         "name": display_name(remote),
-        "provider": rules["provider_display"].get(provider_key, provider_key),
+        "provider": format_provider_name(provider_key, rules),
         "input": per_million_usd(pricing["prompt"]),
         "output": per_million_usd(pricing["completion"]),
         "context": int(remote["context_length"]),
@@ -207,6 +252,10 @@ def select_models(
 
     for model in models:
         model.pop("score", None)
+
+    active_providers = sorted({m["openrouter_id"].split("/")[0] for m in models})
+    if mode := rules.get("provider_mode"):
+        warnings.append(f"provider_mode={mode}; {len(active_providers)} providers in catalog")
 
     return models, warnings
 

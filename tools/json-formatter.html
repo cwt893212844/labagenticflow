@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Format, minify, validate, and diff JSON in the browser. Local only — nothing uploaded." />
+  <title>JSON Formatter — LabAgenticFlow Tools</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site-base.css" />
+  <link rel="stylesheet" href="../assets/tools.css" />
+</head>
+<body>
+  <div class="shell shell--tool">
+    <header class="site-header">
+      <a href="../index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="../index.html">Calculator</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="jwt-decoder.html">JWT</a>
+        <a href="yaml-convert.html">YAML</a>
+      </nav>
+    </header>
+
+    <section class="tool-hero">
+      <p class="doc-eyebrow"><a href="index.html" style="color:inherit;text-decoration:none">Tools</a> / JSON</p>
+      <h1>JSON Formatter</h1>
+      <p class="tool-hero-lead">Pretty-print, minify, or validate JSON. Use diff mode to compare two payloads side by side.</p>
+      <p class="local-badge">Runs locally</p>
+    </section>
+
+    <div class="tool-workspace">
+      <div class="tool-toolbar">
+        <button type="button" class="tool-btn active" id="mode-single">Single</button>
+        <button type="button" class="tool-btn" id="mode-diff">Diff</button>
+        <span style="flex:1"></span>
+        <button type="button" class="tool-btn" id="btn-format">Format</button>
+        <button type="button" class="tool-btn" id="btn-minify">Minify</button>
+        <button type="button" class="tool-btn" id="btn-validate">Validate</button>
+        <button type="button" class="tool-btn" id="btn-clear">Clear</button>
+      </div>
+
+      <div class="tool-panels" id="panels-single">
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span>Input</span><button type="button" class="tool-btn" id="btn-paste" style="padding:4px 8px;min-height:auto">Paste</button></div>
+          <textarea class="tool-textarea" id="input" placeholder='{"hello": "world"}' spellcheck="false"></textarea>
+          <div class="tool-status" id="status">Ready</div>
+        </div>
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span>Output</span><button type="button" class="tool-btn" id="btn-copy" style="padding:4px 8px;min-height:auto">Copy</button></div>
+          <pre class="tool-output" id="output" tabindex="0"></pre>
+        </div>
+      </div>
+
+      <div class="tool-panels" id="panels-diff" hidden>
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span>Before</span></div>
+          <textarea class="tool-textarea" id="diff-a" spellcheck="false"></textarea>
+        </div>
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span>After</span></div>
+          <textarea class="tool-textarea" id="diff-b" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="tool-status" id="diff-status" hidden></div>
+    </div>
+
+    <div class="tool-related">
+      Estimating token cost for a JSON payload? <a href="../index.html">Open the LLM cost calculator →</a>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="index.html">All tools</a> · <a href="jwt-decoder.html">JWT</a> · <a href="yaml-convert.html">YAML</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let diffMode = false;
+
+    function parseJson(text) {
+      return JSON.parse(text);
+    }
+
+    function setStatus(msg, ok = true) {
+      const el = $("status");
+      el.textContent = msg;
+      el.className = "tool-status " + (ok ? "ok" : "err");
+    }
+
+    function formatInput(indent) {
+      try {
+        const obj = parseJson($("input").value);
+        $("output").textContent = JSON.stringify(obj, null, indent);
+        setStatus(indent ? "Formatted" : "Minified");
+      } catch (e) {
+        $("output").textContent = "";
+        setStatus(e.message, false);
+      }
+    }
+
+    function validateInput() {
+      try {
+        parseJson($("input").value);
+        $("output").textContent = "Valid JSON";
+        setStatus("Valid JSON");
+      } catch (e) {
+        $("output").textContent = "";
+        setStatus(e.message, false);
+      }
+    }
+
+    function deepDiff(a, b, path = "") {
+      const lines = [];
+      if (typeof a !== typeof b || Array.isArray(a) !== Array.isArray(b)) {
+        lines.push(`${path || "(root)"}: type changed`);
+        return lines;
+      }
+      if (a === null || b === null || typeof a !== "object") {
+        if (a !== b) lines.push(`${path || "(root)"}: ${JSON.stringify(a)} → ${JSON.stringify(b)}`);
+        return lines;
+      }
+      const keys = new Set([...Object.keys(a || {}), ...Object.keys(b || {})]);
+      keys.forEach((k) => {
+        const p = path ? `${path}.${k}` : k;
+        if (!(k in a)) lines.push(`+ ${p}: ${JSON.stringify(b[k])}`);
+        else if (!(k in b)) lines.push(`- ${p}: ${JSON.stringify(a[k])}`);
+        else lines.push(...deepDiff(a[k], b[k], p));
+      });
+      return lines;
+    }
+
+    function runDiff() {
+      const el = $("diff-status");
+      el.hidden = false;
+      try {
+        const a = parseJson($("diff-a").value || "{}");
+        const b = parseJson($("diff-b").value || "{}");
+        const lines = deepDiff(a, b);
+        el.textContent = lines.length ? lines.join("\n") : "No structural differences";
+        el.className = "tool-status ok";
+      } catch (e) {
+        el.textContent = e.message;
+        el.className = "tool-status err";
+      }
+    }
+
+    function setMode(diff) {
+      diffMode = diff;
+      $("mode-single").classList.toggle("active", !diff);
+      $("mode-diff").classList.toggle("active", diff);
+      $("panels-single").hidden = diff;
+      $("panels-diff").hidden = !diff;
+      $("diff-status").hidden = !diff;
+      if (diff) runDiff();
+    }
+
+    $("mode-single").addEventListener("click", () => setMode(false));
+    $("mode-diff").addEventListener("click", () => setMode(true));
+    $("btn-format").addEventListener("click", () => formatInput(2));
+    $("btn-minify").addEventListener("click", () => formatInput(0));
+    $("btn-validate").addEventListener("click", validateInput);
+    $("btn-clear").addEventListener("click", () => {
+      $("input").value = "";
+      $("output").textContent = "";
+      setStatus("Cleared");
+    });
+    $("btn-paste").addEventListener("click", async () => {
+      try {
+        $("input").value = await navigator.clipboard.readText();
+        setStatus("Pasted");
+      } catch {
+        setStatus("Clipboard denied", false);
+      }
+    });
+    $("btn-copy").addEventListener("click", async () => {
+      const t = $("output").textContent;
+      if (!t) return;
+      try {
+        await navigator.clipboard.writeText(t);
+        setStatus("Copied to clipboard");
+      } catch {
+        setStatus("Copy failed", false);
+      }
+    });
+    $("diff-a").addEventListener("input", runDiff);
+    $("diff-b").addEventListener("input", runDiff);
+
+    $("input").addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        formatInput(2);
+      }
+    });
+  </script>
+</body>
+</html>

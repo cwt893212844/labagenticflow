@@ -74,13 +74,16 @@ async def run_fetch(rules_path: Path, output_path: Path) -> dict[str, Any]:
 
     changes = diff_models(previous, models)
     now = datetime.now(timezone.utc)
+    provider_keys = sorted({m["openrouter_id"].split("/")[0] for m in models})
     dataset: dict[str, Any] = {
         "version": now.strftime("%Y.%m.%d"),
         "last_updated": now.isoformat().replace("+00:00", "Z"),
         "source": "openrouter",
         "source_url": OPENROUTER_MODELS_URL,
-        "selection": "auto",
+        "selection": rules.get("provider_mode", "allowlist"),
         "model_count": len(models),
+        "provider_count": len(provider_keys),
+        "providers": provider_keys,
         "models": models,
         "changes": changes,
     }

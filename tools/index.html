@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Local-first developer tools — JSON, JWT, YAML. Runs in your browser, nothing uploaded." />
+  <title>Dev tools — LabAgenticFlow</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site-base.css" />
+  <link rel="stylesheet" href="../assets/tools.css" />
+</head>
+<body>
+  <div class="shell shell--tool">
+    <header class="site-header">
+      <a href="../index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="../index.html">Calculator</a>
+        <a href="../compare.html">Compare</a>
+        <a href="../model.html">Models</a>
+        <a href="../mcp.html">MCP</a>
+        <a href="index.html" aria-current="page">Tools</a>
+      </nav>
+    </header>
+
+    <section class="tool-hero">
+      <p class="doc-eyebrow">Developer utilities</p>
+      <h1>Local dev tools</h1>
+      <p class="tool-hero-lead">Format, convert, and inspect data in the browser. No upload, no account — built for agent and API workflows.</p>
+      <p class="local-badge">Runs locally · nothing leaves your browser</p>
+    </section>
+
+    <div class="tool-grid-hub">
+      <a class="tool-card" href="json-formatter.html">
+        <span class="tool-card-tag">Format</span>
+        <h2>JSON Formatter</h2>
+        <p>Pretty-print, minify, validate, and diff JSON. Paste API responses or tool-call payloads.</p>
+        <span class="tool-card-cta">Open tool →</span>
+      </a>
+      <a class="tool-card" href="jwt-decoder.html">
+        <span class="tool-card-tag">Decode</span>
+        <h2>JWT Decoder</h2>
+        <p>Inspect header and payload from a JSON Web Token. Decode only — no signature verification.</p>
+        <span class="tool-card-cta">Open tool →</span>
+      </a>
+      <a class="tool-card" href="yaml-convert.html">
+        <span class="tool-card-tag">Convert</span>
+        <h2>JSON ↔ YAML</h2>
+        <p>Convert between JSON and YAML for configs, docker-compose snippets, and CI files.</p>
+        <span class="tool-card-cta">Open tool →</span>
+      </a>
+    </div>
+
+    <div class="tool-related">
+      Building an agent stack? <a href="../mcp.html">Pick MCP servers</a>, then
+      <a href="../index.html">estimate LLM API cost</a> for your workload.
+    </div>
+
+    <footer class="site-footer">
+      <p class="footer-note">Preview build — same domain, no separate install.</p>
+      <div class="footer-links">
+        <a href="../index.html">Calculator</a> · <a href="../compare.html">Compare</a> · <a href="../model.html">Models</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

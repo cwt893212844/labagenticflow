@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Convert JSON to YAML and YAML to JSON in the browser. Local only." />
+  <title>JSON ↔ YAML — LabAgenticFlow Tools</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site-base.css" />
+  <link rel="stylesheet" href="../assets/tools.css" />
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+<body>
+  <div class="shell shell--tool">
+    <header class="site-header">
+      <a href="../index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="../index.html">Calculator</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="json-formatter.html">JSON</a>
+        <a href="jwt-decoder.html">JWT</a>
+      </nav>
+    </header>
+
+    <section class="tool-hero">
+      <p class="doc-eyebrow"><a href="index.html" style="color:inherit;text-decoration:none">Tools</a> / YAML</p>
+      <h1>JSON ↔ YAML</h1>
+      <p class="tool-hero-lead">Convert configs between JSON and YAML. Handy for docker-compose, GitHub Actions, and K8s manifests.</p>
+      <p class="local-badge">Runs locally</p>
+    </section>
+
+    <div class="tool-workspace">
+      <div class="tool-toolbar tab-row">
+        <button type="button" class="tool-btn active" id="dir-j2y">JSON → YAML</button>
+        <button type="button" class="tool-btn" id="dir-y2j">YAML → JSON</button>
+        <span style="flex:1"></span>
+        <button type="button" class="tool-btn" id="btn-convert">Convert</button>
+        <button type="button" class="tool-btn" id="btn-swap">Swap</button>
+        <button type="button" class="tool-btn" id="btn-copy">Copy output</button>
+      </div>
+
+      <div class="tool-panels">
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span id="in-label">JSON input</span></div>
+          <textarea class="tool-textarea" id="input" spellcheck="false" placeholder='{"service": "api", "port": 8080}'></textarea>
+        </div>
+        <div class="tool-panel">
+          <div class="tool-panel-head"><span id="out-label">YAML output</span></div>
+          <pre class="tool-output" id="output" tabindex="0"></pre>
+          <div class="tool-status" id="status">Ready</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="index.html">All tools</a> · <a href="json-formatter.html">JSON formatter</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let dir = "j2y";
+
+    function setDir(mode) {
+      dir = mode;
+      const j2y = mode === "j2y";
+      $("dir-j2y").classList.toggle("active", j2y);
+      $("dir-y2j").classList.toggle("active", !j2y);
+      $("in-label").textContent = j2y ? "JSON input" : "YAML input";
+      $("out-label").textContent = j2y ? "YAML output" : "JSON output";
+      $("input").placeholder = j2y
+        ? '{"service": "api", "port": 8080}'
+        : "service: api\nport: 8080";
+    }
+
+    function setStatus(msg, ok = true) {
+      $("status").textContent = msg;
+      $("status").className = "tool-status " + (ok ? "ok" : "err");
+    }
+
+    function convert() {
+      const text = $("input").value.trim();
+      if (!text) {
+        setStatus("Enter input first", false);
+        return;
+      }
+      try {
+        if (dir === "j2y") {
+          const obj = JSON.parse(text);
+          $("output").textContent = jsyaml.dump(obj, { lineWidth: 120, noRefs: true });
+        } else {
+          const obj = jsyaml.load(text);
+          $("output").textContent = JSON.stringify(obj, null, 2);
+        }
+        setStatus("Converted");
+      } catch (e) {
+        $("output").textContent = "";
+        setStatus(e.message, false);
+      }
+    }
+
+    $("dir-j2y").addEventListener("click", () => setDir("j2y"));
+    $("dir-y2j").addEventListener("click", () => setDir("y2j"));
+    $("btn-convert").addEventListener("click", convert);
+    $("btn-swap").addEventListener("click", () => {
+      const out = $("output").textContent;
+      if (out) {
+        $("input").value = out;
+        setDir(dir === "j2y" ? "y2j" : "j2y");
+        convert();
+      }
+    });
+    $("btn-copy").addEventListener("click", async () => {
+      const t = $("output").textContent;
+      if (!t) return;
+      try {
+        await navigator.clipboard.writeText(t);
+        setStatus("Copied");
+      } catch {
+        setStatus("Copy failed", false);
+      }
+    });
+    $("input").addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        convert();
+      }
+    });
+  </script>
+</body>
+</html>

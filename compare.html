@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Compare 2–4 LLM APIs side by side — same workload, estimated monthly cost, context, and capabilities." />
+  <title>Compare LLM APIs — LabAgenticFlow</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#06090f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site-base.css" />
+  <style>
+    :root {
+      --amber: #f0a030;
+      --violet: #9b7dff;
+      --bg-elevated: #111a24;
+    }
+
+    .shell--wide { max-width: 1100px; }
+
+    .compare-hero {
+      padding: 40px 0 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .compare-hero-lead {
+      color: var(--text-muted);
+      max-width: 56ch;
+      font-size: 0.96rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+      margin-top: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .side-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 18px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .side-panel h2 {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      margin-bottom: 14px;
+    }
+
+    .picker-field { margin-bottom: 14px; }
+
+    .picker-field label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .picker-field select {
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 10px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      min-height: 44px;
+    }
+
+    .slider-field { margin-bottom: 12px; }
+
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      margin-bottom: 6px;
+    }
+
+    .slider-head span:last-child { color: var(--phosphor); }
+
+    input[type="range"] { width: 100%; accent-color: var(--phosphor); }
+
+    .share-btn {
+      width: 100%;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .share-btn:hover { border-color: var(--phosphor); color: var(--phosphor); }
+
+    .compare-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+
+    table.compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare-table th {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: var(--bg-elevated);
+    }
+
+    .compare-table td {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .model-col-head strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .model-col-head span {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    .cost-cell {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--phosphor);
+    }
+
+    .cost-cell.cheapest { color: var(--phosphor); }
+    .cost-cell:not(.cheapest) { color: var(--text-primary); font-weight: 500; font-size: 1rem; }
+
+    .cost-bar-row td { padding-top: 0; border-bottom: none; }
+
+    .cost-bars {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 8px;
+    }
+
+    .cost-bar-item label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .cost-bar-track {
+      height: 6px;
+      background: var(--bg-elevated);
+      overflow: hidden;
+    }
+
+    .cost-bar-fill {
+      height: 100%;
+      background: var(--phosphor);
+      transition: width 0.2s;
+    }
+
+    .cap-chip {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 6px;
+      border: 1px solid var(--border);
+      margin: 2px 4px 2px 0;
+      color: var(--text-dim);
+    }
+
+    .model-link {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--phosphor);
+      text-decoration: none;
+    }
+
+    .empty-hint {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell shell--wide">
+    <header class="site-header">
+      <a href="index.html" class="logo" aria-label="LabAgenticFlow home">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span class="logo-text">Lab<em>Agentic</em>Flow</span>
+      </a>
+      <nav class="header-nav" aria-label="Site">
+        <a href="index.html">Calculator</a>
+        <a href="compare.html" aria-current="page">Compare</a>
+        <a href="model.html">Models</a>
+        <a href="mcp.html">MCP</a>
+        <a href="tools/index.html">Tools</a>
+        <a href="sources.html">Sources</a>
+      </nav>
+    </header>
+
+    <section class="compare-hero">
+      <p class="doc-eyebrow">Side by side</p>
+      <h1>Compare LLM APIs</h1>
+      <p class="compare-hero-lead">Same workload, up to four models. Share the URL to keep picks and token assumptions in sync.</p>
+    </section>
+
+    <div class="layout">
+      <aside class="side-panel" aria-label="Compare controls">
+        <h2>Models & workload</h2>
+        <div id="pickers"></div>
+        <div class="slider-field">
+          <div class="slider-head"><span>Requests / mo</span><span id="val-r"></span></div>
+          <input type="range" id="sl-r" min="1" max="1000000" step="1" />
+        </div>
+        <div class="slider-field">
+          <div class="slider-head"><span>Input / req</span><span id="val-in"></span></div>
+          <input type="range" id="sl-in" min="100" max="128000" step="100" />
+        </div>
+        <div class="slider-field">
+          <div class="slider-head"><span>Output / req</span><span id="val-out"></span></div>
+          <input type="range" id="sl-out" min="50" max="32000" step="50" />
+        </div>
+        <button type="button" class="share-btn" id="share-btn">Copy share link</button>
+      </aside>
+
+      <div id="compare-main">
+        <p class="load-state">Loading…</p>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p class="footer-note">Estimates only. OpenRouter rates; batch/cache not included.</p>
+      <div class="footer-links">
+        <a href="index.html">Calculator</a> · <a href="model.html">Models</a> · <a href="tools/index.html">Dev tools</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/laf-calc.js"></script>
+  <script>
+    const MODELS_URL = "data/models.json";
+    const MAX_SLOTS = 4;
+    const SLOT_LABELS = ["Model A", "Model B", "Model C", "Model D"];
+
+    let MODELS = [];
+    let workload = LAF.parseWorkloadFromUrl();
+    let selectedIds = [];
+
+    const $ = (sel) => document.querySelector(sel);
+
+    function parseModelIds() {
+      const params = new URLSearchParams(location.search);
+      const raw = params.get("models") || params.get("m");
+      if (!raw) return [];
+      return raw.split(",").map((s) => s.trim()).filter(Boolean).slice(0, MAX_SLOTS);
+    }
+
+    function buildOptions(selectedInSlot) {
+      return MODELS.map((m) => {
+        const sel = m.id === selectedInSlot ? " selected" : "";
+        return `<option value="${m.id}"${sel}>${m.name} (${m.provider})</option>`;
+      }).join("");
+    }
+
+    function renderPickers() {
+      while (selectedIds.length < 2) selectedIds.push("");
+      const html = selectedIds.map((id, i) => `
+        <div class="picker-field">
+          <label for="pick-${i}">${SLOT_LABELS[i]}</label>
+          <select id="pick-${i}" data-slot="${i}">
+            <option value="">— Select —</option>
+            ${buildOptions(id)}
+          </select>
+        </div>`).join("");
+
+      const addSlot =
+        selectedIds.length < MAX_SLOTS
+          ? `<button type="button" class="share-btn" id="add-slot" style="margin-top:0">+ Add model</button>`
+          : "";
+
+      $("#pickers").innerHTML = html + addSlot;
+
+      selectedIds.forEach((id, i) => {
+        const sel = $(`#pick-${i}`);
+        if (sel) sel.value = id;
+      });
+
+      $("#pickers").querySelectorAll("select").forEach((sel) => {
+        sel.addEventListener("change", () => {
+          selectedIds[+sel.dataset.slot] = sel.value;
+          syncUrl();
+          renderTable();
+        });
+      });
+
+      $("#add-slot")?.addEventListener("click", () => {
+        if (selectedIds.length < MAX_SLOTS) selectedIds.push("");
+        renderPickers();
+        renderTable();
+      });
+    }
+
+    function getSelectedModels() {
+      return selectedIds.map((id) => MODELS.find((m) => m.id === id)).filter(Boolean);
+    }
+
+    function renderTable() {
+      const models = getSelectedModels();
+      const main = $("#compare-main");
+
+      if (models.length < 2) {
+        main.innerHTML = `<div class="compare-table-wrap"><p class="empty-hint">Pick at least two models to compare.</p></div>`;
+        return;
+      }
+
+      const costs = models.map((m) => ({ model: m, cost: LAF.calcCost(m, workload) }));
+      const maxCost = Math.max(...costs.map((c) => c.cost));
+      const minCost = Math.min(...costs.map((c) => c.cost));
+      const periodLabel = workload.period === "daily" ? "/day" : "/mo";
+
+      const headCols = models
+        .map(
+          (m) => `<th scope="col"><div class="model-col-head"><strong>${m.name}</strong><span>${m.provider}</span></div></th>`
+        )
+        .join("");
+
+      const row = (label, cells) => `<tr><th scope="row">${label}</th>${cells}</tr>`;
+
+      const costCells = costs
+        .map((c) => {
+          const cheapest = c.cost === minCost;
+          return `<td class="cost-cell${cheapest ? " cheapest" : ""}">${LAF.fmtMoney(c.cost)}<span style="font-size:0.65rem;color:var(--text-dim)"> ${periodLabel}</span></td>`;
+        })
+        .join("");
+
+      const rateCells = (field) =>
+        models.map((m) => `<td>$${m[field]}/M</td>`).join("");
+
+      const ctxCells = models.map((m) => `<td>${LAF.fmtCtx(m.context)}</td>`).join("");
+      const tagCells = models
+        .map((m) => `<td>${LAF.buildCapChips(m) || "—"}</td>`)
+        .join("");
+      const linkCells = models
+        .map(
+          (m) =>
+            `<td><a class="model-link" href="model.html?m=${encodeURIComponent(m.id)}">Model page →</a></td>`
+        )
+        .join("");
+
+      const bars = costs
+        .map((c) => {
+          const pct = maxCost > 0 ? (c.cost / maxCost) * 100 : 0;
+          return `
+            <div class="cost-bar-item">
+              <label><span>${c.model.name}</span><span>${LAF.fmtMoney(c.cost)}</span></label>
+              <div class="cost-bar-track"><div class="cost-bar-fill" style="width:${pct}%"></div></div>
+            </div>`;
+        })
+        .join("");
+
+      main.innerHTML = `
+        <div class="compare-table-wrap">
+          <table class="compare-table">
+            <thead><tr><th scope="col">Metric</th>${headCols}</tr></thead>
+            <tbody>
+              ${row("Est. cost", costCells)}
+              <tr class="cost-bar-row"><td></td><td colspan="${models.length}"><div class="cost-bars">${bars}</div></td></tr>
+              ${row("Input $/M", rateCells("input"))}
+              ${row("Output $/M", rateCells("output"))}
+              ${row("Context", ctxCells)}
+              ${row("Capabilities", tagCells)}
+              ${row("Details", linkCells)}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function syncSliders() {
+      $("#sl-r").value = workload.requests;
+      $("#sl-in").value = workload.inputPerReq;
+      $("#sl-out").value = workload.outputPerReq;
+      $("#val-r").textContent = workload.requests.toLocaleString();
+      $("#val-in").textContent = workload.inputPerReq.toLocaleString();
+      $("#val-out").textContent = workload.outputPerReq.toLocaleString();
+    }
+
+    function syncUrl() {
+      const ids = selectedIds.filter(Boolean);
+      const qs = LAF.buildWorkloadQuery(workload, { models: ids.join(",") });
+      history.replaceState(null, "", `compare.html?${qs}`);
+    }
+
+    function onWorkloadChange() {
+      syncSliders();
+      syncUrl();
+      renderTable();
+    }
+
+    $("#sl-r").addEventListener("input", (e) => {
+      workload.requests = +e.target.value;
+      onWorkloadChange();
+    });
+    $("#sl-in").addEventListener("input", (e) => {
+      workload.inputPerReq = +e.target.value;
+      onWorkloadChange();
+    });
+    $("#sl-out").addEventListener("input", (e) => {
+      workload.outputPerReq = +e.target.value;
+      onWorkloadChange();
+    });
+
+    $("#share-btn").addEventListener("click", async () => {
+      const ids = selectedIds.filter(Boolean);
+      const qs = LAF.buildWorkloadQuery(workload, { models: ids.join(",") });
+      const url = `${location.origin}${location.pathname}?${qs}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        $("#share-btn").textContent = "Copied!";
+        setTimeout(() => { $("#share-btn").textContent = "Copy share link"; }, 2000);
+      } catch {
+        prompt("Copy:", url);
+      }
+    });
+
+    async function init() {
+      const res = await fetch(MODELS_URL);
+      if (!res.ok) throw new Error("load");
+      const data = await res.json();
+      MODELS = data.models || [];
+      selectedIds = parseModelIds();
+      if (!selectedIds.length) {
+        const sorted = [...MODELS].sort((a, b) => a.input - b.input);
+        selectedIds = sorted.slice(0, 2).map((m) => m.id);
+      }
+      renderPickers();
+      syncSliders();
+      renderTable();
+    }
+
+    init().catch(() => {
+      $("#compare-main").innerHTML = `<p class="load-state">Failed to load models.</p>`;
+    });
+  </script>
+</body>
+</html>
