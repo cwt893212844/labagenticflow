@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.28",
-  "last_updated": "2026-06-28T09:18:00.885794Z",
+  "version": "2026.06.29",
+  "last_updated": "2026-06-29T11:09:32.132839Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -549,8 +549,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.66,
-      "output": 3.41,
+      "input": 0.55,
+      "output": 3.2,
       "context": 262144,
       "tags": [
         "vision",
@@ -766,7 +766,13 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "moonshotai-kimi-k2-6",
+        "openrouter_id": "moonshotai/kimi-k2.6",
+        "changes": "input: 0.66 → 0.55; output: 3.41 → 3.2"
+      }
+    ]
   },
   "warnings": [
     "provider_mode=auto; 12 providers in catalog"
