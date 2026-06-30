@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.29",
-  "last_updated": "2026-06-29T11:09:32.694402Z",
+  "version": "2026.06.30",
+  "last_updated": "2026-06-30T09:49:01.714852Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -357,7 +357,7 @@
       "repo_url": "https://github.com/microsoft/playwright-mcp",
       "featured": true,
       "registry_name": "io.github.microsoft/playwright-mcp",
-      "registry_version": "0.0.76",
+      "registry_version": "0.0.77",
       "registry_synced": true
     },
     {
@@ -530,6 +530,12 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "playwright-mcp",
+        "name": "Playwright",
+        "changes": "registry_version: '0.0.76' → '0.0.77'"
+      }
+    ]
   }
 }

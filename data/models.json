@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.29",
-  "last_updated": "2026-06-29T11:09:32.132839Z",
+  "version": "2026.06.30",
+  "last_updated": "2026-06-30T09:49:01.107953Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -703,7 +703,7 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.95,
+      "input": 0.94,
       "output": 3.0,
       "context": 1048576,
       "tags": [
@@ -768,9 +768,9 @@
     "removed": [],
     "updated": [
       {
-        "id": "moonshotai-kimi-k2-6",
-        "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.66 → 0.55; output: 3.41 → 3.2"
+        "id": "z-ai-glm-5-2",
+        "openrouter_id": "z-ai/glm-5.2",
+        "changes": "input: 0.95 → 0.94"
       }
     ]
   },
