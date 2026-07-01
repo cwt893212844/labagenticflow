@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.30",
-  "last_updated": "2026-06-30T09:49:01.714852Z",
+  "version": "2026.07.01",
+  "last_updated": "2026-07-01T09:58:21.689160Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -508,7 +508,7 @@
       "description": "Crawl and scrape websites into clean markdown for RAG pipelines.",
       "repo_url": "https://github.com/mendableai/firecrawl-mcp-server",
       "registry_name": "io.github.firecrawl/firecrawl-mcp-server",
-      "registry_version": "3.22.1",
+      "registry_version": "3.22.2",
       "registry_synced": true
     },
     {
@@ -532,9 +532,9 @@
     "removed": [],
     "updated": [
       {
-        "id": "playwright-mcp",
-        "name": "Playwright",
-        "changes": "registry_version: '0.0.76' → '0.0.77'"
+        "id": "mcp-firecrawl",
+        "name": "Firecrawl",
+        "changes": "registry_version: '3.22.1' → '3.22.2'"
       }
     ]
   }

@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.30",
-  "last_updated": "2026-06-30T09:49:01.107953Z",
+  "version": "2026.07.01",
+  "last_updated": "2026-07-01T09:58:21.297851Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -165,17 +165,17 @@
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "anthropic-claude-sonnet-4-6",
-      "name": "Claude Sonnet 4.6",
+      "id": "anthropic-claude-sonnet-5",
+      "name": "Claude Sonnet 5",
       "provider": "Anthropic",
-      "input": 3.0,
-      "output": 15.0,
+      "input": 2.0,
+      "output": 10.0,
       "context": 1000000,
       "tags": [
         "vision",
         "tools"
       ],
-      "openrouter_id": "anthropic/claude-sonnet-4.6",
+      "openrouter_id": "anthropic/claude-sonnet-5",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/anthropic",
       "benchmark_source": "Artificial Analysis"
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.09,
-      "output": 0.18,
+      "input": 0.098,
+      "output": 0.196,
       "context": 1048576,
       "tags": [
         "tools"
@@ -703,7 +703,7 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.94,
+      "input": 0.93,
       "output": 3.0,
       "context": 1048576,
       "tags": [
@@ -764,13 +764,30 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "id": "anthropic-claude-sonnet-5",
+        "name": "Claude Sonnet 5",
+        "openrouter_id": "anthropic/claude-sonnet-5"
+      }
+    ],
+    "removed": [
+      {
+        "id": "anthropic-claude-sonnet-4-6",
+        "name": "Claude Sonnet 4.6",
+        "openrouter_id": "anthropic/claude-sonnet-4.6"
+      }
+    ],
     "updated": [
+      {
+        "id": "deepseek-deepseek-v4-flash",
+        "openrouter_id": "deepseek/deepseek-v4-flash",
+        "changes": "input: 0.09 → 0.098; output: 0.18 → 0.196"
+      },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.95 → 0.94"
+        "changes": "input: 0.94 → 0.93"
       }
     ]
   },
