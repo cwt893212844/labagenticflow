@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.01",
-  "last_updated": "2026-07-01T09:58:21.297851Z",
+  "version": "2026.07.02",
+  "last_updated": "2026-07-02T09:20:49.326245Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.098,
-      "output": 0.196,
+      "input": 0.089,
+      "output": 0.18,
       "context": 1048576,
       "tags": [
         "tools"
@@ -764,30 +764,13 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "anthropic-claude-sonnet-5",
-        "name": "Claude Sonnet 5",
-        "openrouter_id": "anthropic/claude-sonnet-5"
-      }
-    ],
-    "removed": [
-      {
-        "id": "anthropic-claude-sonnet-4-6",
-        "name": "Claude Sonnet 4.6",
-        "openrouter_id": "anthropic/claude-sonnet-4.6"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
         "id": "deepseek-deepseek-v4-flash",
         "openrouter_id": "deepseek/deepseek-v4-flash",
-        "changes": "input: 0.09 → 0.098; output: 0.18 → 0.196"
-      },
-      {
-        "id": "z-ai-glm-5-2",
-        "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.94 → 0.93"
+        "changes": "input: 0.098 → 0.089; output: 0.196 → 0.18"
       }
     ]
   },
