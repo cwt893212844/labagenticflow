@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.04",
-  "last_updated": "2026-07-04T08:44:01.310578Z",
+  "version": "2026.07.05",
+  "last_updated": "2026-07-05T09:12:29.888551Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.9086,
-      "output": 2.8556,
+      "input": 0.728,
+      "output": 2.288,
       "context": 1048576,
       "tags": [
         "tools"
@@ -770,7 +770,7 @@
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.93 → 0.9086; output: 3.0 → 2.8556"
+        "changes": "input: 0.9086 → 0.728; output: 2.8556 → 2.288"
       }
     ]
   },
