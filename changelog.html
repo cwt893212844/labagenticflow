@@ -75,7 +75,7 @@
     function modelLabel(data, item) {
       const m = (data.models || []).find((x) => x.id === item.id);
       const name = m ? m.name : item.name || item.id;
-      const href = `index.html?model=${encodeURIComponent(item.id)}`;
+      const href = `model.html?m=${encodeURIComponent(item.id)}`;
       return `<a href="${href}">${name}</a>`;
     }
 
