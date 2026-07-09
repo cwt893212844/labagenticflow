@@ -235,6 +235,27 @@
       display: block;
     }
 
+    .sparkline-tooltip {
+      position: absolute;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-primary);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .sparkline-tooltip.visible { opacity: 1; }
+
+    .sparkline-hit-area { fill: transparent; stroke: none; cursor: crosshair; }
+
+    .sparkline-hover-dot { opacity: 0; transition: opacity 0.1s; }
+
     .sparkline-grid {
       stroke: rgba(255, 255, 255, 0.06);
       stroke-width: 1;
@@ -449,6 +470,20 @@
       const baseline = margin.top + plotH;
       const area = `${xAt(0)},${baseline} ${pts.join(" ")} ${xAt(values.length - 1)},${baseline}`;
 
+      const hoverDots = values
+        .map(
+          (v, i) =>
+            `<circle class="sparkline-hover-dot" cx="${xAt(i)}" cy="${yAt(v)}" r="4" fill="var(--phosphor)" data-date="${dates[i]}" data-value="${v}" />`
+        )
+        .join("");
+
+      const hitRects = values
+        .map(
+          (v, i) =>
+            `<rect class="sparkline-hit-area" x="${xAt(i) - plotW / values.length / 2}" y="${margin.top}" width="${plotW / values.length}" height="${plotH}" data-i="${i}" />`
+        )
+        .join("");
+
       const first = series[0].date;
       const last = series[series.length - 1].date;
       const delta = values[values.length - 1] - values[0];
@@ -458,7 +493,7 @@
       const ariaLabel = `Input price from ${first} to ${last}, ${deltaLabel}`;
 
       return `
-        <div class="sparkline-wrap">
+        <div class="sparkline-wrap" style="position:relative">
           <div class="sparkline-meta">
             <span>Input price · ${series.length} days</span>
             <span>${first} → ${last} · ${deltaLabel}</span>
@@ -473,7 +508,10 @@
             <polygon class="sparkline-fill" points="${area}" />
             <polyline class="sparkline-line" points="${pts.join(" ")}" />
             ${values.map((v, i) => `<circle cx="${xAt(i)}" cy="${yAt(v)}" r="2.5" fill="var(--phosphor)" />`).join("")}
+            ${hoverDots}
+            ${hitRects}
           </svg>
+          <div class="sparkline-tooltip" id="sparkline-tooltip"></div>
         </div>`;
     }
 
@@ -601,7 +639,49 @@
         ${renderSparkline(series)}
       `;
 
+      window._sparklineSeries = series;
       bindWorkload(model);
+      bindSparklineHover();
+    }
+
+    function bindSparklineHover() {
+      const wrap = document.querySelector(".sparkline-wrap");
+      const tooltip = document.getElementById("sparkline-tooltip");
+      const svg = document.querySelector(".sparkline-chart");
+      if (!wrap || !tooltip || !svg) return;
+
+      const getPos = (e) => {
+        const rect = svg.getBoundingClientRect();
+        const scaleX = 520 / rect.width;
+        const scaleY = 168 / rect.height;
+        const svgX = (e.clientX - rect.left) * scaleX;
+        const svgY = (e.clientY - rect.top) * scaleY;
+        return { svgX, svgY, screenX: e.clientX, screenY: e.clientY };
+      };
+
+      const hitRects = svg.querySelectorAll(".sparkline-hit-area");
+      hitRects.forEach((rect) => {
+        rect.addEventListener("mouseenter", (e) => {
+          const i = +e.target.dataset.i;
+          const { screenX, screenY } = getPos(e);
+          const series = window._sparklineSeries;
+          if (!series || !series[i]) return;
+          const pt = series[i];
+          tooltip.textContent = `${pt.date}  ·  $${pt.input}/M in`;
+          tooltip.style.left = `${screenX + 12}px`;
+          tooltip.style.top = `${screenY - 32}px`;
+          tooltip.classList.add("visible");
+          svg.querySelectorAll(".sparkline-hover-dot").forEach((dot, j) => {
+            dot.style.opacity = j === i ? "1" : "0";
+          });
+        });
+        rect.addEventListener("mouseleave", () => {
+          tooltip.classList.remove("visible");
+          svg.querySelectorAll(".sparkline-hover-dot").forEach((dot) => {
+            dot.style.opacity = "0";
+          });
+        });
+      });
     }
 
     function renderIndex() {
