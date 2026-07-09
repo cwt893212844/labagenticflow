@@ -302,6 +302,16 @@
 
     .bench-link:hover { text-decoration: underline; }
 
+    .model-disclaimer {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-left: 2px solid rgba(240, 160, 48, 0.4);
+      background: rgba(240, 160, 48, 0.05);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
     .not-found {
       padding: 48px 0;
       color: var(--text-muted);
@@ -536,6 +546,20 @@
       });
     }
 
+    function getDisclaimer(model) {
+      const p = (model.provider || "").toLowerCase();
+      if (p === "deepseek") {
+        return "DeepSeek Direct API has peak/off-peak pricing — roughly 20–30% higher during peak hours (10:30–18:30 & 21:00–23:00 Beijing time). This estimate uses the OpenRouter single rate and may underestimate actual peak-hour spend.";
+      }
+      if (p === "anthropic") {
+        return "Anthropic charges separately for input cache reads (<code>input_cache_read</code>), which is not reflected in this estimate.";
+      }
+      if (p === "google" && model.name && model.name.toLowerCase().includes("gemini")) {
+        return "Gemini multimodal inference (image, audio, web search) is billed separately and not included in this estimate.";
+      }
+      return "";
+    }
+
     function renderModel(model) {
       const cost = LAF.calcCost(model, workload);
       const periodLabel = workload.period === "daily" ? "/day" : "/mo";
@@ -555,6 +579,7 @@
             <p class="model-id">${model.openrouter_id}</p>
             <div class="model-tags">${LAF.buildCapChips(model)}</div>
             ${bench}
+            ${getDisclaimer(model) ? `<p class="model-disclaimer">${getDisclaimer(model)}</p>` : ""}
           </div>
           <div class="hero-cost">
             <p class="hero-cost-label">Estimated cost</p>
