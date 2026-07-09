@@ -137,7 +137,7 @@
         <li>Cached / prompt-caching input rates (OpenRouter may record <code>input_cache_read</code> separately — not used in estimates)</li>
         <li>Peak / off-peak pricing (DeepSeek Direct API varies by time-of-day; not exposed via OpenRouter)</li>
         <li>Regional or enterprise pricing</li>
-        <li>Tool-call overhead, vision token surcharges, or reasoning-token billing quirks</li>
+        <li>Tool-call overhead, vision token surcharges, or reasoning-token billing quirks (e.g., OpenAI o-series input price bundles thinking tokens — a complex problem may consume far more tokens than the output)</li>
         <li>Taxes, platform fees, or minimum spend commitments</li>
       </ul>
       <p>Always verify on the provider's official pricing page before production commitments.</p>

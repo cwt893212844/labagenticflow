@@ -234,6 +234,17 @@
       color: var(--text-muted);
       font-size: 0.9rem;
     }
+
+    .compare-preset-link {
+      color: var(--phosphor);
+      text-decoration: none;
+      font-size: 0.85rem;
+      border: 1px solid rgba(61, 255, 154, 0.3);
+      padding: 6px 14px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .compare-preset-link:hover { border-color: var(--phosphor); }
   </style>
 </head>
 <body>
@@ -364,7 +375,7 @@
       const main = $("#compare-main");
 
       if (models.length < 2) {
-        main.innerHTML = `<div class="compare-table-wrap"><p class="empty-hint">Pick at least two models to compare.</p></div>`;
+        main.innerHTML = `<div class="compare-table-wrap"><p class="empty-hint">Pick at least two models to compare.<br><br><a href="?preset=0" class="compare-preset-link">Try GPT-4.1 Pro vs Claude Sonnet 5 →</a></p></div>`;
         return;
       }
 
@@ -484,8 +495,15 @@
       MODELS = data.models || [];
       selectedIds = parseModelIds();
       if (!selectedIds.length) {
-        const sorted = [...MODELS].sort((a, b) => a.input - b.input);
-        selectedIds = sorted.slice(0, 2).map((m) => m.id);
+        // Default comparison combos by common use-case
+        const PRESETS = [
+          ["openai-gpt-5-4-pro", "anthropic-claude-sonnet-5"],
+          ["deepseek-deepseek-v4-flash", "google-gemini-3-5-flash"],
+          ["qwen-qwen3-7-max", "moonshotai-kimi-k2-5"],
+        ];
+        const p = new URLSearchParams(location.search).get("preset");
+        const pick = PRESETS.find(([a]) => MODELS.find((m) => m.id === a));
+        selectedIds = pick || PRESETS[0];
       }
       renderPickers();
       syncSliders();

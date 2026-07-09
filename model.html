@@ -473,14 +473,14 @@
       const hoverDots = values
         .map(
           (v, i) =>
-            `<circle class="sparkline-hover-dot" cx="${xAt(i)}" cy="${yAt(v)}" r="4" fill="var(--phosphor)" data-date="${dates[i]}" data-value="${v}" />`
+            `<circle class="sparkline-hover-dot" cx="${xAt(i)}" cy="${yAt(v)}" r="4" fill="var(--phosphor)" data-date="${dates[i]}" data-value="${v}" data-output="${series[i].output}" />`
         )
         .join("");
 
       const hitRects = values
         .map(
           (v, i) =>
-            `<rect class="sparkline-hit-area" x="${xAt(i) - plotW / values.length / 2}" y="${margin.top}" width="${plotW / values.length}" height="${plotH}" data-date="${dates[i]}" data-value="${v}" />`
+            `<rect class="sparkline-hit-area" x="${xAt(i) - plotW / values.length / 2}" y="${margin.top}" width="${plotW / values.length}" height="${plotH}" data-date="${dates[i]}" data-value="${v}" data-output="${series[i].output}" />`
         )
         .join("");
 
@@ -586,6 +586,7 @@
 
     function getDisclaimer(model) {
       const p = (model.provider || "").toLowerCase();
+      const oid = (model.openrouter_id || "").toLowerCase();
       if (p === "deepseek") {
         return "DeepSeek Direct API has peak/off-peak pricing — roughly 20–30% higher during peak hours (10:30–18:30 & 21:00–23:00 Beijing time). This estimate uses the OpenRouter single rate and may underestimate actual peak-hour spend.";
       }
@@ -594,6 +595,9 @@
       }
       if (p === "google" && model.name && model.name.toLowerCase().includes("gemini")) {
         return "Gemini multimodal inference (image, audio, web search) is billed separately and not included in this estimate.";
+      }
+      if (/o[134]/.test(oid) && oid.includes("thinking")) {
+        return "Input $/M includes reasoning tokens — a complex problem may consume far more tokens than the output.";
       }
       return "";
     }
@@ -658,10 +662,12 @@
         rect.addEventListener("mouseenter", (e) => {
           const date = e.target.dataset.date;
           const value = e.target.dataset.value;
+          const output = e.target.dataset.output;
           if (!date || value === undefined) return;
           const { screenX, screenY } = getPos(e);
           const wrapRect = tooltip.parentElement.getBoundingClientRect();
-          tooltip.textContent = `${date}  ·  $${value}/M in`;
+          tooltip.innerHTML = `${date}<br>$${value}/M in  ·  $${output}/M out`;
+          tooltip.style.whiteSpace = "nowrap";
           tooltip.style.left = `${screenX - wrapRect.left + 12}px`;
           tooltip.style.top = `${screenY - wrapRect.top - 36}px`;
           tooltip.classList.add("visible");
