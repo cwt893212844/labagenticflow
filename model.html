@@ -480,7 +480,7 @@
       const hitRects = values
         .map(
           (v, i) =>
-            `<rect class="sparkline-hit-area" x="${xAt(i) - plotW / values.length / 2}" y="${margin.top}" width="${plotW / values.length}" height="${plotH}" data-i="${i}" />`
+            `<rect class="sparkline-hit-area" x="${xAt(i) - plotW / values.length / 2}" y="${margin.top}" width="${plotW / values.length}" height="${plotH}" data-date="${dates[i]}" data-value="${v}" />`
         )
         .join("");
 
@@ -639,40 +639,34 @@
         ${renderSparkline(series)}
       `;
 
-      window._sparklineSeries = series;
       bindWorkload(model);
       bindSparklineHover();
     }
 
     function bindSparklineHover() {
-      const wrap = document.querySelector(".sparkline-wrap");
       const tooltip = document.getElementById("sparkline-tooltip");
       const svg = document.querySelector(".sparkline-chart");
-      if (!wrap || !tooltip || !svg) return;
+      if (!tooltip || !svg) return;
 
       const getPos = (e) => {
         const rect = svg.getBoundingClientRect();
-        const scaleX = 520 / rect.width;
-        const scaleY = 168 / rect.height;
-        const svgX = (e.clientX - rect.left) * scaleX;
-        const svgY = (e.clientY - rect.top) * scaleY;
-        return { svgX, svgY, screenX: e.clientX, screenY: e.clientY };
+        return { screenX: e.clientX, screenY: e.clientY };
       };
 
       const hitRects = svg.querySelectorAll(".sparkline-hit-area");
       hitRects.forEach((rect) => {
         rect.addEventListener("mouseenter", (e) => {
-          const i = +e.target.dataset.i;
+          const date = e.target.dataset.date;
+          const value = e.target.dataset.value;
+          if (!date || value === undefined) return;
           const { screenX, screenY } = getPos(e);
-          const series = window._sparklineSeries;
-          if (!series || !series[i]) return;
-          const pt = series[i];
-          tooltip.textContent = `${pt.date}  ·  $${pt.input}/M in`;
-          tooltip.style.left = `${screenX + 12}px`;
-          tooltip.style.top = `${screenY - 32}px`;
+          const wrapRect = tooltip.parentElement.getBoundingClientRect();
+          tooltip.textContent = `${date}  ·  $${value}/M in`;
+          tooltip.style.left = `${screenX - wrapRect.left + 12}px`;
+          tooltip.style.top = `${screenY - wrapRect.top - 36}px`;
           tooltip.classList.add("visible");
-          svg.querySelectorAll(".sparkline-hover-dot").forEach((dot, j) => {
-            dot.style.opacity = j === i ? "1" : "0";
+          svg.querySelectorAll(".sparkline-hover-dot").forEach((dot) => {
+            dot.style.opacity = dot.dataset.date === date ? "1" : "0";
           });
         });
         rect.addEventListener("mouseleave", () => {
