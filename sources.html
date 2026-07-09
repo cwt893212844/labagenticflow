@@ -134,7 +134,8 @@
       <h2>What we do not include</h2>
       <ul>
         <li>Batch API discounts</li>
-        <li>Cached / prompt-caching input rates</li>
+        <li>Cached / prompt-caching input rates (OpenRouter may record <code>input_cache_read</code> separately — not used in estimates)</li>
+        <li>Peak / off-peak pricing (DeepSeek Direct API varies by time-of-day; not exposed via OpenRouter)</li>
         <li>Regional or enterprise pricing</li>
         <li>Tool-call overhead, vision token surcharges, or reasoning-token billing quirks</li>
         <li>Taxes, platform fees, or minimum spend commitments</li>
