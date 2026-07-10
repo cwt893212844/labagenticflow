@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/mo",
+      "destination": "/model.html",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
