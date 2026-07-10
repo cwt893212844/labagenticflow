@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.09",
-  "last_updated": "2026-07-09T09:48:33.445381Z",
+  "version": "2026.07.10",
+  "last_updated": "2026-07-10T09:43:47.683242Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -549,7 +549,7 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.65,
+      "input": 0.66,
       "output": 3.41,
       "context": 262144,
       "tags": [
@@ -563,8 +563,8 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.74,
-      "output": 3.5,
+      "input": 0.72,
+      "output": 3.49,
       "context": 262144,
       "tags": [
         "vision",
@@ -574,56 +574,40 @@
       "pricing_source": "openrouter"
     },
     {
-      "id": "openai-gpt-5-2-pro",
-      "name": "GPT-5.2 Pro",
+      "id": "openai-gpt-5-6-luna",
+      "name": "GPT-5.6 Luna",
       "provider": "OpenAI",
-      "input": 21.0,
-      "output": 168.0,
-      "context": 400000,
-      "tags": [
-        "vision",
-        "tools"
-      ],
-      "openrouter_id": "openai/gpt-5.2-pro",
-      "pricing_source": "openrouter",
-      "benchmark_url": "https://artificialanalysis.ai/providers/openai",
-      "benchmark_source": "Artificial Analysis"
-    },
-    {
-      "id": "openai-gpt-5-4-mini",
-      "name": "GPT-5.4 Mini",
-      "provider": "OpenAI",
-      "input": 0.75,
-      "output": 4.5,
-      "context": 400000,
-      "tags": [
-        "vision",
-        "tools"
-      ],
-      "openrouter_id": "openai/gpt-5.4-mini",
-      "pricing_source": "openrouter",
-      "benchmark_url": "https://artificialanalysis.ai/providers/openai",
-      "benchmark_source": "Artificial Analysis"
-    },
-    {
-      "id": "openai-gpt-5-4-pro",
-      "name": "GPT-5.4 Pro",
-      "provider": "OpenAI",
-      "input": 30.0,
-      "output": 180.0,
+      "input": 1.0,
+      "output": 6.0,
       "context": 1050000,
       "tags": [
         "vision",
         "tools"
       ],
-      "openrouter_id": "openai/gpt-5.4-pro",
+      "openrouter_id": "openai/gpt-5.6-luna",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/openai",
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "openai-gpt-5-5",
-      "name": "GPT-5.5",
+      "id": "openai-gpt-5-6-luna-pro",
+      "name": "GPT-5.6 Luna Pro",
+      "provider": "OpenAI",
+      "input": 1.0,
+      "output": 6.0,
+      "context": 1050000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.6-luna-pro",
+      "pricing_source": "openrouter",
+      "benchmark_url": "https://artificialanalysis.ai/providers/openai",
+      "benchmark_source": "Artificial Analysis"
+    },
+    {
+      "id": "openai-gpt-5-6-sol-pro",
+      "name": "GPT-5.6 Sol Pro",
       "provider": "OpenAI",
       "input": 5.0,
       "output": 30.0,
@@ -632,23 +616,39 @@
         "vision",
         "tools"
       ],
-      "openrouter_id": "openai/gpt-5.5",
+      "openrouter_id": "openai/gpt-5.6-sol-pro",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/openai",
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "openai-gpt-5-5-pro",
-      "name": "GPT-5.5 Pro",
+      "id": "openai-gpt-5-6-terra",
+      "name": "GPT-5.6 Terra",
       "provider": "OpenAI",
-      "input": 30.0,
-      "output": 180.0,
+      "input": 2.5,
+      "output": 15.0,
       "context": 1050000,
       "tags": [
         "vision",
         "tools"
       ],
-      "openrouter_id": "openai/gpt-5.5-pro",
+      "openrouter_id": "openai/gpt-5.6-terra",
+      "pricing_source": "openrouter",
+      "benchmark_url": "https://artificialanalysis.ai/providers/openai",
+      "benchmark_source": "Artificial Analysis"
+    },
+    {
+      "id": "openai-gpt-5-6-terra-pro",
+      "name": "GPT-5.6 Terra Pro",
+      "provider": "OpenAI",
+      "input": 2.5,
+      "output": 15.0,
+      "context": 1050000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "openai/gpt-5.6-terra-pro",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/openai",
       "benchmark_source": "Artificial Analysis"
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.93,
-      "output": 3.0,
+      "input": 0.84,
+      "output": 2.64,
       "context": 1048576,
       "tags": [
         "tools"
@@ -764,13 +764,75 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "id": "openai-gpt-5-6-luna",
+        "name": "GPT-5.6 Luna",
+        "openrouter_id": "openai/gpt-5.6-luna"
+      },
+      {
+        "id": "openai-gpt-5-6-luna-pro",
+        "name": "GPT-5.6 Luna Pro",
+        "openrouter_id": "openai/gpt-5.6-luna-pro"
+      },
+      {
+        "id": "openai-gpt-5-6-sol-pro",
+        "name": "GPT-5.6 Sol Pro",
+        "openrouter_id": "openai/gpt-5.6-sol-pro"
+      },
+      {
+        "id": "openai-gpt-5-6-terra",
+        "name": "GPT-5.6 Terra",
+        "openrouter_id": "openai/gpt-5.6-terra"
+      },
+      {
+        "id": "openai-gpt-5-6-terra-pro",
+        "name": "GPT-5.6 Terra Pro",
+        "openrouter_id": "openai/gpt-5.6-terra-pro"
+      }
+    ],
+    "removed": [
+      {
+        "id": "openai-gpt-5-2-pro",
+        "name": "GPT-5.2 Pro",
+        "openrouter_id": "openai/gpt-5.2-pro"
+      },
+      {
+        "id": "openai-gpt-5-4-mini",
+        "name": "GPT-5.4 Mini",
+        "openrouter_id": "openai/gpt-5.4-mini"
+      },
+      {
+        "id": "openai-gpt-5-4-pro",
+        "name": "GPT-5.4 Pro",
+        "openrouter_id": "openai/gpt-5.4-pro"
+      },
+      {
+        "id": "openai-gpt-5-5",
+        "name": "GPT-5.5",
+        "openrouter_id": "openai/gpt-5.5"
+      },
+      {
+        "id": "openai-gpt-5-5-pro",
+        "name": "GPT-5.5 Pro",
+        "openrouter_id": "openai/gpt-5.5-pro"
+      }
+    ],
     "updated": [
       {
         "id": "moonshotai-kimi-k2-6",
         "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.66 → 0.65"
+        "changes": "input: 0.65 → 0.66"
+      },
+      {
+        "id": "moonshotai-kimi-k2-7-code",
+        "openrouter_id": "moonshotai/kimi-k2.7-code",
+        "changes": "input: 0.74 → 0.72; output: 3.5 → 3.49"
+      },
+      {
+        "id": "z-ai-glm-5-2",
+        "openrouter_id": "z-ai/glm-5.2",
+        "changes": "input: 0.93 → 0.84; output: 3.0 → 2.64"
       }
     ]
   },
