@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.10",
-  "last_updated": "2026-07-10T09:43:47.683242Z",
+  "version": "2026.07.11",
+  "last_updated": "2026-07-11T08:03:28.625167Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.09,
-      "output": 0.18,
+      "input": 0.077,
+      "output": 0.154,
       "context": 1048576,
       "tags": [
         "tools"
@@ -564,7 +564,7 @@
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
       "input": 0.72,
-      "output": 3.49,
+      "output": 3.5,
       "context": 262144,
       "tags": [
         "vision",
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.84,
-      "output": 2.64,
+      "input": 0.406,
+      "output": 1.276,
       "context": 1048576,
       "tags": [
         "tools"
@@ -764,75 +764,23 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "openai-gpt-5-6-luna",
-        "name": "GPT-5.6 Luna",
-        "openrouter_id": "openai/gpt-5.6-luna"
-      },
-      {
-        "id": "openai-gpt-5-6-luna-pro",
-        "name": "GPT-5.6 Luna Pro",
-        "openrouter_id": "openai/gpt-5.6-luna-pro"
-      },
-      {
-        "id": "openai-gpt-5-6-sol-pro",
-        "name": "GPT-5.6 Sol Pro",
-        "openrouter_id": "openai/gpt-5.6-sol-pro"
-      },
-      {
-        "id": "openai-gpt-5-6-terra",
-        "name": "GPT-5.6 Terra",
-        "openrouter_id": "openai/gpt-5.6-terra"
-      },
-      {
-        "id": "openai-gpt-5-6-terra-pro",
-        "name": "GPT-5.6 Terra Pro",
-        "openrouter_id": "openai/gpt-5.6-terra-pro"
-      }
-    ],
-    "removed": [
-      {
-        "id": "openai-gpt-5-2-pro",
-        "name": "GPT-5.2 Pro",
-        "openrouter_id": "openai/gpt-5.2-pro"
-      },
-      {
-        "id": "openai-gpt-5-4-mini",
-        "name": "GPT-5.4 Mini",
-        "openrouter_id": "openai/gpt-5.4-mini"
-      },
-      {
-        "id": "openai-gpt-5-4-pro",
-        "name": "GPT-5.4 Pro",
-        "openrouter_id": "openai/gpt-5.4-pro"
-      },
-      {
-        "id": "openai-gpt-5-5",
-        "name": "GPT-5.5",
-        "openrouter_id": "openai/gpt-5.5"
-      },
-      {
-        "id": "openai-gpt-5-5-pro",
-        "name": "GPT-5.5 Pro",
-        "openrouter_id": "openai/gpt-5.5-pro"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
-        "id": "moonshotai-kimi-k2-6",
-        "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.65 → 0.66"
+        "id": "deepseek-deepseek-v4-flash",
+        "openrouter_id": "deepseek/deepseek-v4-flash",
+        "changes": "input: 0.09 → 0.077; output: 0.18 → 0.154"
       },
       {
         "id": "moonshotai-kimi-k2-7-code",
         "openrouter_id": "moonshotai/kimi-k2.7-code",
-        "changes": "input: 0.74 → 0.72; output: 3.5 → 3.49"
+        "changes": "output: 3.49 → 3.5"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.93 → 0.84; output: 3.0 → 2.64"
+        "changes": "input: 0.84 → 0.406; output: 2.64 → 1.276"
       }
     ]
   },
