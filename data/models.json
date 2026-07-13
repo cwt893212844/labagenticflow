@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.12",
-  "last_updated": "2026-07-12T08:24:15.645567Z",
+  "version": "2026.07.13",
+  "last_updated": "2026-07-13T09:36:18.169776Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -397,8 +397,8 @@
       "id": "meta-llama-llama-4-maverick",
       "name": "Llama 4 Maverick",
       "provider": "Meta (via API)",
-      "input": 0.15,
-      "output": 0.6,
+      "input": 0.2,
+      "output": 0.8,
       "context": 1048576,
       "tags": [
         "vision",
@@ -563,8 +563,8 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.72,
-      "output": 3.5,
+      "input": 0.719,
+      "output": 3.49,
       "context": 262144,
       "tags": [
         "vision",
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.42,
-      "output": 1.32,
+      "input": 0.93,
+      "output": 3.0,
       "context": 1048576,
       "tags": [
         "tools"
@@ -768,9 +768,19 @@
     "removed": [],
     "updated": [
       {
+        "id": "meta-llama-llama-4-maverick",
+        "openrouter_id": "meta-llama/llama-4-maverick",
+        "changes": "input: 0.15 → 0.2; output: 0.6 → 0.8"
+      },
+      {
+        "id": "moonshotai-kimi-k2-7-code",
+        "openrouter_id": "moonshotai/kimi-k2.7-code",
+        "changes": "input: 0.72 → 0.719; output: 3.5 → 3.49"
+      },
+      {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.406 → 0.42; output: 1.276 → 1.32"
+        "changes": "input: 0.42 → 0.93; output: 1.32 → 3.0"
       }
     ]
   },
