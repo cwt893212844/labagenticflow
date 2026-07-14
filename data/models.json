@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.13",
-  "last_updated": "2026-07-13T09:36:18.169776Z",
+  "version": "2026.07.14",
+  "last_updated": "2026-07-14T08:16:24.300209Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -227,8 +227,8 @@
       "id": "deepseek-deepseek-chat-v3-1",
       "name": "DeepSeek V3.1",
       "provider": "DeepSeek",
-      "input": 0.21,
-      "output": 0.79,
+      "input": 0.25,
+      "output": 0.95,
       "context": 163840,
       "tags": [
         "tools"
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.077,
-      "output": 0.154,
+      "input": 0.09,
+      "output": 0.18,
       "context": 1048576,
       "tags": [
         "tools"
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.93,
-      "output": 3.0,
+      "input": 0.9282,
+      "output": 2.9172,
       "context": 1048576,
       "tags": [
         "tools"
@@ -768,19 +768,19 @@
     "removed": [],
     "updated": [
       {
-        "id": "meta-llama-llama-4-maverick",
-        "openrouter_id": "meta-llama/llama-4-maverick",
-        "changes": "input: 0.15 → 0.2; output: 0.6 → 0.8"
+        "id": "deepseek-deepseek-chat-v3-1",
+        "openrouter_id": "deepseek/deepseek-chat-v3.1",
+        "changes": "input: 0.21 → 0.25; output: 0.79 → 0.95"
       },
       {
-        "id": "moonshotai-kimi-k2-7-code",
-        "openrouter_id": "moonshotai/kimi-k2.7-code",
-        "changes": "input: 0.72 → 0.719; output: 3.5 → 3.49"
+        "id": "deepseek-deepseek-v4-flash",
+        "openrouter_id": "deepseek/deepseek-v4-flash",
+        "changes": "input: 0.077 → 0.09; output: 0.154 → 0.18"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.42 → 0.93; output: 1.32 → 3.0"
+        "changes": "input: 0.93 → 0.9282; output: 3.0 → 2.9172"
       }
     ]
   },
