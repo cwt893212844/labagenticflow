@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.14",
-  "last_updated": "2026-07-14T08:16:44.406574Z",
+  "version": "2026.07.15",
+  "last_updated": "2026-07-15T08:22:48.961764Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -465,7 +465,7 @@
       "description": "A Model Context Protocol (MCP) server for Kubernetes and OpenShift",
       "repo_url": "https://github.com/containers/kubernetes-mcp-server",
       "registry_name": "io.github.containers/kubernetes-mcp-server",
-      "registry_version": "0.0.64",
+      "registry_version": "0.0.65",
       "registry_synced": true
     },
     {
@@ -530,6 +530,12 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "mcp-kubernetes",
+        "name": "Kubernetes",
+        "changes": "registry_version: '0.0.64' → '0.0.65'"
+      }
+    ]
   }
 }

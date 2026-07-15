@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.14",
-  "last_updated": "2026-07-14T08:16:24.300209Z",
+  "version": "2026.07.15",
+  "last_updated": "2026-07-15T08:22:24.599740Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -239,16 +239,16 @@
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "deepseek-deepseek-v3-1-terminus",
-      "name": "DeepSeek V3.1 Terminus",
+      "id": "deepseek-deepseek-v3-2",
+      "name": "DeepSeek V3.2",
       "provider": "DeepSeek",
-      "input": 0.27,
-      "output": 0.95,
+      "input": 0.269,
+      "output": 0.4,
       "context": 163840,
       "tags": [
         "tools"
       ],
-      "openrouter_id": "deepseek/deepseek-v3.1-terminus",
+      "openrouter_id": "deepseek/deepseek-v3.2",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/deepseek",
       "benchmark_source": "Artificial Analysis"
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.09,
-      "output": 0.18,
+      "input": 0.098,
+      "output": 0.196,
       "context": 1048576,
       "tags": [
         "tools"
@@ -382,8 +382,8 @@
       "id": "meta-llama-llama-3-3-70b-instruct",
       "name": "Llama 3.3 70B Instruct",
       "provider": "Meta (via API)",
-      "input": 0.1,
-      "output": 0.32,
+      "input": 0.13,
+      "output": 0.4,
       "context": 131072,
       "tags": [
         "tools"
@@ -477,9 +477,9 @@
       "id": "mistralai-mistral-small-3-2-24b-instruct",
       "name": "Mistral Small 3.2 24B",
       "provider": "Mistral",
-      "input": 0.075,
-      "output": 0.2,
-      "context": 128000,
+      "input": 0.1,
+      "output": 0.3,
+      "context": 131072,
       "tags": [
         "vision",
         "tools"
@@ -535,8 +535,8 @@
       "id": "moonshotai-kimi-k2-5",
       "name": "Kimi K2.5",
       "provider": "Moonshot",
-      "input": 0.375,
-      "output": 2.025,
+      "input": 0.57,
+      "output": 2.85,
       "context": 262144,
       "tags": [
         "vision",
@@ -673,9 +673,9 @@
       "id": "z-ai-glm-4-7-flash",
       "name": "GLM 4.7 Flash",
       "provider": "Z.ai",
-      "input": 0.06,
+      "input": 0.0605,
       "output": 0.4,
-      "context": 202752,
+      "context": 200000,
       "tags": [
         "tools"
       ],
@@ -690,7 +690,7 @@
       "provider": "Z.ai",
       "input": 1.2,
       "output": 4.0,
-      "context": 262144,
+      "context": 202752,
       "tags": [
         "tools"
       ],
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.9282,
-      "output": 2.9172,
+      "input": 0.8918,
+      "output": 2.8028,
       "context": 1048576,
       "tags": [
         "tools"
@@ -764,23 +764,50 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
-    "updated": [
+    "added": [
       {
-        "id": "deepseek-deepseek-chat-v3-1",
-        "openrouter_id": "deepseek/deepseek-chat-v3.1",
-        "changes": "input: 0.21 → 0.25; output: 0.79 → 0.95"
-      },
+        "id": "deepseek-deepseek-v3-2",
+        "name": "DeepSeek V3.2",
+        "openrouter_id": "deepseek/deepseek-v3.2"
+      }
+    ],
+    "removed": [
+      {
+        "id": "deepseek-deepseek-v3-1-terminus",
+        "name": "DeepSeek V3.1 Terminus",
+        "openrouter_id": "deepseek/deepseek-v3.1-terminus"
+      }
+    ],
+    "updated": [
       {
         "id": "deepseek-deepseek-v4-flash",
         "openrouter_id": "deepseek/deepseek-v4-flash",
-        "changes": "input: 0.077 → 0.09; output: 0.154 → 0.18"
+        "changes": "input: 0.09 → 0.098; output: 0.18 → 0.196"
+      },
+      {
+        "id": "meta-llama-llama-3-3-70b-instruct",
+        "openrouter_id": "meta-llama/llama-3.3-70b-instruct",
+        "changes": "input: 0.1 → 0.13; output: 0.32 → 0.4"
+      },
+      {
+        "id": "mistralai-mistral-small-3-2-24b-instruct",
+        "openrouter_id": "mistralai/mistral-small-3.2-24b-instruct",
+        "changes": "input: 0.075 → 0.1; output: 0.2 → 0.3"
+      },
+      {
+        "id": "moonshotai-kimi-k2-5",
+        "openrouter_id": "moonshotai/kimi-k2.5",
+        "changes": "input: 0.375 → 0.57; output: 2.025 → 2.85"
+      },
+      {
+        "id": "z-ai-glm-4-7-flash",
+        "openrouter_id": "z-ai/glm-4.7-flash",
+        "changes": "input: 0.06 → 0.0605"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.93 → 0.9282; output: 3.0 → 2.9172"
+        "changes": "input: 0.9282 → 0.8918; output: 2.9172 → 2.8028"
       }
     ]
   },
