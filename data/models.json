@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.15",
-  "last_updated": "2026-07-15T08:22:24.599740Z",
+  "version": "2026.07.16",
+  "last_updated": "2026-07-16T08:21:18.985157Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -105,8 +105,8 @@
       "id": "qwen-qwen3-7-max",
       "name": "Qwen3.7 Max",
       "provider": "Alibaba",
-      "input": 1.25,
-      "output": 3.75,
+      "input": 1.475,
+      "output": 4.425,
       "context": 1000000,
       "tags": [
         "tools"
@@ -549,8 +549,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.66,
-      "output": 3.41,
+      "input": 0.95,
+      "output": 4.0,
       "context": 262144,
       "tags": [
         "vision",
@@ -673,9 +673,9 @@
       "id": "z-ai-glm-4-7-flash",
       "name": "GLM 4.7 Flash",
       "provider": "Z.ai",
-      "input": 0.0605,
+      "input": 0.06,
       "output": 0.4,
-      "context": 200000,
+      "context": 202752,
       "tags": [
         "tools"
       ],
@@ -703,8 +703,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.8918,
-      "output": 2.8028,
+      "input": 0.9646,
+      "output": 3.0316,
       "context": 1048576,
       "tags": [
         "tools"
@@ -764,50 +764,28 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "deepseek-deepseek-v3-2",
-        "name": "DeepSeek V3.2",
-        "openrouter_id": "deepseek/deepseek-v3.2"
-      }
-    ],
-    "removed": [
-      {
-        "id": "deepseek-deepseek-v3-1-terminus",
-        "name": "DeepSeek V3.1 Terminus",
-        "openrouter_id": "deepseek/deepseek-v3.1-terminus"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
-        "id": "deepseek-deepseek-v4-flash",
-        "openrouter_id": "deepseek/deepseek-v4-flash",
-        "changes": "input: 0.09 → 0.098; output: 0.18 → 0.196"
+        "id": "qwen-qwen3-7-max",
+        "openrouter_id": "qwen/qwen3.7-max",
+        "changes": "input: 1.25 → 1.475; output: 3.75 → 4.425"
       },
       {
-        "id": "meta-llama-llama-3-3-70b-instruct",
-        "openrouter_id": "meta-llama/llama-3.3-70b-instruct",
-        "changes": "input: 0.1 → 0.13; output: 0.32 → 0.4"
-      },
-      {
-        "id": "mistralai-mistral-small-3-2-24b-instruct",
-        "openrouter_id": "mistralai/mistral-small-3.2-24b-instruct",
-        "changes": "input: 0.075 → 0.1; output: 0.2 → 0.3"
-      },
-      {
-        "id": "moonshotai-kimi-k2-5",
-        "openrouter_id": "moonshotai/kimi-k2.5",
-        "changes": "input: 0.375 → 0.57; output: 2.025 → 2.85"
+        "id": "moonshotai-kimi-k2-6",
+        "openrouter_id": "moonshotai/kimi-k2.6",
+        "changes": "input: 0.66 → 0.95; output: 3.41 → 4.0"
       },
       {
         "id": "z-ai-glm-4-7-flash",
         "openrouter_id": "z-ai/glm-4.7-flash",
-        "changes": "input: 0.06 → 0.0605"
+        "changes": "input: 0.0605 → 0.06"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.9282 → 0.8918; output: 2.9172 → 2.8028"
+        "changes": "input: 0.8918 → 0.9646; output: 2.8028 → 3.0316"
       }
     ]
   },

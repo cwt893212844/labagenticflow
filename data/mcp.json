@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.15",
-  "last_updated": "2026-07-15T08:22:48.961764Z",
+  "version": "2026.07.16",
+  "last_updated": "2026-07-16T08:21:43.714987Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -417,7 +417,7 @@
       "description": "Query Supabase tables and manage project resources.",
       "repo_url": "https://github.com/supabase-community/supabase-mcp",
       "registry_name": "com.supabase/mcp",
-      "registry_version": "0.8.2",
+      "registry_version": "0.8.3",
       "registry_synced": true
     },
     {
@@ -532,9 +532,9 @@
     "removed": [],
     "updated": [
       {
-        "id": "mcp-kubernetes",
-        "name": "Kubernetes",
-        "changes": "registry_version: '0.0.64' → '0.0.65'"
+        "id": "mcp-supabase",
+        "name": "Supabase",
+        "changes": "registry_version: '0.8.2' → '0.8.3'"
       }
     ]
   }
