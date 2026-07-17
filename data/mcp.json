@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.16",
-  "last_updated": "2026-07-16T08:21:43.714987Z",
+  "version": "2026.07.17",
+  "last_updated": "2026-07-17T08:18:20.820662Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -530,12 +530,6 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": [
-      {
-        "id": "mcp-supabase",
-        "name": "Supabase",
-        "changes": "registry_version: '0.8.2' → '0.8.3'"
-      }
-    ]
+    "updated": []
   }
 }

@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.16",
-  "last_updated": "2026-07-16T08:21:18.985157Z",
+  "version": "2026.07.17",
+  "last_updated": "2026-07-17T08:17:58.376337Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -519,19 +519,6 @@
       "pricing_source": "openrouter"
     },
     {
-      "id": "moonshotai-kimi-k2-thinking",
-      "name": "Kimi K2 Thinking",
-      "provider": "Moonshot",
-      "input": 0.6,
-      "output": 2.5,
-      "context": 262144,
-      "tags": [
-        "tools"
-      ],
-      "openrouter_id": "moonshotai/kimi-k2-thinking",
-      "pricing_source": "openrouter"
-    },
-    {
       "id": "moonshotai-kimi-k2-5",
       "name": "Kimi K2.5",
       "provider": "Moonshot",
@@ -563,14 +550,28 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.719,
-      "output": 3.49,
+      "input": 0.75,
+      "output": 3.5,
       "context": 262144,
       "tags": [
         "vision",
         "tools"
       ],
       "openrouter_id": "moonshotai/kimi-k2.7-code",
+      "pricing_source": "openrouter"
+    },
+    {
+      "id": "moonshotai-kimi-k3",
+      "name": "Kimi K3",
+      "provider": "Moonshot",
+      "input": 3.0,
+      "output": 15.0,
+      "context": 1048576,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "moonshotai/kimi-k3",
       "pricing_source": "openrouter"
     },
     {
@@ -703,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.9646,
-      "output": 3.0316,
+      "input": 0.9618,
+      "output": 3.0228,
       "context": 1048576,
       "tags": [
         "tools"
@@ -764,28 +765,30 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "id": "moonshotai-kimi-k3",
+        "name": "Kimi K3",
+        "openrouter_id": "moonshotai/kimi-k3"
+      }
+    ],
+    "removed": [
+      {
+        "id": "moonshotai-kimi-k2-thinking",
+        "name": "Kimi K2 Thinking",
+        "openrouter_id": "moonshotai/kimi-k2-thinking"
+      }
+    ],
     "updated": [
       {
-        "id": "qwen-qwen3-7-max",
-        "openrouter_id": "qwen/qwen3.7-max",
-        "changes": "input: 1.25 → 1.475; output: 3.75 → 4.425"
-      },
-      {
-        "id": "moonshotai-kimi-k2-6",
-        "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.66 → 0.95; output: 3.41 → 4.0"
-      },
-      {
-        "id": "z-ai-glm-4-7-flash",
-        "openrouter_id": "z-ai/glm-4.7-flash",
-        "changes": "input: 0.0605 → 0.06"
+        "id": "moonshotai-kimi-k2-7-code",
+        "openrouter_id": "moonshotai/kimi-k2.7-code",
+        "changes": "input: 0.719 → 0.75; output: 3.49 → 3.5"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.8918 → 0.9646; output: 2.8028 → 3.0316"
+        "changes": "input: 0.9646 → 0.9618; output: 3.0316 → 3.0228"
       }
     ]
   },
