@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.17",
-  "last_updated": "2026-07-17T08:17:58.376337Z",
+  "version": "2026.07.18",
+  "last_updated": "2026-07-18T07:59:41.413416Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -550,8 +550,8 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.75,
-      "output": 3.5,
+      "input": 1.0,
+      "output": 4.4,
       "context": 262144,
       "tags": [
         "vision",
@@ -674,9 +674,9 @@
       "id": "z-ai-glm-4-7-flash",
       "name": "GLM 4.7 Flash",
       "provider": "Z.ai",
-      "input": 0.06,
+      "input": 0.0605,
       "output": 0.4,
-      "context": 202752,
+      "context": 200000,
       "tags": [
         "tools"
       ],
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.9618,
-      "output": 3.0228,
+      "input": 0.3402,
+      "output": 1.0692,
       "context": 1048576,
       "tags": [
         "tools"
@@ -765,30 +765,23 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "moonshotai-kimi-k3",
-        "name": "Kimi K3",
-        "openrouter_id": "moonshotai/kimi-k3"
-      }
-    ],
-    "removed": [
-      {
-        "id": "moonshotai-kimi-k2-thinking",
-        "name": "Kimi K2 Thinking",
-        "openrouter_id": "moonshotai/kimi-k2-thinking"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
         "id": "moonshotai-kimi-k2-7-code",
         "openrouter_id": "moonshotai/kimi-k2.7-code",
-        "changes": "input: 0.719 → 0.75; output: 3.49 → 3.5"
+        "changes": "input: 0.75 → 1.0; output: 3.5 → 4.4"
+      },
+      {
+        "id": "z-ai-glm-4-7-flash",
+        "openrouter_id": "z-ai/glm-4.7-flash",
+        "changes": "input: 0.06 → 0.0605"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.9646 → 0.9618; output: 3.0316 → 3.0228"
+        "changes": "input: 0.9618 → 0.3402; output: 3.0228 → 1.0692"
       }
     ]
   },
