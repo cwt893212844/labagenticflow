@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.18",
-  "last_updated": "2026-07-18T07:59:41.978181Z",
+  "version": "2026.07.19",
+  "last_updated": "2026-07-19T08:26:21.688132Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -164,7 +164,7 @@
       "description": "Web search via the Brave Search API.",
       "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
       "registry_name": "io.github.brave/brave-search-mcp-server",
-      "registry_version": "2.0.85",
+      "registry_version": "2.1.0",
       "registry_synced": true
     },
     {
@@ -532,9 +532,9 @@
     "removed": [],
     "updated": [
       {
-        "id": "mcp-supabase",
-        "name": "Supabase",
-        "changes": "registry_version: '0.8.3' → '0.9.0'"
+        "id": "mcp-brave-search",
+        "name": "Brave Search",
+        "changes": "registry_version: '2.0.85' → '2.1.0'"
       }
     ]
   }
