@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.21",
-  "last_updated": "2026-07-21T08:36:45.596159Z",
+  "version": "2026.07.22",
+  "last_updated": "2026-07-22T08:36:00.369795Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -530,12 +530,6 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": [
-      {
-        "id": "mcp-firecrawl",
-        "name": "Firecrawl",
-        "changes": "registry_version: '3.22.3' → '3.22.4'"
-      }
-    ]
+    "updated": []
   }
 }
