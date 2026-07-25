@@ -1851,7 +1851,7 @@
           return `
             <article class="${cardClasses}" id="model-${m.id}" role="listitem">
               <div class="model-info">
-                <div class="model-name"><a class="model-name-link" href="model.html?m=${encodeURIComponent(m.id)}">${m.name}</a></div>
+                <div class="model-name"><a class="model-name-link" href="/model/${encodeURIComponent(m.id)}">${m.name}</a></div>
                 <div class="model-provider">${m.provider}</div>
                 <div class="model-tags">${capChips}</div>
                 ${benchLink}

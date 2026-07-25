@@ -57,7 +57,7 @@ def generate_sitemap(models_path: Path = MODELS_PATH, output_path: Path = SITEMA
         mid = model.get("id")
         if not mid:
             continue
-        loc = f"{BASE}/model.html?m={mid}"
+        loc = f"{BASE}/model/{mid}"
         entries.append(url_entry(loc, lastmod, "weekly", "0.75"))
 
     xml = (

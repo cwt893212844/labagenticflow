@@ -409,7 +409,7 @@
       const linkCells = models
         .map(
           (m) =>
-            `<td><a class="model-link" href="model.html?m=${encodeURIComponent(m.id)}">Model page →</a></td>`
+            `<td><a class="model-link" href="/model/${encodeURIComponent(m.id)}">Model page →</a></td>`
         )
         .join("");
 
