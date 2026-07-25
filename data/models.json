@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.24",
-  "last_updated": "2026-07-24T08:33:20.079060Z",
+  "version": "2026.07.25",
+  "last_updated": "2026-07-25T08:12:26.787692Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -149,8 +149,8 @@
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "anthropic-claude-opus-4-8",
-      "name": "Claude Opus 4.8",
+      "id": "anthropic-claude-opus-5",
+      "name": "Claude Opus 5",
       "provider": "Anthropic",
       "input": 5.0,
       "output": 25.0,
@@ -159,7 +159,7 @@
         "vision",
         "tools"
       ],
-      "openrouter_id": "anthropic/claude-opus-4.8",
+      "openrouter_id": "anthropic/claude-opus-5",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/anthropic",
       "benchmark_source": "Artificial Analysis"
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.098,
-      "output": 0.196,
+      "input": 0.0938,
+      "output": 0.1876,
       "context": 1048576,
       "tags": [
         "tools"
@@ -536,8 +536,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.684,
-      "output": 3.42,
+      "input": 0.646,
+      "output": 2.72,
       "context": 262144,
       "tags": [
         "vision",
@@ -550,8 +550,8 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.71,
-      "output": 3.49,
+      "input": 0.78,
+      "output": 3.5,
       "context": 262144,
       "tags": [
         "vision",
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.7574,
-      "output": 2.3804,
+      "input": 0.7504,
+      "output": 2.3584,
       "context": 1048576,
       "tags": [
         "tools"
@@ -765,18 +765,40 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "id": "anthropic-claude-opus-5",
+        "name": "Claude Opus 5",
+        "openrouter_id": "anthropic/claude-opus-5"
+      }
+    ],
+    "removed": [
+      {
+        "id": "anthropic-claude-opus-4-8",
+        "name": "Claude Opus 4.8",
+        "openrouter_id": "anthropic/claude-opus-4.8"
+      }
+    ],
     "updated": [
+      {
+        "id": "deepseek-deepseek-v4-flash",
+        "openrouter_id": "deepseek/deepseek-v4-flash",
+        "changes": "input: 0.098 → 0.0938; output: 0.196 → 0.1876"
+      },
+      {
+        "id": "moonshotai-kimi-k2-6",
+        "openrouter_id": "moonshotai/kimi-k2.6",
+        "changes": "input: 0.684 → 0.646; output: 3.42 → 2.72"
+      },
       {
         "id": "moonshotai-kimi-k2-7-code",
         "openrouter_id": "moonshotai/kimi-k2.7-code",
-        "changes": "input: 0.82 → 0.71; output: 3.75 → 3.49"
+        "changes": "input: 0.71 → 0.78; output: 3.49 → 3.5"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.8078 → 0.7574; output: 2.5388 → 2.3804"
+        "changes": "input: 0.7574 → 0.7504; output: 2.3804 → 2.3584"
       }
     ]
   },
