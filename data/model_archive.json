@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-25T08:45:21.971321Z",
+  "updated_at": "2026-07-26T08:33:06.572483Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -202,8 +202,8 @@
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
       "openrouter_id": "deepseek/deepseek-v4-flash",
-      "input": 0.0938,
-      "output": 0.1876,
+      "input": 0.14,
+      "output": 0.28,
       "context": 1048576
     },
     {
@@ -364,7 +364,7 @@
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
       "openrouter_id": "moonshotai/kimi-k2.7-code",
-      "input": 0.78,
+      "input": 0.75,
       "output": 3.5,
       "context": 262144
     },
@@ -454,8 +454,8 @@
       "name": "GLM 5.2",
       "provider": "Z.ai",
       "openrouter_id": "z-ai/glm-5.2",
-      "input": 0.7504,
-      "output": 2.3584,
+      "input": 0.7042,
+      "output": 2.2132,
       "context": 1048576
     },
     {

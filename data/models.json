@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.25",
-  "last_updated": "2026-07-25T08:12:26.787692Z",
+  "version": "2026.07.26",
+  "last_updated": "2026-07-26T08:32:45.748924Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input": 0.0938,
-      "output": 0.1876,
+      "input": 0.14,
+      "output": 0.28,
       "context": 1048576,
       "tags": [
         "tools"
@@ -550,7 +550,7 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.78,
+      "input": 0.75,
       "output": 3.5,
       "context": 262144,
       "tags": [
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.7504,
-      "output": 2.3584,
+      "input": 0.7042,
+      "output": 2.2132,
       "context": 1048576,
       "tags": [
         "tools"
@@ -765,40 +765,23 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "anthropic-claude-opus-5",
-        "name": "Claude Opus 5",
-        "openrouter_id": "anthropic/claude-opus-5"
-      }
-    ],
-    "removed": [
-      {
-        "id": "anthropic-claude-opus-4-8",
-        "name": "Claude Opus 4.8",
-        "openrouter_id": "anthropic/claude-opus-4.8"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
         "id": "deepseek-deepseek-v4-flash",
         "openrouter_id": "deepseek/deepseek-v4-flash",
-        "changes": "input: 0.098 → 0.0938; output: 0.196 → 0.1876"
-      },
-      {
-        "id": "moonshotai-kimi-k2-6",
-        "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.684 → 0.646; output: 3.42 → 2.72"
+        "changes": "input: 0.0938 → 0.14; output: 0.1876 → 0.28"
       },
       {
         "id": "moonshotai-kimi-k2-7-code",
         "openrouter_id": "moonshotai/kimi-k2.7-code",
-        "changes": "input: 0.71 → 0.78; output: 3.49 → 3.5"
+        "changes": "input: 0.78 → 0.75"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.7574 → 0.7504; output: 2.3804 → 2.3584"
+        "changes": "input: 0.7504 → 0.7042; output: 2.3584 → 2.2132"
       }
     ]
   },
