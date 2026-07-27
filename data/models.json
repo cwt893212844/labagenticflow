@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.26",
-  "last_updated": "2026-07-26T08:32:45.748924Z",
+  "version": "2026.07.27",
+  "last_updated": "2026-07-27T09:59:33.021070Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -550,7 +550,7 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.75,
+      "input": 0.73,
       "output": 3.5,
       "context": 262144,
       "tags": [
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.7042,
-      "output": 2.2132,
+      "input": 0.805,
+      "output": 2.53,
       "context": 1048576,
       "tags": [
         "tools"
@@ -769,19 +769,14 @@
     "removed": [],
     "updated": [
       {
-        "id": "deepseek-deepseek-v4-flash",
-        "openrouter_id": "deepseek/deepseek-v4-flash",
-        "changes": "input: 0.0938 → 0.14; output: 0.1876 → 0.28"
-      },
-      {
         "id": "moonshotai-kimi-k2-7-code",
         "openrouter_id": "moonshotai/kimi-k2.7-code",
-        "changes": "input: 0.78 → 0.75"
+        "changes": "input: 0.75 → 0.73"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.7504 → 0.7042; output: 2.3584 → 2.2132"
+        "changes": "input: 0.7042 → 0.805; output: 2.2132 → 2.53"
       }
     ]
   },
