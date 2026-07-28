@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-27T09:59:47.200703Z",
+  "updated_at": "2026-07-28T08:42:26.726220Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -50,6 +50,16 @@
       "output": 2.5,
       "context": 262144,
       "archived_at": "2026-07-25T08:45:21.971321Z"
+    },
+    "qwen-qwen3-6-plus": {
+      "id": "qwen-qwen3-6-plus",
+      "name": "Qwen3.6 Plus",
+      "provider": "Alibaba",
+      "openrouter_id": "qwen/qwen3.6-plus",
+      "input": 0.325,
+      "output": 1.95,
+      "context": 1000000,
+      "archived_at": "2026-07-28T08:42:26.726220Z"
     }
   },
   "last_active": [
@@ -90,12 +100,12 @@
       "context": 1000000
     },
     {
-      "id": "qwen-qwen3-6-plus",
-      "name": "Qwen3.6 Plus",
+      "id": "qwen-qwen3-7-flash",
+      "name": "Qwen3.7 Flash",
       "provider": "Alibaba",
-      "openrouter_id": "qwen/qwen3.6-plus",
-      "input": 0.325,
-      "output": 1.95,
+      "openrouter_id": "qwen/qwen3.7-flash",
+      "input": 0.03,
+      "output": 0.13,
       "context": 1000000
     },
     {
@@ -382,8 +392,8 @@
       "name": "GPT-5.6 Luna",
       "provider": "OpenAI",
       "openrouter_id": "openai/gpt-5.6-luna",
-      "input": 1.0,
-      "output": 6.0,
+      "input": 0.5,
+      "output": 3.0,
       "context": 1050000
     },
     {
@@ -391,8 +401,8 @@
       "name": "GPT-5.6 Luna Pro",
       "provider": "OpenAI",
       "openrouter_id": "openai/gpt-5.6-luna-pro",
-      "input": 1.0,
-      "output": 6.0,
+      "input": 0.5,
+      "output": 3.0,
       "context": 1050000
     },
     {
@@ -409,8 +419,8 @@
       "name": "GPT-5.6 Terra",
       "provider": "OpenAI",
       "openrouter_id": "openai/gpt-5.6-terra",
-      "input": 2.5,
-      "output": 15.0,
+      "input": 1.25,
+      "output": 7.5,
       "context": 1050000
     },
     {
@@ -418,8 +428,8 @@
       "name": "GPT-5.6 Terra Pro",
       "provider": "OpenAI",
       "openrouter_id": "openai/gpt-5.6-terra-pro",
-      "input": 2.5,
-      "output": 15.0,
+      "input": 1.25,
+      "output": 7.5,
       "context": 1050000
     },
     {
@@ -454,8 +464,8 @@
       "name": "GLM 5.2",
       "provider": "Z.ai",
       "openrouter_id": "z-ai/glm-5.2",
-      "input": 0.805,
-      "output": 2.53,
+      "input": 0.7686,
+      "output": 2.4156,
       "context": 1048576
     },
     {
