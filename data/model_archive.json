@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-28T08:42:26.726220Z",
+  "updated_at": "2026-07-29T08:48:09.336682Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -60,6 +60,36 @@
       "output": 1.95,
       "context": 1000000,
       "archived_at": "2026-07-28T08:42:26.726220Z"
+    },
+    "anthropic-claude-haiku-4-5": {
+      "id": "anthropic-claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "provider": "Anthropic",
+      "openrouter_id": "anthropic/claude-haiku-4.5",
+      "input": 1.0,
+      "output": 5.0,
+      "context": 200000,
+      "archived_at": "2026-07-29T08:48:09.336682Z"
+    },
+    "google-gemini-3-flash-preview": {
+      "id": "google-gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
+      "provider": "Google",
+      "openrouter_id": "google/gemini-3-flash-preview",
+      "input": 0.5,
+      "output": 3.0,
+      "context": 1048576,
+      "archived_at": "2026-07-29T08:48:09.336682Z"
+    },
+    "google-gemini-3-1-flash-lite": {
+      "id": "google-gemini-3-1-flash-lite",
+      "name": "Gemini 3.1 Flash Lite",
+      "provider": "Google",
+      "openrouter_id": "google/gemini-3.1-flash-lite",
+      "input": 0.25,
+      "output": 1.5,
+      "context": 1048576,
+      "archived_at": "2026-07-29T08:48:09.336682Z"
     }
   },
   "last_active": [
@@ -127,13 +157,22 @@
       "context": 1000000
     },
     {
-      "id": "anthropic-claude-haiku-4-5",
-      "name": "Claude Haiku 4.5",
+      "id": "anthropic-claude-opus-4-7-batch",
+      "name": "Claude Opus 4.7 (batch)",
       "provider": "Anthropic",
-      "openrouter_id": "anthropic/claude-haiku-4.5",
-      "input": 1.0,
-      "output": 5.0,
-      "context": 200000
+      "openrouter_id": "anthropic/claude-opus-4.7:batch",
+      "input": 2.5,
+      "output": 12.5,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic-claude-opus-4-8-batch",
+      "name": "Claude Opus 4.8 (batch)",
+      "provider": "Anthropic",
+      "openrouter_id": "anthropic/claude-opus-4.8:batch",
+      "input": 2.5,
+      "output": 12.5,
+      "context": 1000000
     },
     {
       "id": "anthropic-claude-opus-5",
@@ -151,6 +190,15 @@
       "openrouter_id": "anthropic/claude-sonnet-5",
       "input": 2.0,
       "output": 10.0,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic-claude-sonnet-5-batch",
+      "name": "Claude Sonnet 5 (batch)",
+      "provider": "Anthropic",
+      "openrouter_id": "anthropic/claude-sonnet-5:batch",
+      "input": 1.0,
+      "output": 5.0,
       "context": 1000000
     },
     {
@@ -226,24 +274,6 @@
       "context": 1048576
     },
     {
-      "id": "google-gemini-3-flash-preview",
-      "name": "Gemini 3 Flash Preview",
-      "provider": "Google",
-      "openrouter_id": "google/gemini-3-flash-preview",
-      "input": 0.5,
-      "output": 3.0,
-      "context": 1048576
-    },
-    {
-      "id": "google-gemini-3-1-flash-lite",
-      "name": "Gemini 3.1 Flash Lite",
-      "provider": "Google",
-      "openrouter_id": "google/gemini-3.1-flash-lite",
-      "input": 0.25,
-      "output": 1.5,
-      "context": 1048576
-    },
-    {
       "id": "google-gemini-3-5-flash",
       "name": "Gemini 3.5 Flash",
       "provider": "Google",
@@ -262,12 +292,30 @@
       "context": 1048576
     },
     {
+      "id": "google-gemini-3-5-flash-lite-batch",
+      "name": "Gemini 3.5 Flash Lite (batch)",
+      "provider": "Google",
+      "openrouter_id": "google/gemini-3.5-flash-lite:batch",
+      "input": 0.15,
+      "output": 1.25,
+      "context": 1048576
+    },
+    {
       "id": "google-gemini-3-6-flash",
       "name": "Gemini 3.6 Flash",
       "provider": "Google",
       "openrouter_id": "google/gemini-3.6-flash",
       "input": 1.5,
       "output": 7.5,
+      "context": 1048576
+    },
+    {
+      "id": "google-gemini-3-6-flash-batch",
+      "name": "Gemini 3.6 Flash (batch)",
+      "provider": "Google",
+      "openrouter_id": "google/gemini-3.6-flash:batch",
+      "input": 0.75,
+      "output": 3.75,
       "context": 1048576
     },
     {
@@ -464,8 +512,8 @@
       "name": "GLM 5.2",
       "provider": "Z.ai",
       "openrouter_id": "z-ai/glm-5.2",
-      "input": 0.7686,
-      "output": 2.4156,
+      "input": 0.749,
+      "output": 2.354,
       "context": 1048576
     },
     {
