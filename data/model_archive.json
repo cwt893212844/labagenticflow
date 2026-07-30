@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-29T08:48:09.336682Z",
+  "updated_at": "2026-07-30T08:34:59.703779Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -512,8 +512,8 @@
       "name": "GLM 5.2",
       "provider": "Z.ai",
       "openrouter_id": "z-ai/glm-5.2",
-      "input": 0.749,
-      "output": 2.354,
+      "input": 0.6993,
+      "output": 2.1978,
       "context": 1048576
     },
     {

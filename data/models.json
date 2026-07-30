@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.29",
-  "last_updated": "2026-07-29T08:47:40.285978Z",
+  "version": "2026.07.30",
+  "last_updated": "2026-07-30T08:34:31.475027Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -736,8 +736,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.749,
-      "output": 2.354,
+      "input": 0.6993,
+      "output": 2.1978,
       "context": 1048576,
       "tags": [
         "tools"
@@ -797,55 +797,13 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "anthropic-claude-opus-4-7-batch",
-        "name": "Claude Opus 4.7 (batch)",
-        "openrouter_id": "anthropic/claude-opus-4.7:batch"
-      },
-      {
-        "id": "anthropic-claude-opus-4-8-batch",
-        "name": "Claude Opus 4.8 (batch)",
-        "openrouter_id": "anthropic/claude-opus-4.8:batch"
-      },
-      {
-        "id": "anthropic-claude-sonnet-5-batch",
-        "name": "Claude Sonnet 5 (batch)",
-        "openrouter_id": "anthropic/claude-sonnet-5:batch"
-      },
-      {
-        "id": "google-gemini-3-5-flash-lite-batch",
-        "name": "Gemini 3.5 Flash Lite (batch)",
-        "openrouter_id": "google/gemini-3.5-flash-lite:batch"
-      },
-      {
-        "id": "google-gemini-3-6-flash-batch",
-        "name": "Gemini 3.6 Flash (batch)",
-        "openrouter_id": "google/gemini-3.6-flash:batch"
-      }
-    ],
-    "removed": [
-      {
-        "id": "anthropic-claude-haiku-4-5",
-        "name": "Claude Haiku 4.5",
-        "openrouter_id": "anthropic/claude-haiku-4.5"
-      },
-      {
-        "id": "google-gemini-3-flash-preview",
-        "name": "Gemini 3 Flash Preview",
-        "openrouter_id": "google/gemini-3-flash-preview"
-      },
-      {
-        "id": "google-gemini-3-1-flash-lite",
-        "name": "Gemini 3.1 Flash Lite",
-        "openrouter_id": "google/gemini-3.1-flash-lite"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.7686 → 0.749; output: 2.4156 → 2.354"
+        "changes": "input: 0.749 → 0.6993; output: 2.354 → 2.1978"
       }
     ]
   },
