@@ -1,6 +1,6 @@
 {
-  "version": "2026.07.30",
-  "last_updated": "2026-07-30T08:34:31.475027Z",
+  "version": "2026.07.31",
+  "last_updated": "2026-07-31T08:56:01.749844Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -301,8 +301,8 @@
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "deepseek-deepseek-v4-flash",
-      "name": "DeepSeek V4 Flash",
+      "id": "deepseek-deepseek-v4-flash-0731",
+      "name": "DeepSeek V4 Flash 0731",
       "provider": "DeepSeek",
       "input": 0.14,
       "output": 0.28,
@@ -310,7 +310,7 @@
       "tags": [
         "tools"
       ],
-      "openrouter_id": "deepseek/deepseek-v4-flash",
+      "openrouter_id": "deepseek/deepseek-v4-flash-0731",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/providers/deepseek",
       "benchmark_source": "Artificial Analysis"
@@ -568,8 +568,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.646,
-      "output": 2.72,
+      "input": 0.95,
+      "output": 4.0,
       "context": 262144,
       "tags": [
         "vision",
@@ -610,8 +610,8 @@
       "id": "openai-gpt-5-6-luna",
       "name": "GPT-5.6 Luna",
       "provider": "OpenAI",
-      "input": 0.5,
-      "output": 3.0,
+      "input": 0.1,
+      "output": 0.6,
       "context": 1050000,
       "tags": [
         "vision",
@@ -626,8 +626,8 @@
       "id": "openai-gpt-5-6-luna-pro",
       "name": "GPT-5.6 Luna Pro",
       "provider": "OpenAI",
-      "input": 0.5,
-      "output": 3.0,
+      "input": 0.1,
+      "output": 0.6,
       "context": 1050000,
       "tags": [
         "vision",
@@ -658,8 +658,8 @@
       "id": "openai-gpt-5-6-terra",
       "name": "GPT-5.6 Terra",
       "provider": "OpenAI",
-      "input": 1.25,
-      "output": 7.5,
+      "input": 1.0,
+      "output": 6.0,
       "context": 1050000,
       "tags": [
         "vision",
@@ -674,8 +674,8 @@
       "id": "openai-gpt-5-6-terra-pro",
       "name": "GPT-5.6 Terra Pro",
       "provider": "OpenAI",
-      "input": 1.25,
-      "output": 7.5,
+      "input": 1.0,
+      "output": 6.0,
       "context": 1050000,
       "tags": [
         "vision",
@@ -736,8 +736,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.6993,
-      "output": 2.1978,
+      "input": 1.232,
+      "output": 3.872,
       "context": 1048576,
       "tags": [
         "tools"
@@ -797,13 +797,50 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "id": "deepseek-deepseek-v4-flash-0731",
+        "name": "DeepSeek V4 Flash 0731",
+        "openrouter_id": "deepseek/deepseek-v4-flash-0731"
+      }
+    ],
+    "removed": [
+      {
+        "id": "deepseek-deepseek-v4-flash",
+        "name": "DeepSeek V4 Flash",
+        "openrouter_id": "deepseek/deepseek-v4-flash"
+      }
+    ],
     "updated": [
+      {
+        "id": "moonshotai-kimi-k2-6",
+        "openrouter_id": "moonshotai/kimi-k2.6",
+        "changes": "input: 0.646 → 0.95; output: 2.72 → 4.0"
+      },
+      {
+        "id": "openai-gpt-5-6-luna",
+        "openrouter_id": "openai/gpt-5.6-luna",
+        "changes": "input: 0.5 → 0.1; output: 3.0 → 0.6"
+      },
+      {
+        "id": "openai-gpt-5-6-luna-pro",
+        "openrouter_id": "openai/gpt-5.6-luna-pro",
+        "changes": "input: 0.5 → 0.1; output: 3.0 → 0.6"
+      },
+      {
+        "id": "openai-gpt-5-6-terra",
+        "openrouter_id": "openai/gpt-5.6-terra",
+        "changes": "input: 1.25 → 1.0; output: 7.5 → 6.0"
+      },
+      {
+        "id": "openai-gpt-5-6-terra-pro",
+        "openrouter_id": "openai/gpt-5.6-terra-pro",
+        "changes": "input: 1.25 → 1.0; output: 7.5 → 6.0"
+      },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.749 → 0.6993; output: 2.354 → 2.1978"
+        "changes": "input: 0.6993 → 1.232; output: 2.1978 → 3.872"
       }
     ]
   },
