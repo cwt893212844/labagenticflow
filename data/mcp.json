@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.01",
-  "last_updated": "2026-08-01T08:27:08.147965Z",
+  "version": "2026.08.02",
+  "last_updated": "2026-08-02T08:30:07.552632Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -530,12 +530,6 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": [
-      {
-        "id": "mcp-kubernetes",
-        "name": "Kubernetes",
-        "changes": "registry_version: '0.0.65' → '0.0.66'"
-      }
-    ]
+    "updated": []
   }
 }

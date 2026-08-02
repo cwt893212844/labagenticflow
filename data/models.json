@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.01",
-  "last_updated": "2026-08-01T08:26:57.598977Z",
+  "version": "2026.08.02",
+  "last_updated": "2026-08-02T08:29:44.043454Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -272,8 +272,8 @@
       "id": "deepseek-deepseek-v4-flash-0731",
       "name": "DeepSeek V4 Flash 0731",
       "provider": "DeepSeek",
-      "input": 0.14,
-      "output": 0.28,
+      "input": 0.09,
+      "output": 0.18,
       "context": 1048576,
       "tags": [
         "tools"
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.76006,
-      "output": 2.38876,
+      "input": 0.3122,
+      "output": 0.9812,
       "context": 1048576,
       "tags": [
         "tools"
@@ -765,65 +765,18 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "anthropic-claude-haiku-4-5",
-        "name": "Claude Haiku 4.5",
-        "openrouter_id": "anthropic/claude-haiku-4.5"
-      },
-      {
-        "id": "google-gemini-3-flash-preview",
-        "name": "Gemini 3 Flash Preview",
-        "openrouter_id": "google/gemini-3-flash-preview"
-      },
-      {
-        "id": "google-gemini-3-1-flash-lite",
-        "name": "Gemini 3.1 Flash Lite",
-        "openrouter_id": "google/gemini-3.1-flash-lite"
-      }
-    ],
-    "removed": [
-      {
-        "id": "anthropic-claude-opus-4-7-batch",
-        "name": "Claude Opus 4.7 (batch)",
-        "openrouter_id": "anthropic/claude-opus-4.7:batch"
-      },
-      {
-        "id": "anthropic-claude-opus-4-8-batch",
-        "name": "Claude Opus 4.8 (batch)",
-        "openrouter_id": "anthropic/claude-opus-4.8:batch"
-      },
-      {
-        "id": "anthropic-claude-sonnet-5-batch",
-        "name": "Claude Sonnet 5 (batch)",
-        "openrouter_id": "anthropic/claude-sonnet-5:batch"
-      },
-      {
-        "id": "google-gemini-3-5-flash-lite-batch",
-        "name": "Gemini 3.5 Flash Lite (batch)",
-        "openrouter_id": "google/gemini-3.5-flash-lite:batch"
-      },
-      {
-        "id": "google-gemini-3-6-flash-batch",
-        "name": "Gemini 3.6 Flash (batch)",
-        "openrouter_id": "google/gemini-3.6-flash:batch"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
-        "id": "mistralai-mistral-small-3-2-24b-instruct",
-        "openrouter_id": "mistralai/mistral-small-3.2-24b-instruct",
-        "changes": "input: 0.1 → 0.075; output: 0.3 → 0.2"
-      },
-      {
-        "id": "moonshotai-kimi-k2-6",
-        "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.95 → 0.6; output: 4.0 → 3.41"
+        "id": "deepseek-deepseek-v4-flash-0731",
+        "openrouter_id": "deepseek/deepseek-v4-flash-0731",
+        "changes": "input: 0.14 → 0.09; output: 0.28 → 0.18"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 1.232 → 0.76006; output: 3.872 → 2.38876"
+        "changes": "input: 0.76006 → 0.3122; output: 2.38876 → 0.9812"
       }
     ]
   },
