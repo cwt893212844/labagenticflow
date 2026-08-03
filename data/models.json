@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.02",
-  "last_updated": "2026-08-02T08:29:44.043454Z",
+  "version": "2026.08.03",
+  "last_updated": "2026-08-03T09:54:35.129896Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.3122,
-      "output": 0.9812,
+      "input": 1.19,
+      "output": 3.74,
       "context": 1048576,
       "tags": [
         "tools"
@@ -769,14 +769,9 @@
     "removed": [],
     "updated": [
       {
-        "id": "deepseek-deepseek-v4-flash-0731",
-        "openrouter_id": "deepseek/deepseek-v4-flash-0731",
-        "changes": "input: 0.14 → 0.09; output: 0.28 → 0.18"
-      },
-      {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.76006 → 0.3122; output: 2.38876 → 0.9812"
+        "changes": "input: 0.3122 → 1.19; output: 0.9812 → 3.74"
       }
     ]
   },
