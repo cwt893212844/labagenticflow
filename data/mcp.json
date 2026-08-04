@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.03",
-  "last_updated": "2026-08-03T09:54:45.803465Z",
+  "version": "2026.08.04",
+  "last_updated": "2026-08-04T08:45:39.999585Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -508,7 +508,7 @@
       "description": "Crawl and scrape websites into clean markdown for RAG pipelines.",
       "repo_url": "https://github.com/mendableai/firecrawl-mcp-server",
       "registry_name": "io.github.firecrawl/firecrawl-mcp-server",
-      "registry_version": "3.23.0",
+      "registry_version": "3.23.2",
       "registry_synced": true
     },
     {
@@ -530,6 +530,12 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "mcp-firecrawl",
+        "name": "Firecrawl",
+        "changes": "registry_version: '3.23.0' → '3.23.2'"
+      }
+    ]
   }
 }

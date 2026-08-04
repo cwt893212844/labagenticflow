@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.03",
-  "last_updated": "2026-08-03T09:54:35.129896Z",
+  "version": "2026.08.04",
+  "last_updated": "2026-08-04T08:45:10.028373Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -70,22 +70,6 @@
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "qwen-qwen3-6-flash",
-      "name": "Qwen3.6 Flash",
-      "provider": "Alibaba",
-      "input": 0.1875,
-      "output": 1.125,
-      "context": 1000000,
-      "tags": [
-        "vision",
-        "tools"
-      ],
-      "openrouter_id": "qwen/qwen3.6-flash",
-      "pricing_source": "openrouter",
-      "benchmark_url": "https://artificialanalysis.ai/leaderboards/models",
-      "benchmark_source": "Artificial Analysis"
-    },
-    {
       "id": "qwen-qwen3-7-flash",
       "name": "Qwen3.7 Flash",
       "provider": "Alibaba",
@@ -128,6 +112,22 @@
         "tools"
       ],
       "openrouter_id": "qwen/qwen3.7-plus",
+      "pricing_source": "openrouter",
+      "benchmark_url": "https://artificialanalysis.ai/leaderboards/models",
+      "benchmark_source": "Artificial Analysis"
+    },
+    {
+      "id": "qwen-qwen3-8-max",
+      "name": "Qwen3.8 Max",
+      "provider": "Alibaba",
+      "input": 2.0,
+      "output": 6.0,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.8-max",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/leaderboards/models",
       "benchmark_source": "Artificial Analysis"
@@ -382,8 +382,8 @@
       "id": "meta-llama-llama-3-3-70b-instruct",
       "name": "Llama 3.3 70B Instruct",
       "provider": "Meta (via API)",
-      "input": 0.13,
-      "output": 0.4,
+      "input": 0.1,
+      "output": 0.32,
       "context": 131072,
       "tags": [
         "tools"
@@ -536,8 +536,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.6,
-      "output": 3.41,
+      "input": 0.589,
+      "output": 2.48,
       "context": 262144,
       "tags": [
         "vision",
@@ -704,8 +704,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 1.19,
-      "output": 3.74,
+      "input": 0.76,
+      "output": 2.42,
       "context": 1048576,
       "tags": [
         "tools"
@@ -765,13 +765,35 @@
     }
   ],
   "changes": {
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "id": "qwen-qwen3-8-max",
+        "name": "Qwen3.8 Max",
+        "openrouter_id": "qwen/qwen3.8-max"
+      }
+    ],
+    "removed": [
+      {
+        "id": "qwen-qwen3-6-flash",
+        "name": "Qwen3.6 Flash",
+        "openrouter_id": "qwen/qwen3.6-flash"
+      }
+    ],
     "updated": [
+      {
+        "id": "meta-llama-llama-3-3-70b-instruct",
+        "openrouter_id": "meta-llama/llama-3.3-70b-instruct",
+        "changes": "input: 0.13 → 0.1; output: 0.4 → 0.32"
+      },
+      {
+        "id": "moonshotai-kimi-k2-6",
+        "openrouter_id": "moonshotai/kimi-k2.6",
+        "changes": "input: 0.6 → 0.589; output: 3.41 → 2.48"
+      },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.3122 → 1.19; output: 0.9812 → 3.74"
+        "changes": "input: 1.19 → 0.76; output: 3.74 → 2.42"
       }
     ]
   },
