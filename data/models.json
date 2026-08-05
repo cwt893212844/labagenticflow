@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.04",
-  "last_updated": "2026-08-04T08:45:10.028373Z",
+  "version": "2026.08.05",
+  "last_updated": "2026-08-05T08:42:30.842160Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -477,8 +477,8 @@
       "id": "mistralai-mistral-small-3-2-24b-instruct",
       "name": "Mistral Small 3.2 24B",
       "provider": "Mistral",
-      "input": 0.075,
-      "output": 0.2,
+      "input": 0.09375,
+      "output": 0.25,
       "context": 256000,
       "tags": [
         "vision",
@@ -765,35 +765,13 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "qwen-qwen3-8-max",
-        "name": "Qwen3.8 Max",
-        "openrouter_id": "qwen/qwen3.8-max"
-      }
-    ],
-    "removed": [
-      {
-        "id": "qwen-qwen3-6-flash",
-        "name": "Qwen3.6 Flash",
-        "openrouter_id": "qwen/qwen3.6-flash"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
-        "id": "meta-llama-llama-3-3-70b-instruct",
-        "openrouter_id": "meta-llama/llama-3.3-70b-instruct",
-        "changes": "input: 0.13 → 0.1; output: 0.4 → 0.32"
-      },
-      {
-        "id": "moonshotai-kimi-k2-6",
-        "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.6 → 0.589; output: 3.41 → 2.48"
-      },
-      {
-        "id": "z-ai-glm-5-2",
-        "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 1.19 → 0.76; output: 3.74 → 2.42"
+        "id": "mistralai-mistral-small-3-2-24b-instruct",
+        "openrouter_id": "mistralai/mistral-small-3.2-24b-instruct",
+        "changes": "input: 0.075 → 0.09375; output: 0.2 → 0.25"
       }
     ]
   },
