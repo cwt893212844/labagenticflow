@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-05T08:42:48.814205Z",
+  "updated_at": "2026-08-06T08:44:59.099709Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -444,7 +444,7 @@
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
       "openrouter_id": "moonshotai/kimi-k2.7-code",
-      "input": 0.73,
+      "input": 0.7,
       "output": 3.5,
       "context": 262144
     },
