@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-07T07:22:37.632947Z",
+  "updated_at": "2026-08-08T07:00:20.078706Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -312,8 +312,8 @@
       "name": "DeepSeek V3.2",
       "provider": "DeepSeek",
       "openrouter_id": "deepseek/deepseek-v3.2",
-      "input": 0.269,
-      "output": 0.4,
+      "input": 0.26,
+      "output": 0.38,
       "context": 163840
     },
     {
@@ -474,8 +474,8 @@
       "name": "Kimi K2.6",
       "provider": "Moonshot",
       "openrouter_id": "moonshotai/kimi-k2.6",
-      "input": 0.589,
-      "output": 2.48,
+      "input": 0.5795,
+      "output": 2.44,
       "context": 262144
     },
     {
@@ -573,8 +573,8 @@
       "name": "GLM 5.2",
       "provider": "Z.ai",
       "openrouter_id": "z-ai/glm-5.2",
-      "input": 0.6832,
-      "output": 2.1472,
+      "input": 0.28,
+      "output": 0.88,
       "context": 1048576
     },
     {
