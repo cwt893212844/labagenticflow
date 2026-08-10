@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.09",
-  "last_updated": "2026-08-09T07:02:36.200257Z",
+  "version": "2026.08.10",
+  "last_updated": "2026-08-10T07:49:23.797240Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -304,7 +304,7 @@
       "id": "deepseek-deepseek-v4-flash-0731",
       "name": "DeepSeek V4 Flash 0731",
       "provider": "DeepSeek",
-      "input": 0.09,
+      "input": 0.08,
       "output": 0.18,
       "context": 1048576,
       "tags": [
@@ -430,7 +430,7 @@
       "name": "Llama 4 Maverick",
       "provider": "Meta (via API)",
       "input": 0.2,
-      "output": 0.8,
+      "output": 0.696,
       "context": 1048576,
       "tags": [
         "vision",
@@ -555,8 +555,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.5795,
-      "output": 2.44,
+      "input": 0.95,
+      "output": 4.0,
       "context": 262144,
       "tags": [
         "vision",
@@ -721,8 +721,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.0966,
-      "output": 0.3036,
+      "input": 0.76,
+      "output": 2.42,
       "context": 1048576,
       "tags": [
         "tools"
@@ -801,14 +801,24 @@
     "removed": [],
     "updated": [
       {
-        "id": "deepseek-deepseek-v3-2",
-        "openrouter_id": "deepseek/deepseek-v3.2",
-        "changes": "input: 0.26 → 0.269; output: 0.38 → 0.4"
+        "id": "deepseek-deepseek-v4-flash-0731",
+        "openrouter_id": "deepseek/deepseek-v4-flash-0731",
+        "changes": "input: 0.09 → 0.08"
+      },
+      {
+        "id": "meta-llama-llama-4-maverick",
+        "openrouter_id": "meta-llama/llama-4-maverick",
+        "changes": "output: 0.8 → 0.696"
+      },
+      {
+        "id": "moonshotai-kimi-k2-6",
+        "openrouter_id": "moonshotai/kimi-k2.6",
+        "changes": "input: 0.5795 → 0.95; output: 2.44 → 4.0"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.28 → 0.0966; output: 0.88 → 0.3036"
+        "changes": "input: 0.0966 → 0.76; output: 0.3036 → 2.42"
       }
     ]
   },
