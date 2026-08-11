@@ -257,8 +257,8 @@
     $("#page-root").innerHTML = `
         <section class="model-hero">
           <div>
-            <p class="doc-eyebrow">Model pricing</p>
-            <h1>${model.name}</h1>
+            <p class="doc-eyebrow">API pricing</p>
+            <h1>${model.name} API pricing</h1>
             <p class="model-provider">${model.provider}</p>
             <p class="model-id">${model.openrouter_id}</p>
             <div class="model-tags">${LAF.buildCapChips(model)}</div>
@@ -278,6 +278,12 @@
           <div class="stat-cell"><p class="stat-label">Context</p><p class="stat-value">${LAF.fmtCtx(model.context)}</p></div>
           <div class="stat-cell"><p class="stat-label">Source</p><p class="stat-value">OpenRouter</p></div>
         </div>
+
+        <p class="doc-lead" style="margin-top:24px">
+          ${model.name} API pricing via OpenRouter: $${model.input}/M input, $${model.output}/M output,
+          ${LAF.fmtCtx(model.context)} context. Estimate workload cost below or in the
+          <a href="${HOME}?model=${encodeURIComponent(model.id)}">full calculator</a>.
+        </p>
 
         ${renderWorkloadPanel(model)}
 

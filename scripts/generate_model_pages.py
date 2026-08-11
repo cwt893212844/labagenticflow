@@ -134,8 +134,8 @@ def render_active_page(model: dict[str, Any], last_updated: str) -> str:
     <div id="page-root">
       <section class="model-hero">
         <div>
-          <p class="doc-eyebrow">Model pricing</p>
-          <h1>{html.escape(name)}</h1>
+          <p class="doc-eyebrow">API pricing</p>
+          <h1>{html.escape(name)} API pricing</h1>
           <p class="model-provider">{html.escape(provider)}</p>
           <p class="model-id">{html.escape(oid)}</p>
           <div class="model-tags">{tag_html}</div>
@@ -153,10 +153,11 @@ def render_active_page(model: dict[str, Any], last_updated: str) -> str:
         <div class="stat-cell"><p class="stat-label">Updated</p><p class="stat-value">{html.escape(updated)}</p></div>
       </div>
       <p class="doc-lead" style="margin-top:24px">
-        Compare workload cost in the
+        {html.escape(name)} API pricing via OpenRouter: ${html.escape(str(inp))}/M input,
+        ${html.escape(str(out))}/M output, {html.escape(ctx)} context.
+        Estimate workload cost in the
         <a href="../index.html?model={html.escape(mid)}">calculator</a>
         or <a href="../compare.html?models={html.escape(mid)}">side-by-side compare</a>.
-        Rates from OpenRouter.
       </p>
     </div>
     <footer class="site-footer">
