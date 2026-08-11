@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.10",
-  "last_updated": "2026-08-10T07:49:24.364603Z",
+  "version": "2026.08.11",
+  "last_updated": "2026-08-11T07:14:53.013088Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -417,7 +417,7 @@
       "description": "Query Supabase tables and manage project resources.",
       "repo_url": "https://github.com/supabase-community/supabase-mcp",
       "registry_name": "com.supabase/mcp",
-      "registry_version": "0.9.0",
+      "registry_version": "0.10.0",
       "registry_synced": true
     },
     {
@@ -508,7 +508,7 @@
       "description": "Crawl and scrape websites into clean markdown for RAG pipelines.",
       "repo_url": "https://github.com/mendableai/firecrawl-mcp-server",
       "registry_name": "io.github.firecrawl/firecrawl-mcp-server",
-      "registry_version": "3.23.6",
+      "registry_version": "3.23.9",
       "registry_synced": true
     },
     {
@@ -530,6 +530,17 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "mcp-firecrawl",
+        "name": "Firecrawl",
+        "changes": "registry_version: '3.23.6' → '3.23.9'"
+      },
+      {
+        "id": "mcp-supabase",
+        "name": "Supabase",
+        "changes": "registry_version: '0.9.0' → '0.10.0'"
+      }
+    ]
   }
 }

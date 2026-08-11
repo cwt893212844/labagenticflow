@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-10T07:49:24.690951Z",
+  "updated_at": "2026-08-11T07:14:53.237791Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -160,6 +160,16 @@
       "output": 0.9,
       "context": 131072,
       "archived_at": "2026-08-07T07:22:37.632947Z"
+    },
+    "cohere-command-r-plus-08-2024": {
+      "id": "cohere-command-r-plus-08-2024",
+      "name": "Command R+ (08-2024)",
+      "provider": "Cohere",
+      "openrouter_id": "cohere/command-r-plus-08-2024",
+      "input": 2.5,
+      "output": 10.0,
+      "context": 128000,
+      "archived_at": "2026-08-11T07:14:53.237791Z"
     }
   },
   "last_active": [
@@ -290,15 +300,6 @@
       "context": 128000
     },
     {
-      "id": "cohere-command-r-plus-08-2024",
-      "name": "Command R+ (08-2024)",
-      "provider": "Cohere",
-      "openrouter_id": "cohere/command-r-plus-08-2024",
-      "input": 2.5,
-      "output": 10.0,
-      "context": 128000
-    },
-    {
       "id": "deepseek-deepseek-v3-1-terminus",
       "name": "DeepSeek V3.1 Terminus",
       "provider": "DeepSeek",
@@ -339,8 +340,8 @@
       "name": "DeepSeek V4 Pro",
       "provider": "DeepSeek",
       "openrouter_id": "deepseek/deepseek-v4-pro",
-      "input": 0.435,
-      "output": 0.87,
+      "input": 0.63168,
+      "output": 1.26336,
       "context": 1048576
     },
     {
@@ -549,6 +550,15 @@
       "input": 1.0,
       "output": 6.0,
       "context": 1050000
+    },
+    {
+      "id": "upstage-solar-pro4",
+      "name": "Solar Pro 4",
+      "provider": "Upstage",
+      "openrouter_id": "upstage/solar-pro4",
+      "input": 0.03,
+      "output": 0.12,
+      "context": 524288
     },
     {
       "id": "z-ai-glm-4-7-flash",
