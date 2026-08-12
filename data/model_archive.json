@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-11T14:56:11.723752Z",
+  "updated_at": "2026-08-12T07:38:39.050363Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -305,7 +305,7 @@
       "provider": "DeepSeek",
       "openrouter_id": "deepseek/deepseek-v3.1-terminus",
       "input": 0.27,
-      "output": 1.0,
+      "output": 0.95,
       "context": 163840
     },
     {
@@ -583,8 +583,8 @@
       "name": "GLM 5.2",
       "provider": "Z.ai",
       "openrouter_id": "z-ai/glm-5.2",
-      "input": 0.76,
-      "output": 2.42,
+      "input": 0.5,
+      "output": 3.15,
       "context": 1048576
     },
     {
