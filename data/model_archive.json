@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12T07:38:39.050363Z",
+  "updated_at": "2026-08-13T07:40:47.044284Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -170,6 +170,26 @@
       "output": 10.0,
       "context": 128000,
       "archived_at": "2026-08-11T07:14:53.237791Z"
+    },
+    "qwen-qwen3-5-plus-20260420": {
+      "id": "qwen-qwen3-5-plus-20260420",
+      "name": "Qwen3.5 Plus 2026-04-20",
+      "provider": "Alibaba",
+      "openrouter_id": "qwen/qwen3.5-plus-20260420",
+      "input": 0.3,
+      "output": 1.8,
+      "context": 1000000,
+      "archived_at": "2026-08-13T07:40:47.044284Z"
+    },
+    "deepseek-deepseek-v4-pro": {
+      "id": "deepseek-deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "openrouter_id": "deepseek/deepseek-v4-pro",
+      "input": 0.63168,
+      "output": 1.26336,
+      "context": 1048576,
+      "archived_at": "2026-08-13T07:40:47.044284Z"
     }
   },
   "last_active": [
@@ -190,15 +210,6 @@
       "input": 0.8,
       "output": 3.2,
       "context": 300000
-    },
-    {
-      "id": "qwen-qwen3-5-plus-20260420",
-      "name": "Qwen3.5 Plus 2026-04-20",
-      "provider": "Alibaba",
-      "openrouter_id": "qwen/qwen3.5-plus-20260420",
-      "input": 0.3,
-      "output": 1.8,
-      "context": 1000000
     },
     {
       "id": "qwen-qwen3-7-flash",
@@ -225,6 +236,15 @@
       "openrouter_id": "qwen/qwen3.7-plus",
       "input": 0.32,
       "output": 1.28,
+      "context": 1000000
+    },
+    {
+      "id": "qwen-qwen3-8-2-4t-a95b",
+      "name": "Qwen3.8 2.4T A95B",
+      "provider": "Alibaba",
+      "openrouter_id": "qwen/qwen3.8-2.4t-a95b",
+      "input": 2.0,
+      "output": 6.0,
       "context": 1000000
     },
     {
@@ -336,12 +356,12 @@
       "context": 1048576
     },
     {
-      "id": "deepseek-deepseek-v4-pro",
-      "name": "DeepSeek V4 Pro",
+      "id": "deepseek-deepseek-v4-pro-0813",
+      "name": "DeepSeek V4 Pro 0813",
       "provider": "DeepSeek",
-      "openrouter_id": "deepseek/deepseek-v4-pro",
-      "input": 0.63168,
-      "output": 1.26336,
+      "openrouter_id": "deepseek/deepseek-v4-pro-0813",
+      "input": 0.435,
+      "output": 0.87,
       "context": 1048576
     },
     {
@@ -484,8 +504,8 @@
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
       "openrouter_id": "moonshotai/kimi-k2.7-code",
-      "input": 0.7,
-      "output": 3.5,
+      "input": 0.67,
+      "output": 3.4,
       "context": 262144
     },
     {
