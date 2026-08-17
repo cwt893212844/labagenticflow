@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.16",
-  "last_updated": "2026-08-16T06:46:40.216986Z",
+  "version": "2026.08.17",
+  "last_updated": "2026-08-17T07:03:32.896942Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -291,7 +291,7 @@
       "provider": "DeepSeek",
       "input": 0.14,
       "output": 0.28,
-      "context": 1048576,
+      "context": 1310720,
       "tags": [
         "tools"
       ],
@@ -304,8 +304,8 @@
       "id": "deepseek-deepseek-v4-pro-0813",
       "name": "DeepSeek V4 Pro 0813",
       "provider": "DeepSeek",
-      "input": 0.435,
-      "output": 0.87,
+      "input": 1.32,
+      "output": 3.96,
       "context": 1048576,
       "tags": [
         "tools"
@@ -540,8 +540,8 @@
       "id": "moonshotai-kimi-k2-6",
       "name": "Kimi K2.6",
       "provider": "Moonshot",
-      "input": 0.5415,
-      "output": 2.28,
+      "input": 0.95,
+      "output": 4.0,
       "context": 262144,
       "tags": [
         "vision",
@@ -719,8 +719,8 @@
       "id": "z-ai-glm-5-2",
       "name": "GLM 5.2",
       "provider": "Z.ai",
-      "input": 0.308,
-      "output": 0.968,
+      "input": 1.19,
+      "output": 3.74,
       "context": 1048576,
       "tags": [
         "tools"
@@ -799,14 +799,19 @@
     "removed": [],
     "updated": [
       {
+        "id": "deepseek-deepseek-v4-pro-0813",
+        "openrouter_id": "deepseek/deepseek-v4-pro-0813",
+        "changes": "input: 0.435 → 1.32; output: 0.87 → 3.96"
+      },
+      {
         "id": "moonshotai-kimi-k2-6",
         "openrouter_id": "moonshotai/kimi-k2.6",
-        "changes": "input: 0.65 → 0.5415; output: 3.41 → 2.28"
+        "changes": "input: 0.5415 → 0.95; output: 2.28 → 4.0"
       },
       {
         "id": "z-ai-glm-5-2",
         "openrouter_id": "z-ai/glm-5.2",
-        "changes": "input: 0.49 → 0.308; output: 1.54 → 0.968"
+        "changes": "input: 0.308 → 1.19; output: 0.968 → 3.74"
       }
     ]
   },
