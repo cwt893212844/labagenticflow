@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.19",
-  "last_updated": "2026-08-19T06:51:16.568270Z",
+  "version": "2026.08.20",
+  "last_updated": "2026-08-20T06:53:02.545719Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -71,21 +71,6 @@
       "benchmark_source": "Artificial Analysis"
     },
     {
-      "id": "qwen-qwen3-7-max",
-      "name": "Qwen3.7 Max",
-      "provider": "Alibaba",
-      "input": 1.475,
-      "output": 4.425,
-      "context": 1000000,
-      "tags": [
-        "tools"
-      ],
-      "openrouter_id": "qwen/qwen3.7-max",
-      "pricing_source": "openrouter",
-      "benchmark_url": "https://artificialanalysis.ai/leaderboards/models",
-      "benchmark_source": "Artificial Analysis"
-    },
-    {
       "id": "qwen-qwen3-7-plus",
       "name": "Qwen3.7 Plus",
       "provider": "Alibaba",
@@ -112,6 +97,22 @@
         "tools"
       ],
       "openrouter_id": "qwen/qwen3.8-2.4t-a95b",
+      "pricing_source": "openrouter",
+      "benchmark_url": "https://artificialanalysis.ai/leaderboards/models",
+      "benchmark_source": "Artificial Analysis"
+    },
+    {
+      "id": "qwen-qwen3-8-27b",
+      "name": "Qwen3.8 27B",
+      "provider": "Alibaba",
+      "input": 0.45,
+      "output": 3.2,
+      "context": 1000000,
+      "tags": [
+        "vision",
+        "tools"
+      ],
+      "openrouter_id": "qwen/qwen3.8-27b",
       "pricing_source": "openrouter",
       "benchmark_url": "https://artificialanalysis.ai/leaderboards/models",
       "benchmark_source": "Artificial Analysis"
@@ -304,8 +305,8 @@
       "id": "deepseek-deepseek-v4-pro-0813",
       "name": "DeepSeek V4 Pro 0813",
       "provider": "DeepSeek",
-      "input": 1.32,
-      "output": 3.96,
+      "input": 1.188,
+      "output": 3.564,
       "context": 1048576,
       "tags": [
         "tools"
@@ -797,33 +798,23 @@
   "changes": {
     "added": [
       {
-        "id": "z-ai-glm-5-3",
-        "name": "GLM 5.3",
-        "openrouter_id": "z-ai/glm-5.3"
+        "id": "qwen-qwen3-8-27b",
+        "name": "Qwen3.8 27B",
+        "openrouter_id": "qwen/qwen3.8-27b"
       }
     ],
     "removed": [
       {
-        "id": "z-ai-glm-5-2",
-        "name": "GLM 5.2",
-        "openrouter_id": "z-ai/glm-5.2"
+        "id": "qwen-qwen3-7-max",
+        "name": "Qwen3.7 Max",
+        "openrouter_id": "qwen/qwen3.7-max"
       }
     ],
     "updated": [
       {
-        "id": "moonshotai-kimi-k2-5",
-        "openrouter_id": "moonshotai/kimi-k2.5",
-        "changes": "input: 0.57 → 0.45; output: 2.85 → 2.25"
-      },
-      {
-        "id": "moonshotai-kimi-k2-7-code-batch",
-        "openrouter_id": "moonshotai/kimi-k2.7-code:batch",
-        "changes": "input: 0.475 → 0.95; output: 2.0 → 4.0"
-      },
-      {
-        "id": "z-ai-glm-5-2-batch",
-        "openrouter_id": "z-ai/glm-5.2:batch",
-        "changes": "input: 0.7 → 1.4; output: 2.2 → 4.4"
+        "id": "deepseek-deepseek-v4-pro-0813",
+        "openrouter_id": "deepseek/deepseek-v4-pro-0813",
+        "changes": "input: 1.32 → 1.188; output: 3.96 → 3.564"
       }
     ]
   },
