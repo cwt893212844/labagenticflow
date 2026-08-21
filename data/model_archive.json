@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-20T06:53:03.419917Z",
+  "updated_at": "2026-08-21T06:53:43.350109Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -544,8 +544,8 @@
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
       "openrouter_id": "moonshotai/kimi-k2.7-code",
-      "input": 0.71,
-      "output": 3.5,
+      "input": 0.67,
+      "output": 3.4,
       "context": 262144
     },
     {
@@ -645,7 +645,7 @@
       "openrouter_id": "z-ai/glm-5.2:batch",
       "input": 1.4,
       "output": 4.4,
-      "context": 512000
+      "context": 1048575
     },
     {
       "id": "z-ai-glm-5-3",

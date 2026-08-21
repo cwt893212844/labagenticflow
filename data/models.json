@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.20",
-  "last_updated": "2026-08-20T06:53:02.545719Z",
+  "version": "2026.08.21",
+  "last_updated": "2026-08-21T06:53:42.650380Z",
   "source": "openrouter",
   "source_url": "https://openrouter.ai/api/v1/models",
   "selection": "auto",
@@ -555,8 +555,8 @@
       "id": "moonshotai-kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
       "provider": "Moonshot",
-      "input": 0.71,
-      "output": 3.5,
+      "input": 0.67,
+      "output": 3.4,
       "context": 262144,
       "tags": [
         "vision",
@@ -722,7 +722,7 @@
       "provider": "Z.ai",
       "input": 1.4,
       "output": 4.4,
-      "context": 512000,
+      "context": 1048575,
       "tags": [
         "tools"
       ],
@@ -796,25 +796,13 @@
     }
   ],
   "changes": {
-    "added": [
-      {
-        "id": "qwen-qwen3-8-27b",
-        "name": "Qwen3.8 27B",
-        "openrouter_id": "qwen/qwen3.8-27b"
-      }
-    ],
-    "removed": [
-      {
-        "id": "qwen-qwen3-7-max",
-        "name": "Qwen3.7 Max",
-        "openrouter_id": "qwen/qwen3.7-max"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "updated": [
       {
-        "id": "deepseek-deepseek-v4-pro-0813",
-        "openrouter_id": "deepseek/deepseek-v4-pro-0813",
-        "changes": "input: 1.32 → 1.188; output: 3.96 → 3.564"
+        "id": "moonshotai-kimi-k2-7-code",
+        "openrouter_id": "moonshotai/kimi-k2.7-code",
+        "changes": "input: 0.71 → 0.67; output: 3.5 → 3.4"
       }
     ]
   },

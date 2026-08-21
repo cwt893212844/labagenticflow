@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.20",
-  "last_updated": "2026-08-20T06:53:03.098441Z",
+  "version": "2026.08.21",
+  "last_updated": "2026-08-21T06:53:43.067180Z",
   "source": "mcp-registry",
   "source_url": "https://registry.modelcontextprotocol.io",
   "selection": "auto",
@@ -164,7 +164,7 @@
       "description": "Web search via the Brave Search API.",
       "repo_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
       "registry_name": "io.github.brave/brave-search-mcp-server",
-      "registry_version": "2.1.0",
+      "registry_version": "2.1.3",
       "registry_synced": true
     },
     {
@@ -417,7 +417,7 @@
       "description": "Query Supabase tables and manage project resources.",
       "repo_url": "https://github.com/supabase-community/supabase-mcp",
       "registry_name": "com.supabase/mcp",
-      "registry_version": "0.10.0",
+      "registry_version": "0.11.0",
       "registry_synced": true
     },
     {
@@ -530,6 +530,17 @@
   "changes": {
     "added": [],
     "removed": [],
-    "updated": []
+    "updated": [
+      {
+        "id": "mcp-brave-search",
+        "name": "Brave Search",
+        "changes": "registry_version: '2.1.0' → '2.1.3'"
+      },
+      {
+        "id": "mcp-supabase",
+        "name": "Supabase",
+        "changes": "registry_version: '0.10.0' → '0.11.0'"
+      }
+    ]
   }
 }
