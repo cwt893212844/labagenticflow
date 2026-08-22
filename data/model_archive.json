@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T06:53:43.350109Z",
+  "updated_at": "2026-08-22T06:47:07.276795Z",
   "models": {
     "anthropic-claude-opus-4-8": {
       "id": "anthropic-claude-opus-4-8",
@@ -373,8 +373,8 @@
       "name": "DeepSeek V3.2",
       "provider": "DeepSeek",
       "openrouter_id": "deepseek/deepseek-v3.2",
-      "input": 0.269,
-      "output": 0.4,
+      "input": 0.26,
+      "output": 0.38,
       "context": 163840
     },
     {
@@ -391,8 +391,8 @@
       "name": "DeepSeek V4 Flash 0731",
       "provider": "DeepSeek",
       "openrouter_id": "deepseek/deepseek-v4-flash-0731",
-      "input": 0.14,
-      "output": 0.28,
+      "input": 0.08,
+      "output": 0.18,
       "context": 1310720
     },
     {
@@ -508,9 +508,9 @@
       "name": "Mistral Small 3.2 24B",
       "provider": "Mistral",
       "openrouter_id": "mistralai/mistral-small-3.2-24b-instruct",
-      "input": 0.09375,
-      "output": 0.25,
-      "context": 256000
+      "input": 0.075,
+      "output": 0.2,
+      "context": 131072
     },
     {
       "id": "mistralai-mistral-small-2603",
@@ -535,8 +535,8 @@
       "name": "Kimi K2.6",
       "provider": "Moonshot",
       "openrouter_id": "moonshotai/kimi-k2.6",
-      "input": 0.95,
-      "output": 4.0,
+      "input": 0.5415,
+      "output": 2.28,
       "context": 262144
     },
     {
